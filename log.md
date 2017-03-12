@@ -26,8 +26,8 @@ initially I won't use it.
 The above is reflected in the file bcomp.ucf, which contains all the pin
 assignments of the FPGA. This file is written based on the following images
 from the BASYS2 datasheet:
-!(https://github.com/MJoergen/bcomp/blob/master/pins.png)
-!(https://github.com/MJoergen/bcomp/blob/master/pins2.png)
+![alt text](https://github.com/MJoergen/bcomp/blob/master/pins.png "")
+![alt text](https://github.com/MJoergen/bcomp/blob/master/pins2.png "")
 
 ## Blocks
 Next thing is to have an overall block structure. The first video again gives
