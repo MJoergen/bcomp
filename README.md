@@ -8,3 +8,7 @@ This will implement everything in VHDL, taylored for the BASYS2 FPGA board http:
 The FPGA board is based on a Spartan-3E FPGA chip from Xilinx.
 
 Suggestions and contributions are welcome.
+
+# Resources
+Here are some links to additional learning resources:
+* http://www.fpga4student.com/
