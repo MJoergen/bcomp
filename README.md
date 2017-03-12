@@ -12,3 +12,4 @@ Suggestions and contributions are welcome.
 # Resources
 Here are some links to additional learning resources:
 * http://www.fpga4student.com/
+* Datasheet for the BASYS2 board: https://reference.digilentinc.com/_media/basys2:basys2_rm.pdf
