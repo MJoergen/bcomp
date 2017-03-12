@@ -1,13 +1,46 @@
 #
 # This is the global pin description file for the Xilinx Spartan 3E FPGA
-# clock pins for Basys2 Board
+# pins for Basys2 Board
+#
+# I've adopted a naming convention, so all inputs to the FPGA are suffixed
+# with a "_i", and all outputs from the FPGA are suffixed with a "_o".
+#
+# The "Signal names" given in the comment to each pin, are the names 
+# used in the BASYS2 datasheet.
 
-# 25 MHz crystal oscillator
-NET "vga_clk_i"  LOC = "M6"; # Bank = 2, Signal name = UCLK, PAD = GCLK0
-NET "vga_clk_i" TNM_NET = vga_clk_i;
-TIMESPEC TS_vga_clk_i = PERIOD "vga_clk_i" 40 ns HIGH 50%;
+# A crystal oscillator is connected to this FPGA pin
+# The frequency of the oscillator is fixed at 25 MHz.
+NET "clk_i"  LOC = "M6"; # Bank = 2, Signal name = UCLK, PAD = GCLK0
+NET "clk_i" TNM_NET = clk_i;
+TIMESPEC TS_clk_i = PERIOD "clk_i" 40 ns HIGH 50%;  # 25 MHz
 
-# Connected to Basys2 onBoard 7seg display
+# Pin assignments for slide switches
+NET "sw_i<7>" LOC = "N3";  # Bank = 2, Signal name = SW7
+NET "sw_i<6>" LOC = "E2";  # Bank = 3, Signal name = SW6
+NET "sw_i<5>" LOC = "F3";  # Bank = 3, Signal name = SW5
+NET "sw_i<4>" LOC = "G3";  # Bank = 3, Signal name = SW4
+NET "sw_i<3>" LOC = "B4";  # Bank = 0, Signal name = SW3
+NET "sw_i<2>" LOC = "K3";  # Bank = 3, Signal name = SW2
+NET "sw_i<1>" LOC = "L3";  # Bank = 3, Signal name = SW1
+NET "sw_i<0>" LOC = "P11"; # Bank = 2, Signal name = SW0
+
+# Pin assignments for push buttons
+NET "btn_i<3>" LOC = "A7";  # Bank = 0, Signal name = BTN3
+NET "btn_i<2>" LOC = "M4";  # Bank = 2, Signal name = BTN2
+NET "btn_i<1>" LOC = "C11"; # Bank = 0, Signal name = BTN1
+NET "btn_i<0>" LOC = "G12"; # Bank = 1, Signal name = BTN0
+
+# Pin assignments for LEDs
+NET "led_o<7>" LOC = "G1" ; # Bank = 3, Signal name = LD7
+NET "led_o<6>" LOC = "P4" ; # Bank = 2, Signal name = LD6
+NET "led_o<5>" LOC = "N4" ; # Bank = 2, Signal name = LD5
+NET "led_o<4>" LOC = "N5" ; # Bank = 2, Signal name = LD4
+NET "led_o<3>" LOC = "P6" ; # Bank = 2, Signal name = LD3
+NET "led_o<2>" LOC = "P7" ; # Bank = 2, Signal name = LD2
+NET "led_o<1>" LOC = "M11"; # Bank = 2, Signal name = LD1
+NET "led_o<0>" LOC = "M5" ; # Bank = 2, Signal name = LD0
+
+# Pin assignments for seven-segment display
 NET "seg_ca_o<0>"  LOC = "L14"; # Bank = 1, Signal name = CA
 NET "seg_ca_o<1>"  LOC = "H12"; # Bank = 1, Signal name = CB
 NET "seg_ca_o<2>"  LOC = "N14"; # Bank = 1, Signal name = CC
@@ -21,31 +54,7 @@ NET "seg_an_o<2>"  LOC = "M13"; # Bank = 1, Signal name = AN2
 NET "seg_an_o<1>"  LOC = "J12"; # Bank = 1, Signal name = AN1
 NET "seg_an_o<0>"  LOC = "F12"; # Bank = 1, Signal name = AN0
 
-# Pin assignment for LEDs
-NET "led_o<7>" LOC = "G1" ; # Bank = 3, Signal name = LD7
-NET "led_o<6>" LOC = "P4" ; # Bank = 2, Signal name = LD6
-NET "led_o<5>" LOC = "N4" ; # Bank = 2, Signal name = LD5
-NET "led_o<4>" LOC = "N5" ; # Bank = 2, Signal name = LD4
-NET "led_o<3>" LOC = "P6" ; # Bank = 2, Signal name = LD3
-NET "led_o<2>" LOC = "P7" ; # Bank = 2, Signal name = LD2
-NET "led_o<1>" LOC = "M11"; # Bank = 2, Signal name = LD1
-NET "led_o<0>" LOC = "M5" ; # Bank = 2, Signal name = LD0
-
-# Pin assignment for SWs
-NET "sw_i<7>" LOC = "N3";  # Bank = 2, Signal name = SW7
-NET "sw_i<6>" LOC = "E2";  # Bank = 3, Signal name = SW6
-NET "sw_i<5>" LOC = "F3";  # Bank = 3, Signal name = SW5
-NET "sw_i<4>" LOC = "G3";  # Bank = 3, Signal name = SW4
-NET "sw_i<3>" LOC = "B4";  # Bank = 0, Signal name = SW3
-NET "sw_i<2>" LOC = "K3";  # Bank = 3, Signal name = SW2
-NET "sw_i<1>" LOC = "L3";  # Bank = 3, Signal name = SW1
-NET "sw_i<0>" LOC = "P11"; # Bank = 2, Signal name = SW0
-
-# Pin assignment for buttons
-NET "btn_i<3>" LOC = "A7";  # Bank = 0, Signal name = BTN3
-NET "btn_i<2>" LOC = "M4";  # Bank = 2, Signal name = BTN2
-NET "btn_i<1>" LOC = "C11"; # Bank = 0, Signal name = BTN1
-NET "btn_i<0>" LOC = "G12"; # Bank = 1, Signal name = BTN0
+## The rest of this file is not used. It's included for future possible expansions
 
 # Pin assignment for VGA (not used)
 #NET "vga_hs_o"       LOC = "J14"  | DRIVE = 2 ; # Bank = 1, Signal name = HSYNC
