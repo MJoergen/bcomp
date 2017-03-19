@@ -9,7 +9,7 @@ entity bcomp is
        );
    port (
       -- Clock
-      vga_clk_i   : in  std_logic;  -- 25 MHz
+      clk_i       : in  std_logic;  -- 25 MHz
 
       -- Input switches
       sw_i        : in  std_logic_vector (7 downto 0);
