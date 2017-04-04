@@ -6,7 +6,10 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- This entity implements the feature described in the video
 -- https://www.youtube.com/watch?v=WCwJNnx36Rk
 -- The implementation is quite different from the video because of the
--- limitations of the FPGA, so we need access to the crystal clock
+-- way the switches are hooked up on the Basys2 board. In the video,
+-- he uses a double throw switch, but the Basys2 board only has 
+-- single throw switches. So instead we implement debouncing
+-- uses a regular timer, based on the crystal clock.
 
 entity bistable_clock is
 
