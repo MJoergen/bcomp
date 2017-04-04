@@ -23,6 +23,9 @@ entity register_8bit is
              -- Data output
              data_o      : out std_logic_vector(7 downto 0);
 
+             -- Register output
+             reg_o       : out std_logic_vector(7 downto 0);
+
              -- Control inputs
              load_i      : in  std_logic;
              enable_i    : in  std_logic);
@@ -43,6 +46,7 @@ begin
         end if;
     end process;
 
+    reg_o <= data;
     data_o <= data when (enable_i = '1') else "ZZZZZZZZ";
 
 end Structural;
