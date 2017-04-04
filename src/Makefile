@@ -2,13 +2,9 @@
 #top_module = bcomp
 #vfiles     = bcomp.vhd # Top level
 
-#project    = monostable_clock
-#top_module = monostable_clock
-#vfiles     = monostable_clock.vhd # Top level
-
-project    = bistable_clock
-top_module = bistable_clock
-vfiles     = bistable_clock.vhd # Top level
+project    = monostable_clock
+top_module = monostable_clock
+vfiles     = monostable_clock.vhd # Top level
 
 # Synthesis
 vendor     = xilinx

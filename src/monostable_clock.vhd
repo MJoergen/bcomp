@@ -11,7 +11,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- Once every millisecond the push button is stored in a register,
 -- and this provides the debouncing functionality.
 
-entity bistable_clock is
+entity monostable_clock is
 
     generic (
                 COUNTER_SIZE : integer := 21 -- for delay
@@ -28,9 +28,9 @@ entity bistable_clock is
              -- Registered button output
              btn_delay_o : out std_logic);
 
-end bistable_clock;
+end monostable_clock;
 
-architecture Structural of bistable_clock is
+architecture Structural of monostable_clock is
     signal counter   : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
                        (others => '0');
     signal btn_delay : std_logic;

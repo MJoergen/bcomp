@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity bistable_clock_tb is
-end bistable_clock_tb ;
+entity monostable_clock_tb is
+end monostable_clock_tb ;
 
-architecture Structural of bistable_clock_tb is
+architecture Structural of monostable_clock_tb is
 
     -- Clock
     signal clk : std_logic; -- 25 MHz
@@ -29,7 +29,7 @@ begin
     end process clk_gen;
 
     -- Instantiate DUT
-    inst_bistable_clock : entity work.bistable_clock
+    inst_monostable_clock : entity work.monostable_clock
     generic map (
                     COUNTER_SIZE => 4 -- Much shorter counter during simulation.
                     -- 40 ns * 2^4 = 640 ns.
