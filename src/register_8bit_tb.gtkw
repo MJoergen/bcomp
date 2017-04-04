@@ -1,26 +1,26 @@
 [*]
 [*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
-[*] Tue Apr  4 15:26:03 2017
+[*] Tue Apr  4 18:12:02 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/register_8bit_tb.ghw"
-[dumpfile_mtime] "Tue Apr  4 15:25:41 2017"
-[dumpfile_size] 1200
+[dumpfile_mtime] "Tue Apr  4 18:11:51 2017"
+[dumpfile_size] 1352
 [savefile] "/home/mike/git/bcomp/src/register_8bit_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-28.236040 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-28.432684 60000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.register_8bit_tb.
 [treeopen] top.register_8bit_tb.inst_register_8bit.
 [sst_width] 229
-[signals_width] 134
+[signals_width] 164
 [sst_expanded] 1
 [sst_vpaned_height] 139
-@28
-top.register_8bit_tb.clk
-top.register_8bit_tb.load
 @29
+top.register_8bit_tb.clk
+@28
+top.register_8bit_tb.load
 top.register_8bit_tb.enable
 @22
 #{top.register_8bit_tb.data_in[7:0]} top.register_8bit_tb.data_in[7] top.register_8bit_tb.data_in[6] top.register_8bit_tb.data_in[5] top.register_8bit_tb.data_in[4] top.register_8bit_tb.data_in[3] top.register_8bit_tb.data_in[2] top.register_8bit_tb.data_in[1] top.register_8bit_tb.data_in[0]

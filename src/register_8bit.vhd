@@ -2,20 +2,24 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
--- bistable_clock.vhd
+-- register_8bit.vhd
 -- This entity implements the feature described in the video
--- https://www.youtube.com/watch?v=WCwJNnx36Rk
--- The implementation is quite different from the video because of the
--- way the switches are hooked up on the Basys2 board. In the video,
--- he uses a double throw switch, but the Basys2 board only has 
--- single throw switches. So instead we implement debouncing
--- uses a regular timer, based on the crystal clock.
+-- https://www.youtube.com/watch?v=CiMaWbz_6E8
+-- The signals data_i and data_o will both be connected in parallel
+-- to the main data bus, so they could alternatively be implemented
+-- as 'inout' signals. But for now, I'm following the video as
+-- closely as possible.
+-- The enable pin here is active high, whereas in the video it is
+-- active low.
 
 entity register_8bit is
 
     port (
              -- Clock input from crystal (for delay)
              clk_i       : in  std_logic;
+
+             -- Clear input
+             clr_i       : in  std_logic;
 
              -- Data input
              data_i      : in  std_logic_vector(7 downto 0);
@@ -39,7 +43,9 @@ architecture Structural of register_8bit is
 begin
     process(clk_i)
     begin
-        if rising_edge(clk_i) then
+        if clr_i = '1' then
+            data <= (others => '0');
+        elsif rising_edge(clk_i) then
             if load_i = '1' then
                 data <= data_i;
             end if;

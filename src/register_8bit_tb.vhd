@@ -12,6 +12,7 @@ architecture Structural of register_8bit_tb is
     signal test_running : boolean := true;
 
     -- Inputs to the DUT
+    signal clr        : std_logic;
     signal data_in    : std_logic_vector(7 downto 0);
     signal load       : std_logic;
     signal enable     : std_logic;
@@ -36,6 +37,7 @@ begin
     inst_register_8bit : entity work.register_8bit
     port map (
                  clk_i       => clk       ,
+                 clr_i       => clr       ,
                  data_i      => data_in   ,
                  data_o      => data_out  ,
                  reg_o       => reg       ,
@@ -46,8 +48,14 @@ begin
     -- Start the main test
     main_test : process is
     begin
-        load    <= '1'; -- Start with a known value
+        clr     <= '1';
         enable  <= '1';
+        wait for 80 ns;
+        assert data_out = "00000000";
+        assert reg      = "00000000";
+
+        clr     <= '0';
+        load    <= '1'; -- Start with a known value
         data_in <= "01010101";
 
         wait for 80 ns;
