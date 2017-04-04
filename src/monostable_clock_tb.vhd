@@ -43,7 +43,7 @@ begin
     -- Start the main test
     main_test : process is
     begin
-        wait for 40 ns;
+        wait for 80 ns;
 
         btn <= '0';
         wait for 640 ns;
