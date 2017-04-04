@@ -3,13 +3,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- monostable_clock.vhd
--- This entity implements the feature described in
--- the video https://www.youtube.com/watch?v=81BgFhm2vz8
--- The implementation is quite different from the video
--- because of the limitations of the FPGA, so we
--- need access to the crystal clock
--- Once every millisecond the push button is stored in a register,
--- and this provides the debouncing functionality.
+-- This entity implements the feature described in the video
+-- https://www.youtube.com/watch?v=81BgFhm2vz8
+-- The implementation is quite different from the video because of the
+-- limitations of the FPGA, so we need access to the crystal clock
+-- As soon as the button is pressed, the output is set high.
+-- As soon as we release the button, a timer starts counting, and when it
+-- reaches the maximum value, the output is reset again.
 
 entity monostable_clock is
 
@@ -25,7 +25,7 @@ entity monostable_clock is
              -- Button input
              btn_i       : in  std_logic;
 
-             -- Registered button output
+             -- Delayed (monostable) button output
              btn_delay_o : out std_logic);
 
 end monostable_clock;
