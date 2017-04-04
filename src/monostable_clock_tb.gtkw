@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
+[*] Tue Apr  4 08:18:48 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/monostable_clock_tb.ghw"
+[dumpfile_mtime] "Tue Apr  4 08:18:02 2017"
+[dumpfile_size] 2053
+[savefile] "/home/mike/git/bcomp/src/monostable_clock_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-30.153452 1886000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.monostable_clock_tb.
+[treeopen] top.monostable_clock_tb.inst_monostable_clock.
+[sst_width] 229
+[signals_width] 160
+[sst_expanded] 1
+[sst_vpaned_height] 139
+@28
+top.monostable_clock_tb.clk
+top.monostable_clock_tb.btn
+top.monostable_clock_tb.btn_reg
+@22
+#{top.monostable_clock_tb.inst_monostable_clock.counter[3:0]} top.monostable_clock_tb.inst_monostable_clock.counter[3] top.monostable_clock_tb.inst_monostable_clock.counter[2] top.monostable_clock_tb.inst_monostable_clock.counter[1] top.monostable_clock_tb.inst_monostable_clock.counter[0]
+[pattern_trace] 1
+[pattern_trace] 0
