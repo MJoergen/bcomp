@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
+[*] Tue Apr  4 11:17:00 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/clock_logic_tb.ghw"
+[dumpfile_mtime] "Tue Apr  4 11:16:13 2017"
+[dumpfile_size] 3155
+[savefile] "/home/mike/git/bcomp/src/clock_logic_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-30.611645 3355000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.clock_logic_tb.
+[treeopen] top.clock_logic_tb.inst_clock_logic.
+[treeopen] top.clock_logic_tb.inst_clock_logic.inst_bistable_clock.
+[treeopen] top.clock_logic_tb.inst_clock_logic.inst_monostable_clock.
+[sst_width] 229
+[signals_width] 154
+[sst_expanded] 1
+[sst_vpaned_height] 139
+@28
+top.clock_logic_tb.clk
+top.clock_logic_tb.hlt
+top.clock_logic_tb.sw
+top.clock_logic_tb.btn
+top.clock_logic_tb.clk_deriv
+@22
+#{top.clock_logic_tb.counter[7:0]} top.clock_logic_tb.counter[7] top.clock_logic_tb.counter[6] top.clock_logic_tb.counter[5] top.clock_logic_tb.counter[4] top.clock_logic_tb.counter[3] top.clock_logic_tb.counter[2] top.clock_logic_tb.counter[1] top.clock_logic_tb.counter[0]
+@28
+top.clock_logic_tb.inst_clock_logic.sw_reg
+top.clock_logic_tb.inst_clock_logic.btn_delay
+@22
+#{top.clock_logic_tb.inst_clock_logic.inst_bistable_clock.counter[3:0]} top.clock_logic_tb.inst_clock_logic.inst_bistable_clock.counter[3] top.clock_logic_tb.inst_clock_logic.inst_bistable_clock.counter[2] top.clock_logic_tb.inst_clock_logic.inst_bistable_clock.counter[1] top.clock_logic_tb.inst_clock_logic.inst_bistable_clock.counter[0]
+@23
+#{top.clock_logic_tb.inst_clock_logic.inst_monostable_clock.counter[3:0]} top.clock_logic_tb.inst_clock_logic.inst_monostable_clock.counter[3] top.clock_logic_tb.inst_clock_logic.inst_monostable_clock.counter[2] top.clock_logic_tb.inst_clock_logic.inst_monostable_clock.counter[1] top.clock_logic_tb.inst_clock_logic.inst_monostable_clock.counter[0]
+[pattern_trace] 1
+[pattern_trace] 0

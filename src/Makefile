@@ -6,9 +6,15 @@
 #top_module = monostable_clock
 #vfiles     = monostable_clock.vhd # Top level
 
-project    = bistable_clock
-top_module = bistable_clock
-vfiles     = bistable_clock.vhd # Top level
+#project    = bistable_clock
+#top_module = bistable_clock
+#vfiles     = bistable_clock.vhd # Top level
+
+project    = clock_logic
+top_module = clock_logic
+vfiles     = clock_logic.vhd # Top level
+vfiles    += bistable_clock.vhd
+vfiles    += monostable_clock.vhd
 
 # Synthesis
 vendor     = xilinx
