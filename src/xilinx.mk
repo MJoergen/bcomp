@@ -92,6 +92,7 @@ junk += $(local_corengcs)
 
 .PHONY: show sim net_sim net_uni
 show: $(wave)
+	export LD_LIBRARY_PATH=/usr/lib64
 	gtkwave $(wave) $(wavesave)
 
 sim:
