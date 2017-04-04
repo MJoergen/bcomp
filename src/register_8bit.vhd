@@ -9,8 +9,8 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- to the main data bus, so they could alternatively be implemented
 -- as 'inout' signals. But for now, I'm following the video as
 -- closely as possible.
--- The enable pin here is active high, whereas in the video it is
--- active low.
+-- The load and enable pins here are active high, whereas in the video
+-- they are active low.
 
 entity register_8bit is
 
