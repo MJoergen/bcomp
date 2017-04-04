@@ -38,7 +38,7 @@ begin
     assert (load_i and enable_i) /= '1';
 
     
-    process(clk_i)
+    process(clk_i, clr_i)
     begin
         if clr_i = '1' then
             data <= (others => '0');
