@@ -10,11 +10,15 @@
 #top_module = bistable_clock
 #vfiles     = bistable_clock.vhd # Top level
 
-project    = clock_logic
-top_module = clock_logic
-vfiles     = clock_logic.vhd # Top level
-vfiles    += bistable_clock.vhd
-vfiles    += monostable_clock.vhd
+#project    = clock_logic
+#top_module = clock_logic
+#vfiles     = clock_logic.vhd # Top level
+#vfiles    += bistable_clock.vhd
+#vfiles    += monostable_clock.vhd
+
+project    = register_8bit
+top_module = register_8bit
+vfiles     = register_8bit.vhd # Top level
 
 # Synthesis
 vendor     = xilinx
@@ -29,7 +33,7 @@ tb_sources = $(testbench).vhd
 wave       = $(testbench).ghw
 wavesave   = $(testbench).gtkw
 unisim_lib = unisim-obj93.cf
-stoptime   = --stop-time=4000us
+stoptime   = --stop-time=4000us --assert-level=none
 
 # Host PC application
 app_source = $(project).cpp
