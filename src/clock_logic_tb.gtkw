@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
-[*] Tue Apr  4 11:17:00 2017
+[*] Tue Apr  4 14:22:09 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/clock_logic_tb.ghw"
-[dumpfile_mtime] "Tue Apr  4 11:16:13 2017"
-[dumpfile_size] 3155
+[dumpfile_mtime] "Tue Apr  4 14:21:56 2017"
+[dumpfile_size] 7644
 [savefile] "/home/mike/git/bcomp/src/clock_logic_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-30.611645 3355000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-32.163807 3355000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.clock_logic_tb.
 [treeopen] top.clock_logic_tb.inst_clock_logic.
