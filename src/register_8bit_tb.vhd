@@ -13,13 +13,14 @@ architecture Structural of register_8bit_tb is
 
     -- Inputs to the DUT
     signal clr        : std_logic;
-    signal data_in    : std_logic_vector(7 downto 0);
     signal load       : std_logic;
     signal enable     : std_logic;
 
     -- Output from the DUT
-    signal data_out   : std_logic_vector(7 downto 0);
     signal reg        : std_logic_vector(7 downto 0);
+
+    -- Main data bus
+    signal data       : std_logic_vector(7 downto 0);
 
 begin
     -- Generate clock
@@ -36,82 +37,55 @@ begin
     -- Instantiate DUT
     inst_register_8bit : entity work.register_8bit
     port map (
-                 clk_i       => clk       ,
-                 clr_i       => clr       ,
-                 data_i      => data_in   ,
-                 data_o      => data_out  ,
-                 reg_o       => reg       ,
-                 load_i      => load      ,
+                 clk_i       => clk    ,
+                 clr_i       => clr    ,
+                 data_io     => data   ,
+                 reg_o       => reg    ,
+                 load_i      => load   ,
                  enable_i    => enable
              );
 
     -- Start the main test
     main_test : process is
     begin
-        clr     <= '1';
-        enable  <= '1';
+        -- Check reset state
+        clr    <= '1';
+        enable <= '1'; -- When activating enable, remember to tristate data.
+        data   <= "ZZZZZZZZ";
         wait for 80 ns;
-        assert data_out = "00000000";
-        assert reg      = "00000000";
+        assert data    = "00000000";
+        assert reg     = "00000000";
 
-        clr     <= '0';
-        load    <= '1'; -- Start with a known value
-        data_in <= "01010101";
-
+        -- Check tristate buffer
+        enable <= '0';
         wait for 80 ns;
-        assert data_out = "01010101";
-        assert reg      = "01010101";
+        assert data    = "ZZZZZZZZ";
+        assert reg     = "00000000";
 
-        data_in <= "00001111";
+        -- Check setting register
+        clr    <= '0';
+        load   <= '1';
+        enable <= '0'; -- When setting load, remember to clear enable.
+        data   <= "01010101";
         wait for 80 ns;
-        assert data_out = "00001111";
-        assert reg      = "00001111";
+        assert data    = "01010101";
+        assert reg     = "01010101";
 
-        data_in <= "00110011";
+        -- Check tristate buffer
+        enable <= '0';
+        load   <= '0';
+        data   <= "ZZZZZZZZ";
         wait for 80 ns;
-        assert data_out = "00110011";
-        assert reg      = "00110011";
+        assert data    = "ZZZZZZZZ";
+        assert reg     = "01010101";
 
-        load    <= '0';
+        -- Check reset state
+        clr    <= '1';
+        enable <= '1';
+        data   <= "ZZZZZZZZ";
         wait for 80 ns;
-        assert data_out = "00110011";
-        assert reg      = "00110011";
-
-        data_in <= "10101010";
-        wait for 80 ns;
-        assert data_out = "00110011";
-        assert reg      = "00110011";
-
-        enable  <= '0';
-        wait for 80 ns;
-        assert data_out = "ZZZZZZZZ";
-        assert reg      = "00110011";
-
-        enable  <= '1';
-        wait for 80 ns;
-        assert data_out = "00110011";
-        assert reg      = "00110011";
-
-        load    <= '1';
-        wait for 80 ns;
-        assert data_out = "10101010";
-        assert reg      = "10101010";
-
-        enable  <= '0';
-        wait for 80 ns;
-        assert data_out = "ZZZZZZZZ";
-        assert reg      = "10101010";
-
-        data_in <= "11001100";
-        load    <= '1';
-        wait for 80 ns;
-        assert data_out = "ZZZZZZZZ";
-        assert reg      = "11001100";
-
-        enable  <= '1';
-        wait for 80 ns;
-        assert data_out = "11001100";
-        assert reg      = "11001100";
+        assert data    = "00000000";
+        assert reg     = "00000000";
 
         test_running <= false;
         wait;
