@@ -1,0 +1,38 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Wed Apr  5 17:56:10 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/alu_tb.ghw"
+[dumpfile_mtime] "Wed Apr  5 17:55:26 2017"
+[dumpfile_size] 922
+[savefile] "/home/mike/git/bcomp/src/alu_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-26.519833 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.alu_tb.
+[treeopen] top.alu_tb.inst_alu.
+[sst_width] 229
+[signals_width] 134
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@22
+#{top.alu_tb.areg[7:0]} top.alu_tb.areg[7] top.alu_tb.areg[6] top.alu_tb.areg[5] top.alu_tb.areg[4] top.alu_tb.areg[3] top.alu_tb.areg[2] top.alu_tb.areg[1] top.alu_tb.areg[0]
+#{top.alu_tb.breg[7:0]} top.alu_tb.breg[7] top.alu_tb.breg[6] top.alu_tb.breg[5] top.alu_tb.breg[4] top.alu_tb.breg[3] top.alu_tb.breg[2] top.alu_tb.breg[1] top.alu_tb.breg[0]
+@28
+top.alu_tb.sub
+top.alu_tb.enable
+@22
+#{top.alu_tb.result[7:0]} top.alu_tb.result[7] top.alu_tb.result[6] top.alu_tb.result[5] top.alu_tb.result[4] top.alu_tb.result[3] top.alu_tb.result[2] top.alu_tb.result[1] top.alu_tb.result[0]
+@200
+-DUT
+@22
+#{top.alu_tb.inst_alu.areg_i[7:0]} top.alu_tb.inst_alu.areg_i[7] top.alu_tb.inst_alu.areg_i[6] top.alu_tb.inst_alu.areg_i[5] top.alu_tb.inst_alu.areg_i[4] top.alu_tb.inst_alu.areg_i[3] top.alu_tb.inst_alu.areg_i[2] top.alu_tb.inst_alu.areg_i[1] top.alu_tb.inst_alu.areg_i[0]
+#{top.alu_tb.inst_alu.breg_i[7:0]} top.alu_tb.inst_alu.breg_i[7] top.alu_tb.inst_alu.breg_i[6] top.alu_tb.inst_alu.breg_i[5] top.alu_tb.inst_alu.breg_i[4] top.alu_tb.inst_alu.breg_i[3] top.alu_tb.inst_alu.breg_i[2] top.alu_tb.inst_alu.breg_i[1] top.alu_tb.inst_alu.breg_i[0]
+#{top.alu_tb.inst_alu.plus[7:0]} top.alu_tb.inst_alu.plus[7] top.alu_tb.inst_alu.plus[6] top.alu_tb.inst_alu.plus[5] top.alu_tb.inst_alu.plus[4] top.alu_tb.inst_alu.plus[3] top.alu_tb.inst_alu.plus[2] top.alu_tb.inst_alu.plus[1] top.alu_tb.inst_alu.plus[0]
+#{top.alu_tb.inst_alu.minus[7:0]} top.alu_tb.inst_alu.minus[7] top.alu_tb.inst_alu.minus[6] top.alu_tb.inst_alu.minus[5] top.alu_tb.inst_alu.minus[4] top.alu_tb.inst_alu.minus[3] top.alu_tb.inst_alu.minus[2] top.alu_tb.inst_alu.minus[1] top.alu_tb.inst_alu.minus[0]
+#{top.alu_tb.inst_alu.result[7:0]} top.alu_tb.inst_alu.result[7] top.alu_tb.inst_alu.result[6] top.alu_tb.inst_alu.result[5] top.alu_tb.inst_alu.result[4] top.alu_tb.inst_alu.result[3] top.alu_tb.inst_alu.result[2] top.alu_tb.inst_alu.result[1] top.alu_tb.inst_alu.result[0]
+#{top.alu_tb.inst_alu.result_o[7:0]} top.alu_tb.inst_alu.result_o[7] top.alu_tb.inst_alu.result_o[6] top.alu_tb.inst_alu.result_o[5] top.alu_tb.inst_alu.result_o[4] top.alu_tb.inst_alu.result_o[3] top.alu_tb.inst_alu.result_o[2] top.alu_tb.inst_alu.result_o[1] top.alu_tb.inst_alu.result_o[0]
+[pattern_trace] 1
+[pattern_trace] 0
