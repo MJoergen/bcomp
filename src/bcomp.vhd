@@ -46,9 +46,12 @@ architecture Structural of bcomp is
     alias regs_a_enable  : std_logic is sw_i(2);
     alias regs_b_load    : std_logic is sw_i(3);
     alias regs_b_enable  : std_logic is sw_i(4);
-    alias regs_ir_load   : std_logic is sw_i(5);
-    alias regs_ir_enable : std_logic is sw_i(6);
+    alias alu_sub        : std_logic is sw_i(5);
+    alias alu_enable     : std_logic is sw_i(6);
     alias clk_switch     : std_logic is sw_i(7);
+
+    signal areg    :  std_logic_vector (7 downto 0);
+    signal breg    :  std_logic_vector (7 downto 0);
 
 begin
 
@@ -59,10 +62,10 @@ begin
     -- Instantiate clock module
     inst_clock_logic : entity work.clock_logic
     port map (
-                 clk_i       => clk_i     , -- External crystal
-                 sw_i        => clk_switch,
-                 btn_i       => btn_i(0)  ,
-                 hlt_i       => '0'       ,
+                 clk_i       => clk_i      , -- External crystal
+                 sw_i        => clk_switch ,
+                 btn_i       => btn_i(0)   ,
+                 hlt_i       => '0'        ,
                  clk_deriv_o => clk         -- Main internal clock
              );
 
@@ -71,34 +74,45 @@ begin
     -- Instantiate A-register
     inst_a_register : entity work.register_8bit
     port map (
-                 clk_i       => clk    ,
-                 clr_i       => regs_clear,
-                 data_io     => data   ,
-                 reg_o       => open   , -- For now leave this unconnected
-                 load_i      => regs_a_load,
+                 clk_i       => clk          ,
+                 clr_i       => regs_clear   ,
+                 data_io     => data         ,
+                 reg_o       => areg         ,
+                 load_i      => regs_a_load  ,
                  enable_i    => regs_a_enable
              );
 
     -- Instantiate B-register
     inst_b_register : entity work.register_8bit
     port map (
-                 clk_i       => clk    ,
-                 clr_i       => regs_clear,
-                 data_io     => data   ,
-                 reg_o       => open   , -- For now leave this unconnected
-                 load_i      => regs_b_load,
+                 clk_i       => clk          ,
+                 clr_i       => regs_clear   ,
+                 data_io     => data         ,
+                 reg_o       => breg         ,
+                 load_i      => regs_b_load  ,
                  enable_i    => regs_b_enable
              );
 
-    -- Instantiate instruction register
-    inst_instruction_register : entity work.register_8bit
+--    -- Instantiate instruction register
+--    inst_instruction_register : entity work.register_8bit
+--    port map (
+--                 clk_i       => clk    ,
+--                 clr_i       => regs_clear,
+--                 data_io     => data   ,
+--                 reg_o       => open   , -- For now leave this unconnected
+--                 load_i      => regs_ir_load,
+--                 enable_i    => regs_ir_enable
+--             );
+
+    -- Instantiate ALU
+    inst_alu : entity work.alu
     port map (
-                 clk_i       => clk    ,
-                 clr_i       => regs_clear,
-                 data_io     => data   ,
-                 reg_o       => open   , -- For now leave this unconnected
-                 load_i      => regs_ir_load,
-                 enable_i    => regs_ir_enable
+                 areg_i      => areg       ,
+                 breg_i      => breg       ,
+                 sub_i       => alu_sub    ,
+                 enable_i    => alu_enable ,
+                 result_o    => data       ,
+                 internal_o  => open
              );
 
     -- Just copy the data bus to the output LED's.

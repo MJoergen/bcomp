@@ -23,8 +23,8 @@ architecture Structural of bcomp_tb is
     alias regs_a_enable  : std_logic is sw(2);
     alias regs_b_load    : std_logic is sw(3);
     alias regs_b_enable  : std_logic is sw(4);
-    alias regs_ir_load   : std_logic is sw(5);
-    alias regs_ir_enable : std_logic is sw(6);
+    alias alu_sub        : std_logic is sw(5);
+    alias alu_enable     : std_logic is sw(6);
     alias clk_switch     : std_logic is sw(7);
 
     constant ZERO : std_logic_vector (7 downto 0) := (others => '0');
@@ -85,43 +85,42 @@ begin
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         -- Test register load
-        data <= "01010101";
+        data <= "01010101"; -- 0x55 into register A
         regs_a_load <= '1';
         wait for 40 ns;
         assert led = "01010101";
 
-        data <= "10101010";
+        data <= "00110011"; -- 0x33 into register B
         regs_a_load <= '0';
         regs_b_load <= '1';
         wait for 40 ns;
-        assert led = "10101010";
+        assert led = "00110011";
 
-        data <= "11001100";
+        data <= "ZZZZZZZZ"; -- Clear data bus
         regs_b_load <= '0';
-        regs_ir_load <= '1';
-        wait for 40 ns;
-        assert led = "11001100";
-
-        data <= "ZZZZZZZZ";
-        regs_ir_load <= '0';
         wait for 40 ns;
         assert led = "ZZZZZZZZ";
 
         regs_a_enable <= '1';
         wait for 40 ns;
-        assert led = "01010101";
+        assert led = "01010101"; -- Verify register A
 
         regs_a_enable <= '0';
         regs_b_enable <= '1';
         wait for 40 ns;
-        assert led = "10101010";
+        assert led = "00110011"; -- Verify register B
 
         regs_b_enable <= '0';
-        regs_ir_enable <= '1';
+        alu_sub <= '0';
+        alu_enable <= '1';
         wait for 40 ns;
-        assert led = "11001100";
+        assert led = "10001000"; -- Verify addition: 0x88
 
-        regs_ir_enable <= '0';
+        alu_sub <= '1';
+        wait for 40 ns;
+        assert led = "00100010"; -- Verify addition: 0x22
+
+        alu_enable <= '0';
 
         test_running <= false;
         wait;

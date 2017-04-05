@@ -1,10 +1,11 @@
-#project    = bcomp
-#top_module = bcomp
-#vfiles     = bcomp.vhd # Top level
-#vfiles    += clock_logic.vhd # Top level
-#vfiles    += bistable_clock.vhd
-#vfiles    += monostable_clock.vhd
-#vfiles    += register_8bit.vhd # Top level
+project    = bcomp
+top_module = bcomp
+vfiles     = bcomp.vhd # Top level
+vfiles    += clock_logic.vhd # Top level
+vfiles    += bistable_clock.vhd
+vfiles    += monostable_clock.vhd
+vfiles    += register_8bit.vhd
+vfiles    += alu.vhd # Top level
 
 #project    = monostable_clock
 #top_module = monostable_clock
@@ -24,9 +25,9 @@
 #top_module = register_8bit
 #vfiles     = register_8bit.vhd # Top level
 
-project    = alu
-top_module = alu
-vfiles     = alu.vhd # Top level
+#project    = alu
+#top_module = alu
+#vfiles     = alu.vhd # Top level
 
 # Synthesis
 vendor     = xilinx
