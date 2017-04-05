@@ -17,6 +17,10 @@ entity bcomp is
       -- Input buttons
       btn_i       : in  std_logic_vector (3 downto 0);
 
+      -- pragma synthesis_off
+      data_i      : in  std_logic_vector (7 downto 0);
+      -- pragma synthesis_on
+
       -- Output LEDs
       led_o       : out std_logic_vector (7 downto 0);
 
@@ -37,10 +41,63 @@ end bcomp;
 
 architecture Structural of bcomp is
 
+    -- The main clock
+    signal clk  : std_logic;
+
+    -- The main data bus
+    signal data : std_logic_vector(7 downto 0);
+
 begin
 
-    -- Just copy the input switches to the output LED's.
-    led_o(7 downto 0) <= sw_i(7 downto 0);
+    -- pragma synthesis_off
+    data <= data_i;
+    -- pragma synthesis_on
+
+    -- Instantiate clock module
+    inst_clock_logic : entity work.clock_logic
+    port map (
+                 clk_i       => clk_i     ,
+                 sw_i        => sw_i(7)   ,
+                 btn_i       => btn_i(0)  ,
+                 hlt_i       => '0'       ,
+                 clk_deriv_o => clk
+             );
+
+    -- Instantiate A-register
+    inst_a_register : entity work.register_8bit
+    port map (
+                 clk_i       => clk    ,
+                 clr_i       => sw_i(0),
+                 data_io     => data   ,
+                 reg_o       => open   ,
+                 load_i      => sw_i(1),
+                 enable_i    => sw_i(2)
+             );
+
+    -- Instantiate B-register
+    inst_b_register : entity work.register_8bit
+    port map (
+                 clk_i       => clk    ,
+                 clr_i       => sw_i(0),
+                 data_io     => data   ,
+                 reg_o       => open   ,
+                 load_i      => sw_i(3),
+                 enable_i    => sw_i(4)
+             );
+
+    -- Instantiate instruction register
+    inst_instruction_register : entity work.register_8bit
+    port map (
+                 clk_i       => clk    ,
+                 clr_i       => sw_i(0),
+                 data_io     => data   ,
+                 reg_o       => open   ,
+                 load_i      => sw_i(5),
+                 enable_i    => sw_i(6)
+             );
+
+    -- Just copy the data bus to the output LED's.
+    led_o <= data;
     seg_ca_o <= "1111111";
     seg_dp_o <= '1';
     seg_an_o <= "1111";

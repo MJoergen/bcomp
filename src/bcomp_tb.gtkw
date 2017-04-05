@@ -1,25 +1,50 @@
 [*]
-[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Sun Mar 19 21:26:45 2017
+[*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
+[*] Tue Apr  4 22:11:00 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Sun Mar 19 21:24:35 2017"
-[dumpfile_size] 839
+[dumpfile_mtime] "Tue Apr  4 22:07:52 2017"
+[dumpfile_size] 1871
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1000 600
-[pos] -7 -96
-*-27.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-27.094690 31500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
+[treeopen] top.bcomp_tb.inst_bcomp.inst_a_register.
 [sst_width] 229
-[signals_width] 94
+[signals_width] 170
 [sst_expanded] 1
 [sst_vpaned_height] 146
+@28
+top.bcomp_tb.clk
 @22
+#{top.bcomp_tb.btn[3:0]} top.bcomp_tb.btn[3] top.bcomp_tb.btn[2] top.bcomp_tb.btn[1] top.bcomp_tb.btn[0]
 #{top.bcomp_tb.sw[7:0]} top.bcomp_tb.sw[7] top.bcomp_tb.sw[6] top.bcomp_tb.sw[5] top.bcomp_tb.sw[4] top.bcomp_tb.sw[3] top.bcomp_tb.sw[2] top.bcomp_tb.sw[1] top.bcomp_tb.sw[0]
+@c00023
 #{top.bcomp_tb.led[7:0]} top.bcomp_tb.led[7] top.bcomp_tb.led[6] top.bcomp_tb.led[5] top.bcomp_tb.led[4] top.bcomp_tb.led[3] top.bcomp_tb.led[2] top.bcomp_tb.led[1] top.bcomp_tb.led[0]
-@29
-top.bcomp_tb.inst_bcomp.clk_i
+@28
+top.bcomp_tb.led[7]
+top.bcomp_tb.led[6]
+top.bcomp_tb.led[5]
+top.bcomp_tb.led[4]
+top.bcomp_tb.led[3]
+top.bcomp_tb.led[2]
+top.bcomp_tb.led[1]
+top.bcomp_tb.led[0]
+@1401201
+-group_end
+@22
+#{top.bcomp_tb.inst_bcomp.data_i[7:0]} top.bcomp_tb.inst_bcomp.data_i[7] top.bcomp_tb.inst_bcomp.data_i[6] top.bcomp_tb.inst_bcomp.data_i[5] top.bcomp_tb.inst_bcomp.data_i[4] top.bcomp_tb.inst_bcomp.data_i[3] top.bcomp_tb.inst_bcomp.data_i[2] top.bcomp_tb.inst_bcomp.data_i[1] top.bcomp_tb.inst_bcomp.data_i[0]
+@200
+-A register
+@28
+top.bcomp_tb.inst_bcomp.inst_a_register.clr_i
+top.bcomp_tb.inst_bcomp.inst_a_register.load_i
+top.bcomp_tb.inst_bcomp.inst_a_register.enable_i
+@22
+#{top.bcomp_tb.inst_bcomp.inst_a_register.data_io[7:0]} top.bcomp_tb.inst_bcomp.inst_a_register.data_io[7] top.bcomp_tb.inst_bcomp.inst_a_register.data_io[6] top.bcomp_tb.inst_bcomp.inst_a_register.data_io[5] top.bcomp_tb.inst_bcomp.inst_a_register.data_io[4] top.bcomp_tb.inst_bcomp.inst_a_register.data_io[3] top.bcomp_tb.inst_bcomp.inst_a_register.data_io[2] top.bcomp_tb.inst_bcomp.inst_a_register.data_io[1] top.bcomp_tb.inst_bcomp.inst_a_register.data_io[0]
+#{top.bcomp_tb.inst_bcomp.inst_a_register.data[7:0]} top.bcomp_tb.inst_bcomp.inst_a_register.data[7] top.bcomp_tb.inst_bcomp.inst_a_register.data[6] top.bcomp_tb.inst_bcomp.inst_a_register.data[5] top.bcomp_tb.inst_bcomp.inst_a_register.data[4] top.bcomp_tb.inst_bcomp.inst_a_register.data[3] top.bcomp_tb.inst_bcomp.inst_a_register.data[2] top.bcomp_tb.inst_bcomp.inst_a_register.data[1] top.bcomp_tb.inst_bcomp.inst_a_register.data[0]
 [pattern_trace] 1
 [pattern_trace] 0

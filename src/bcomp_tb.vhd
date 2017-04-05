@@ -18,6 +18,15 @@ architecture Structural of bcomp_tb is
     signal sw  : std_logic_vector (7 downto 0);
     signal btn : std_logic_vector (3 downto 0);
 
+    alias regs_clear     : std_logic is sw(0);
+    alias regs_a_load    : std_logic is sw(1);
+    alias regs_a_enable  : std_logic is sw(2);
+    alias regs_b_load    : std_logic is sw(3);
+    alias regs_b_enable  : std_logic is sw(4);
+    alias regs_ir_load   : std_logic is sw(5);
+    alias regs_ir_enable : std_logic is sw(6);
+    alias clk_switch     : std_logic is sw(7);
+
     -- segment display
     signal seg_ca : std_logic_vector (6 downto 0);
     signal seg_dp : std_logic;
@@ -35,8 +44,6 @@ begin
         wait for 40 ns;
     end process clk_gen;
 
-    btn <= "0000";
-
     -- Instantiate DUT
     inst_bcomp : entity work.bcomp
     generic map (
@@ -46,6 +53,7 @@ begin
                  clk_i    => clk    ,
                  sw_i     => sw     ,
                  btn_i    => btn    ,
+                 data_i   => led    ,
                  led_o    => led    , 
                  seg_ca_o => seg_ca ,
                  seg_dp_o => seg_dp ,
@@ -55,13 +63,60 @@ begin
     -- Start the main test
     main_test : process is
     begin
-        sw <= "11111111";
-        wait for 200 ns;
-        assert led = "11111111";
+        led <= "ZZZZZZZZ";
+        btn <= "0000"; -- Not used
+        sw <= "00000000";  -- Clear all enable bits
+        clk_switch <= '1'; -- Use freerunning (astable) clock
+        regs_clear <= '1';
+        wait for 40 ns;
+        assert led = "ZZZZZZZZ"; -- All enable bits clear
 
-        sw <= "00000000";
-        wait for 200 ns;
-        assert led = "00000000";
+        regs_clear <= '0';
+        regs_a_enable <= '1';
+        wait for 40 ns;
+        assert led = "00000000"; -- Verify register A clear
+
+        regs_a_enable <= '0';
+        wait for 40 ns;
+        assert led = "ZZZZZZZZ";
+
+        led <= "01010101";
+        regs_a_load <= '1';
+        wait for 40 ns;
+        assert led = "01010101";
+
+        led <= "10101010";
+        regs_a_load <= '0';
+        regs_b_load <= '1';
+        wait for 40 ns;
+        assert led = "10101010";
+
+        led <= "11001100";
+        regs_b_load <= '0';
+        regs_ir_load <= '1';
+        wait for 40 ns;
+        assert led = "11001100";
+
+        led <= "ZZZZZZZZ";
+        regs_ir_load <= '0';
+        wait for 40 ns;
+        assert led = "ZZZZZZZZ";
+
+        regs_a_enable <= '1';
+        wait for 40 ns;
+        assert led = "01010101";
+
+        regs_a_enable <= '0';
+        regs_b_enable <= '1';
+        wait for 40 ns;
+        assert led = "10101010";
+
+        regs_b_enable <= '0';
+        regs_ir_enable <= '1';
+        wait for 40 ns;
+        assert led = "11001100";
+
+        regs_ir_enable <= '0';
 
         test_running <= false;
         wait;
