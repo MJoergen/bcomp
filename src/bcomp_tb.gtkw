@@ -1,28 +1,30 @@
 [*]
-[*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
-[*] Tue Apr  4 22:11:00 2017
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Wed Apr  5 16:00:15 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Tue Apr  4 22:07:52 2017"
-[dumpfile_size] 1871
+[dumpfile_mtime] "Wed Apr  5 15:59:59 2017"
+[dumpfile_size] 2212
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-27.094690 31500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.264027 31500000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
-[treeopen] top.bcomp_tb.inst_bcomp.inst_a_register.
+[treeopen] top.bcomp_tb.inst_bcomp.
 [sst_width] 229
 [signals_width] 170
 [sst_expanded] 1
 [sst_vpaned_height] 146
+@200
+-Test bench
 @28
 top.bcomp_tb.clk
 @22
 #{top.bcomp_tb.btn[3:0]} top.bcomp_tb.btn[3] top.bcomp_tb.btn[2] top.bcomp_tb.btn[1] top.bcomp_tb.btn[0]
 #{top.bcomp_tb.sw[7:0]} top.bcomp_tb.sw[7] top.bcomp_tb.sw[6] top.bcomp_tb.sw[5] top.bcomp_tb.sw[4] top.bcomp_tb.sw[3] top.bcomp_tb.sw[2] top.bcomp_tb.sw[1] top.bcomp_tb.sw[0]
-@c00023
+@c00022
 #{top.bcomp_tb.led[7:0]} top.bcomp_tb.led[7] top.bcomp_tb.led[6] top.bcomp_tb.led[5] top.bcomp_tb.led[4] top.bcomp_tb.led[3] top.bcomp_tb.led[2] top.bcomp_tb.led[1] top.bcomp_tb.led[0]
 @28
 top.bcomp_tb.led[7]
@@ -33,9 +35,13 @@ top.bcomp_tb.led[3]
 top.bcomp_tb.led[2]
 top.bcomp_tb.led[1]
 top.bcomp_tb.led[0]
-@1401201
+@1401200
 -group_end
+@200
+-DUT
 @22
+#{top.bcomp_tb.inst_bcomp.data[7:0]} top.bcomp_tb.inst_bcomp.data[7] top.bcomp_tb.inst_bcomp.data[6] top.bcomp_tb.inst_bcomp.data[5] top.bcomp_tb.inst_bcomp.data[4] top.bcomp_tb.inst_bcomp.data[3] top.bcomp_tb.inst_bcomp.data[2] top.bcomp_tb.inst_bcomp.data[1] top.bcomp_tb.inst_bcomp.data[0]
+#{top.bcomp_tb.inst_bcomp.led_o[7:0]} top.bcomp_tb.inst_bcomp.led_o[7] top.bcomp_tb.inst_bcomp.led_o[6] top.bcomp_tb.inst_bcomp.led_o[5] top.bcomp_tb.inst_bcomp.led_o[4] top.bcomp_tb.inst_bcomp.led_o[3] top.bcomp_tb.inst_bcomp.led_o[2] top.bcomp_tb.inst_bcomp.led_o[1] top.bcomp_tb.inst_bcomp.led_o[0]
 #{top.bcomp_tb.inst_bcomp.data_i[7:0]} top.bcomp_tb.inst_bcomp.data_i[7] top.bcomp_tb.inst_bcomp.data_i[6] top.bcomp_tb.inst_bcomp.data_i[5] top.bcomp_tb.inst_bcomp.data_i[4] top.bcomp_tb.inst_bcomp.data_i[3] top.bcomp_tb.inst_bcomp.data_i[2] top.bcomp_tb.inst_bcomp.data_i[1] top.bcomp_tb.inst_bcomp.data_i[0]
 @200
 -A register

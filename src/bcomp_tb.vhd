@@ -12,7 +12,7 @@ architecture Structural of bcomp_tb is
     signal test_running : boolean := true;
 
     -- LED
-    signal led : std_logic_vector (7 downto 0);
+    signal led : std_logic_vector (7 downto 0) := (others => 'Z');
 
     -- slide-switches and push-buttons
     signal sw  : std_logic_vector (7 downto 0);
@@ -27,10 +27,11 @@ architecture Structural of bcomp_tb is
     alias regs_ir_enable : std_logic is sw(6);
     alias clk_switch     : std_logic is sw(7);
 
-    -- segment display
-    signal seg_ca : std_logic_vector (6 downto 0);
-    signal seg_dp : std_logic;
-    signal seg_an : std_logic_vector (3 downto 0);
+    constant ZERO : std_logic_vector (7 downto 0) := (others => '0');
+    constant ZZZZ : std_logic_vector (7 downto 0) := (others => 'Z');
+
+    -- Input to main data bus
+    signal data : std_logic_vector (7 downto 0);
 
 begin
     -- Generate clock
@@ -53,20 +54,23 @@ begin
                  clk_i    => clk    ,
                  sw_i     => sw     ,
                  btn_i    => btn    ,
-                 data_i   => led    ,
+                 data_i   => data   , -- Used only for test purposes
                  led_o    => led    , 
-                 seg_ca_o => seg_ca ,
-                 seg_dp_o => seg_dp ,
-                 seg_an_o => seg_an
+                 seg_ca_o => open   ,
+                 seg_dp_o => open   ,
+                 seg_an_o => open
              );
 
     -- Start the main test
     main_test : process is
     begin
-        led <= "ZZZZZZZZ";
+        -- Set initial values
+        data <= "ZZZZZZZZ";
         btn <= "0000"; -- Not used
         sw <= "00000000";  -- Clear all enable bits
         clk_switch <= '1'; -- Use freerunning (astable) clock
+
+        -- Test register clear
         regs_clear <= '1';
         wait for 40 ns;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
@@ -78,26 +82,27 @@ begin
 
         regs_a_enable <= '0';
         wait for 40 ns;
-        assert led = "ZZZZZZZZ";
+        assert led = "ZZZZZZZZ"; -- All enable bits clear
 
-        led <= "01010101";
+        -- Test register load
+        data <= "01010101";
         regs_a_load <= '1';
         wait for 40 ns;
         assert led = "01010101";
 
-        led <= "10101010";
+        data <= "10101010";
         regs_a_load <= '0';
         regs_b_load <= '1';
         wait for 40 ns;
         assert led = "10101010";
 
-        led <= "11001100";
+        data <= "11001100";
         regs_b_load <= '0';
         regs_ir_load <= '1';
         wait for 40 ns;
         assert led = "11001100";
 
-        led <= "ZZZZZZZZ";
+        data <= "ZZZZZZZZ";
         regs_ir_load <= '0';
         wait for 40 ns;
         assert led = "ZZZZZZZZ";

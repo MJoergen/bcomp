@@ -18,6 +18,7 @@ entity bcomp is
       btn_i       : in  std_logic_vector (3 downto 0);
 
       -- pragma synthesis_off
+      -- Used during testing to inject data onto the main data bus.
       data_i      : in  std_logic_vector (7 downto 0);
       -- pragma synthesis_on
 
@@ -28,24 +29,26 @@ entity bcomp is
       seg_ca_o    : out std_logic_vector (6 downto 0);
       seg_dp_o    : out std_logic;
       seg_an_o    : out std_logic_vector (3 downto 0)
-
-      -- VGA port
-      --vga_hs_o    : out std_logic; 
-      --vga_vs_o    : out std_logic;
-      --vga_red_o   : out std_logic_vector (2 downto 0); 
-      --vga_green_o : out std_logic_vector (2 downto 0); 
-      --vga_blue_o  : out std_logic_vector (2 downto 1)
       );
 
 end bcomp;
 
 architecture Structural of bcomp is
 
-    -- The main clock
+    -- The main internal clock
     signal clk  : std_logic;
 
     -- The main data bus
     signal data : std_logic_vector(7 downto 0);
+
+    alias regs_clear     : std_logic is sw_i(0);
+    alias regs_a_load    : std_logic is sw_i(1);
+    alias regs_a_enable  : std_logic is sw_i(2);
+    alias regs_b_load    : std_logic is sw_i(3);
+    alias regs_b_enable  : std_logic is sw_i(4);
+    alias regs_ir_load   : std_logic is sw_i(5);
+    alias regs_ir_enable : std_logic is sw_i(6);
+    alias clk_switch     : std_logic is sw_i(7);
 
 begin
 
@@ -56,48 +59,52 @@ begin
     -- Instantiate clock module
     inst_clock_logic : entity work.clock_logic
     port map (
-                 clk_i       => clk_i     ,
-                 sw_i        => sw_i(7)   ,
+                 clk_i       => clk_i     , -- External crystal
+                 sw_i        => clk_switch,
                  btn_i       => btn_i(0)  ,
                  hlt_i       => '0'       ,
-                 clk_deriv_o => clk
+                 clk_deriv_o => clk         -- Main internal clock
              );
+
+    -- Connect the registers to the main data bus
 
     -- Instantiate A-register
     inst_a_register : entity work.register_8bit
     port map (
                  clk_i       => clk    ,
-                 clr_i       => sw_i(0),
+                 clr_i       => regs_clear,
                  data_io     => data   ,
-                 reg_o       => open   ,
-                 load_i      => sw_i(1),
-                 enable_i    => sw_i(2)
+                 reg_o       => open   , -- For now leave this unconnected
+                 load_i      => regs_a_load,
+                 enable_i    => regs_a_enable
              );
 
     -- Instantiate B-register
     inst_b_register : entity work.register_8bit
     port map (
                  clk_i       => clk    ,
-                 clr_i       => sw_i(0),
+                 clr_i       => regs_clear,
                  data_io     => data   ,
-                 reg_o       => open   ,
-                 load_i      => sw_i(3),
-                 enable_i    => sw_i(4)
+                 reg_o       => open   , -- For now leave this unconnected
+                 load_i      => regs_b_load,
+                 enable_i    => regs_b_enable
              );
 
     -- Instantiate instruction register
     inst_instruction_register : entity work.register_8bit
     port map (
                  clk_i       => clk    ,
-                 clr_i       => sw_i(0),
+                 clr_i       => regs_clear,
                  data_io     => data   ,
-                 reg_o       => open   ,
-                 load_i      => sw_i(5),
-                 enable_i    => sw_i(6)
+                 reg_o       => open   , -- For now leave this unconnected
+                 load_i      => regs_ir_load,
+                 enable_i    => regs_ir_enable
              );
 
     -- Just copy the data bus to the output LED's.
     led_o <= data;
+
+    -- Not used at the moment.
     seg_ca_o <= "1111111";
     seg_dp_o <= '1';
     seg_an_o <= "1111";
