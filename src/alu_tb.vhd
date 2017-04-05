@@ -14,6 +14,7 @@ architecture Structural of alu_tb is
     signal enable     : std_logic;
 
     -- Output from the DUT
+    signal internal   : std_logic_vector (7 downto 0);
     signal result     : std_logic_vector (7 downto 0);
 
 begin
@@ -24,6 +25,7 @@ begin
                  breg_i      => breg      ,
                  sub_i       => sub       ,
                  enable_i    => enable    ,
+                 internal_o  => internal  ,
                  result_o    => result
              );
 
@@ -36,33 +38,40 @@ begin
         breg <= "00000000";
         sub <= '0';
         wait for 40 ns;
-        assert result = "ZZZZZZZZ";
+        assert internal = "00000000";
+        assert result   = "ZZZZZZZZ";
 
         areg <= "01010101";
         breg <= "00110011";
         sub <= '0';
         wait for 40 ns;
-        assert result = "ZZZZZZZZ";
+        assert internal = "10001000";
+        assert result   = "ZZZZZZZZ";
 
         enable <= '1';
         wait for 40 ns;
-        assert result = "10001000"; -- 0x55 + 0x33 = 0x88
+        assert internal = "10001000";
+        assert result   = "10001000"; -- 0x55 + 0x33 = 0x88
 
         enable <= '0';
         wait for 40 ns;
-        assert result = "ZZZZZZZZ";
+        assert internal = "10001000";
+        assert result   = "ZZZZZZZZ";
 
         sub <= '1';
         wait for 40 ns;
-        assert result = "ZZZZZZZZ";
+        assert internal = "00100010";
+        assert result   = "ZZZZZZZZ";
 
         enable <= '1';
         wait for 40 ns;
-        assert result = "00100010"; -- 0x55 - 0x33 = 0x22
+        assert internal = "00100010";
+        assert result   = "00100010"; -- 0x55 - 0x33 = 0x22
 
         enable <= '0';
         wait for 40 ns;
-        assert result = "ZZZZZZZZ";
+        assert internal = "00100010";
+        assert result   = "ZZZZZZZZ";
 
         wait;
     end process main_test;
