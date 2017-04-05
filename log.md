@@ -34,15 +34,41 @@ Next thing is to have an overall block structure. The first video again gives
 all the answers.
 
 Blocks needed:
-* Clock
+* Clock  -- DONE
+* A-register   -- DONE
+* B-register   -- DONE
+* Instruction Register  -- DONE
+* ALU
 * Program Counter
 * Memory Address Register
 * RAM
-* Instruction Register
 * Control Unit
-* A-register
-* ALU
-* B-register
 * Output-register
 
 So far, I've set up the build environment. Kind of like a "Hello World".
+
+# 2017-04-05
+
+The videos 5 through 8 deal with the clock circuit. Now since the BASYS2 board
+has an onboard crystal oscillator, our implementation will be somewhat different
+than in the videos. Specifically, the "astable 555 timer" in video 5 is not needed
+at all. However, videos 6, 7, and 8 have been implemented as faithfully as possible:
+* Video 6 - monostable_clock.vhd
+* Video 7 - bistable_clock.vhd
+* Video 8 - clock_logic.vhd
+
+Note that each of these blocks have a separate test bench (name *_tb.vhd). These act
+as unit tests for each block.
+
+Next, videos 9 through 13 deal with the internal data bus and the three registers.
+Since the three registers are identical, only one block is needed:
+* Video 12 - register_8bit.vhd
+
+Note that at this I have assembled the blocks made so far into the top level
+file bcomp.vhd, and made an accompanying test bench bcomp_tb.vhd. This test bench
+works similarly to the video number 13.
+
+One caveat so far is that in the video, the instruction register only connects the 
+four least significant bits to the data bus. At this moment, it's not clear why,
+so I'm just connecting all eight bits.
+

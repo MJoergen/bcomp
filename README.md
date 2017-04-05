@@ -9,6 +9,8 @@ The FPGA board is based on a Spartan-3E FPGA chip from Xilinx.
 
 Suggestions and contributions are welcome.
 
+Please see the log file for implementation details and links to individual videos.
+
 # Resources
 Here are some links to additional learning resources:
 * http://www.fpga4student.com/
