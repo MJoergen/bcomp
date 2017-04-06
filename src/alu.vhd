@@ -23,8 +23,8 @@ entity alu is
              -- Result output
              result_o    : out std_logic_vector (7 downto 0);
 
-             -- Internal output
-             internal_o  : out std_logic_vector (7 downto 0)
+             -- LED output
+             led_o       : out std_logic_vector (7 downto 0)
          );
 
 end alu;
@@ -47,7 +47,7 @@ begin
     -- Multiplex the correct result depending on the operation.
     result <= minus when sub_i = '1' else plus;
 
-    internal_o <= result;
+    led_o <= result;
 
     -- The output is a tristate buffer.
     result_o <= result when enable_i = '1' else (others => 'Z');
