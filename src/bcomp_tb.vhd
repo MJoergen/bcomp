@@ -118,7 +118,19 @@ begin
 
         alu_sub <= '1';
         wait for 40 ns;
-        assert led = "00100010"; -- Verify addition: 0x22
+        assert led = "00100010"; -- Verify subtraction: 0x22
+
+        -- Verify counting.
+        alu_sub <= '0';
+        regs_a_load <= '1';
+        wait for 40 ns;
+        assert led = "01010101"; -- 0x22 + 0x33 = 0x55
+        wait for 40 ns;
+        assert led = "10001000"; -- 0x55 + 0x33 = 0x88
+        wait for 40 ns;
+        assert led = "10111011"; -- 0x88 + 0x33 = 0xbb
+        wait for 40 ns;
+        assert led = "11101110"; -- 0xbb + 0x33 = 0xee
 
         alu_enable <= '0';
 
