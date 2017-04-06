@@ -112,7 +112,7 @@ begin
                  sub_i       => alu_sub    ,
                  enable_i    => alu_enable ,
                  result_o    => data       ,
-                 internal_o  => open
+                 led_o       => open
              );
 
     -- Just copy the data bus to the output LED's.

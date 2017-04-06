@@ -17,7 +17,7 @@ architecture Structural of register_8bit_tb is
     signal enable     : std_logic;
 
     -- Output from the DUT
-    signal led        : std_logic_vector(7 downto 0);
+    signal reg        : std_logic_vector(7 downto 0);
 
     -- Main data bus
     signal data       : std_logic_vector(7 downto 0);
@@ -40,7 +40,7 @@ begin
                  clk_i       => clk    ,
                  clr_i       => clr    ,
                  data_io     => data   ,
-                 led_o       => led    ,
+                 reg_o       => reg    ,
                  load_i      => load   ,
                  enable_i    => enable
              );
@@ -54,13 +54,13 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "00000000";
-        assert led     = "00000000";
+        assert reg     = "00000000";
 
         -- Check tristate buffer
         enable <= '0';
         wait for 80 ns;
         assert data    = "ZZZZZZZZ";
-        assert led     = "00000000";
+        assert reg     = "00000000";
 
         -- Check setting register
         clr    <= '0';
@@ -69,7 +69,7 @@ begin
         data   <= "01010101";
         wait for 80 ns;
         assert data    = "01010101";
-        assert led     = "01010101";
+        assert reg     = "01010101";
 
         -- Check tristate buffer
         enable <= '0';
@@ -77,7 +77,7 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "ZZZZZZZZ";
-        assert led     = "01010101";
+        assert reg     = "01010101";
 
         -- Check reset state
         clr    <= '1';
@@ -85,7 +85,7 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "00000000";
-        assert led     = "00000000";
+        assert reg     = "00000000";
 
         test_running <= false;
         wait;
