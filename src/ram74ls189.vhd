@@ -8,8 +8,8 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- Deviations from the chip:
 -- * Data outputs are NOT inverted.
 -- * Control inputs are active high.
--- * Both read and write are made synchronous (on rising edge of cs_i).
---   This enables the use of internal RAM in the FPGA.
+-- * Writes are made synchronous (on rising edge of we_i).
+--   This improves the clock routing in the FPGA.
 
 -- This is a single port RAM.
 
@@ -35,22 +35,17 @@ end ram74ls189;
 architecture Structural of ram74ls189 is
 
     type ram_type is array (0 to 15) of std_logic_vector(3 downto 0);
-    signal data : ram_type := (others => (others => '0'));
-
-    signal data_reg : std_logic_vector (3 downto 0);
+    signal data : ram_type;
 
 begin
 
-    data_o <= data_reg when cs_i = '1' and we_i = '0' else "ZZZZ";
+    data_o <= data(conv_integer(address_i))
+              when cs_i = '1' and we_i = '0' else "ZZZZ";
 
-    process (cs_i)
+    process (we_i)
     begin
-        if rising_edge(cs_i) then
-            if we_i = '1' then
-                data(conv_integer(address_i)) <= data_i;
-            else
-                data_reg <= data(conv_integer(address_i));
-            end if;
+        if rising_edge(we_i) then
+            data(conv_integer(address_i)) <= data_i;
         end if;
     end process;
 

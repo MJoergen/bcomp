@@ -7,9 +7,13 @@
 #vfiles    += register_8bit.vhd
 #vfiles    += alu.vhd # Top level
 
-project    = ram74ls189
-top_module = ram74ls189
-vfiles     = ram74ls189.vhd # Top level
+project    = ram
+top_module = ram
+vfiles     = ram.vhd # Top level
+
+#project    = ram74ls189
+#top_module = ram74ls189
+#vfiles     = ram74ls189.vhd # Top level
 
 #project    = monostable_clock
 #top_module = monostable_clock

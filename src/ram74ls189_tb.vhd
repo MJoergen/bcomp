@@ -40,7 +40,7 @@ begin
         -- Check reset state (reading from address 0)
         we <= '0';
         address <= "0000";
-        cs <= '0', '1' after 20 ns;
+        cs <= '1';
         wait for 100 ns;
         assert data_out = "0000";
         
@@ -48,14 +48,12 @@ begin
         address <= "0000";
         data_in <= "0110";
         we <= '1';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "ZZZZ";
 
         -- Check reading from address 0
         address <= "0000";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "0110";
 
@@ -64,21 +62,18 @@ begin
         address <= "0001";
         data_in <= "1101";
         we <= '1';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "ZZZZ";
 
         -- Check reading from address 0
         address <= "0000";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "0110";
 
         -- Check reading from address 1
         address <= "0001";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1101";
 
@@ -87,28 +82,24 @@ begin
         address <= "0010";
         data_in <= "1010";
         we <= '1';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "ZZZZ";
 
         -- Check reading from address 0
         address <= "0000";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "0110";
 
         -- Check reading from address 1
         address <= "0001";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1101";
 
         -- Check reading from address 2
         address <= "0010";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1010";
 
@@ -117,35 +108,30 @@ begin
         address <= "0100";
         data_in <= "0101";
         we <= '1';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "ZZZZ";
 
         -- Check reading from address 0
         address <= "0000";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "0110";
 
         -- Check reading from address 1
         address <= "0001";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1101";
 
         -- Check reading from address 2
         address <= "0010";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1010";
 
         -- Check reading from address 4
         address <= "0100";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "0101";
 
@@ -154,42 +140,36 @@ begin
         address <= "1000";
         data_in <= "1011";
         we <= '1';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "ZZZZ";
 
         -- Check reading from address 0
         address <= "0000";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "0110";
 
         -- Check reading from address 1
         address <= "0001";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1101";
 
         -- Check reading from address 2
         address <= "0010";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1010";
 
         -- Check reading from address 4
         address <= "0100";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "0101";
 
         -- Check reading from address 8
         address <= "1000";
         we <= '0';
-        cs <= '0', '1' after 20 ns;
         wait for 100 ns;
         assert data_out = "1011";
 
