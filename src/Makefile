@@ -10,6 +10,7 @@
 project    = ram
 top_module = ram
 vfiles     = ram.vhd # Top level
+vfiles    += ram74ls189.vhd # Top level
 
 #project    = ram74ls189
 #top_module = ram74ls189
