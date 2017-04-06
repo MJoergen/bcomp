@@ -52,6 +52,7 @@ architecture Structural of bcomp is
     --   RAM
     signal databus       : std_logic_vector(7 downto 0);
 
+    -- Interpretation of input switches.
     alias regs_clear     : std_logic is sw_i(0);
     alias areg_load      : std_logic is sw_i(1);
     alias areg_enable    : std_logic is sw_i(2);
@@ -61,8 +62,12 @@ architecture Structural of bcomp is
     alias alu_enable     : std_logic is sw_i(6);
     alias clk_switch     : std_logic is sw_i(7);
 
+    alias address_load   : std_logic is sw_i(5); -- Same as alu_sub for now.
+    alias address_runmode: std_logic is sw_i(7); -- Same as clk_switch for now.
+
     signal areg_value    : std_logic_vector (7 downto 0);
     signal breg_value    : std_logic_vector (7 downto 0);
+    signal address_value : std_logic_vector (3 downto 0);
 
 begin
 
@@ -124,6 +129,18 @@ begin
                  enable_i    => alu_enable ,
                  result_o    => databus    ,
                  led_o       => open
+             );
+
+
+    -- Instantiate address register
+    inst_address_register : entity work.address_register
+    port map (
+                 clk_i       => clk,
+                 address_i   => databus(3 downto 0),
+                 sw_i        => sw_i(3 downto 0),
+                 address_o   => address_value,
+                 runmode_i   => address_runmode,
+                 load_i      => address_load
              );
 
     -- For now, just copy the data bus to the output LED's.
