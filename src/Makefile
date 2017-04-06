@@ -35,6 +35,8 @@ family     = spartan3e
 part       = xc3s250e-5-cp132
 board      = Basys2
 index      = 0
+#part       = xc7a35t-1-cpg236
+#board      = Basys3
 
 # Simulation
 testbench  = $(top_module)_tb
