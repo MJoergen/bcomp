@@ -2,9 +2,9 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
--- clock_logic.vhd
+-- alu.vhd
 -- This entity implements the feature described in the video
--- https://www.youtube.com/watch?v=SmQ5K7UQPMM
+-- https://www.youtube.com/watch?v=S-3fXU3FZQc&index=16
 
 entity alu is
 

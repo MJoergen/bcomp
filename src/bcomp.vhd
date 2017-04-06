@@ -39,24 +39,35 @@ architecture Structural of bcomp is
     signal clk  : std_logic;
 
     -- The main data bus
-    signal data : std_logic_vector(7 downto 0);
+    -- All the blocks connected to the data bus
+    -- must have an enable_i pin telling the block,
+    -- whether to output data to the bus or not.
+    -- Additionally, all these blocks provide
+    -- access to the data before the output buffer.
+    -- These blocks are: 
+    --   A-register
+    --   B-register
+    --   instruction register
+    --   ALU
+    --   RAM
+    signal databus       : std_logic_vector(7 downto 0);
 
     alias regs_clear     : std_logic is sw_i(0);
-    alias regs_a_load    : std_logic is sw_i(1);
-    alias regs_a_enable  : std_logic is sw_i(2);
-    alias regs_b_load    : std_logic is sw_i(3);
-    alias regs_b_enable  : std_logic is sw_i(4);
+    alias areg_load      : std_logic is sw_i(1);
+    alias areg_enable    : std_logic is sw_i(2);
+    alias breg_load      : std_logic is sw_i(3);
+    alias breg_enable    : std_logic is sw_i(4);
     alias alu_sub        : std_logic is sw_i(5);
     alias alu_enable     : std_logic is sw_i(6);
     alias clk_switch     : std_logic is sw_i(7);
 
-    signal areg    :  std_logic_vector (7 downto 0);
-    signal breg    :  std_logic_vector (7 downto 0);
+    signal areg_value    : std_logic_vector (7 downto 0);
+    signal breg_value    : std_logic_vector (7 downto 0);
 
 begin
 
     -- pragma synthesis_off
-    data <= data_i;
+    databus <= data_i;
     -- pragma synthesis_on
 
     -- Instantiate clock module
@@ -76,10 +87,10 @@ begin
     port map (
                  clk_i       => clk          ,
                  clr_i       => regs_clear   ,
-                 data_io     => data         ,
-                 reg_o       => areg         ,
-                 load_i      => regs_a_load  ,
-                 enable_i    => regs_a_enable
+                 data_io     => databus      ,
+                 reg_o       => areg_value   ,
+                 load_i      => areg_load    ,
+                 enable_i    => areg_enable
              );
 
     -- Instantiate B-register
@@ -87,10 +98,10 @@ begin
     port map (
                  clk_i       => clk          ,
                  clr_i       => regs_clear   ,
-                 data_io     => data         ,
-                 reg_o       => breg         ,
-                 load_i      => regs_b_load  ,
-                 enable_i    => regs_b_enable
+                 data_io     => databus      ,
+                 reg_o       => breg_value   ,
+                 load_i      => breg_load    ,
+                 enable_i    => breg_enable
              );
 
 --    -- Instantiate instruction register
@@ -107,16 +118,17 @@ begin
     -- Instantiate ALU
     inst_alu : entity work.alu
     port map (
-                 areg_i      => areg       ,
-                 breg_i      => breg       ,
+                 areg_i      => areg_value ,
+                 breg_i      => breg_value ,
                  sub_i       => alu_sub    ,
                  enable_i    => alu_enable ,
-                 result_o    => data       ,
+                 result_o    => databus    ,
                  led_o       => open
              );
 
-    -- Just copy the data bus to the output LED's.
-    led_o <= data;
+    -- For now, just copy the data bus to the output LED's.
+    -- This will later be multiplxed based on the push buttons.
+    led_o <= databus;
 
     -- Not used at the moment.
     seg_ca_o <= "1111111";
