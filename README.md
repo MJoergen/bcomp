@@ -15,3 +15,8 @@ Please see the log file for implementation details and links to individual video
 Here are some links to additional learning resources:
 * http://www.fpga4student.com/
 * Datasheet for the BASYS2 board: https://reference.digilentinc.com/_media/basys2:basys2_rm.pdf
+
+# Installation
+This project assumes you're running on a Linux based system.
+You need to install the Xilinx ISE Design Suite (version 14.7) from this link:
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/design-tools.html
