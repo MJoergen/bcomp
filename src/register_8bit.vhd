@@ -12,7 +12,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity register_8bit is
 
     port (
-             -- Clock input from crystal (for delay)
+             -- Clock input
              clk_i       : in std_logic;
 
              -- Clear input
