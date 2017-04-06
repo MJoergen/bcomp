@@ -1,16 +1,21 @@
-project    = bcomp
-top_module = bcomp
-vfiles     = bcomp.vhd # Top level
-vfiles    += clock_logic.vhd # Top level
-vfiles    += bistable_clock.vhd
-vfiles    += monostable_clock.vhd
-vfiles    += register_8bit.vhd
-vfiles    += alu.vhd # Top level
+#project    = bcomp
+#top_module = bcomp
+#vfiles     = bcomp.vhd # Top level
+#vfiles    += clock_logic.vhd
+#vfiles    += bistable_clock.vhd
+#vfiles    += monostable_clock.vhd
+#vfiles    += register_8bit.vhd
+#vfiles    += alu.vhd
+#vfiles    += address_register.vhd
 
 #project    = ram
 #top_module = ram
 #vfiles     = ram.vhd # Top level
 #vfiles    += ram74ls189.vhd # Top level
+
+project    = address_register
+top_module = address_register
+vfiles     = address_register.vhd # Top level
 
 #project    = ram74ls189
 #top_module = ram74ls189
