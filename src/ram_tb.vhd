@@ -17,6 +17,7 @@ architecture Structural of ram_tb is
 
     -- Output from the DUT
     signal data       : std_logic_vector(7 downto 0);
+    signal led        : std_logic_vector(7 downto 0);
 
 begin
 
@@ -25,6 +26,7 @@ begin
     port map (
                  address_i   => address ,
                  data_io     => data    ,
+                 led_o       => led     ,
                  wr_i        => wr      ,
                  enable_i    => enable
              );
@@ -46,6 +48,7 @@ begin
         wr <= '1' after 20 ns;
         enable <= '0';
         wait for 80 ns;
+        assert led     = "ZZZZZZZZ";
         assert data    = "01010011";
 
         -- Check tristate buffer
@@ -54,6 +57,7 @@ begin
         wr <= '0';
         enable <= '0';
         wait for 80 ns;
+        assert led     = "01010011";
         assert data    = "ZZZZZZZZ";
 
         -- Check read from address 0
@@ -62,6 +66,7 @@ begin
         wr <= '0';
         enable <= '1';
         wait for 80 ns;
+        assert led     = "01010011";
         assert data    = "01010011";
 
         -- Check write to address 1
@@ -70,6 +75,7 @@ begin
         wr <= '1' after 20 ns;
         enable <= '0';
         wait for 80 ns;
+        assert led     = "ZZZZZZZZ";
         assert data    = "10100110";
 
         -- Check read from address 0
@@ -78,6 +84,7 @@ begin
         wr <= '0';
         enable <= '1';
         wait for 80 ns;
+        assert led     = "01010011";
         assert data    = "01010011";
 
         -- Check read from address 1
@@ -86,7 +93,17 @@ begin
         wr <= '0';
         enable <= '0', '1' after 20 ns;
         wait for 80 ns;
+        assert led     = "10100110";
         assert data    = "10100110";
+
+        -- Check tristate buffer
+        address <= "0000";
+        data <= "ZZZZZZZZ";
+        wr <= '0';
+        enable <= '0';
+        wait for 80 ns;
+        assert led     = "01010011";
+        assert data    = "ZZZZZZZZ";
 
         wait;
     end process main_test;

@@ -1,18 +1,17 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Thu Apr  6 09:40:10 2017
+[*] Thu Apr  6 09:54:37 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/ram_tb.ghw"
-[dumpfile_mtime] "Thu Apr  6 09:38:03 2017"
-[dumpfile_size] 1487
+[dumpfile_mtime] "Thu Apr  6 09:54:22 2017"
+[dumpfile_size] 1601
 [savefile] "/home/mike/git/bcomp/src/ram_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] 178 0
-*-27.424866 280000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.781010 139000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.ram_tb.
-[treeopen] top.ram_tb.inst_ram.
 [treeopen] top.ram_tb.inst_ram.inst_ram74ls189_low.
 [treeopen] top.ram_tb.inst_ram.inst_ram74ls189_low.data.
 [sst_width] 229
@@ -25,6 +24,8 @@ top.ram_tb.wr
 @22
 #{top.ram_tb.address[3:0]} top.ram_tb.address[3] top.ram_tb.address[2] top.ram_tb.address[1] top.ram_tb.address[0]
 #{top.ram_tb.data[7:0]} top.ram_tb.data[7] top.ram_tb.data[6] top.ram_tb.data[5] top.ram_tb.data[4] top.ram_tb.data[3] top.ram_tb.data[2] top.ram_tb.data[1] top.ram_tb.data[0]
+@23
+#{top.ram_tb.led[7:0]} top.ram_tb.led[7] top.ram_tb.led[6] top.ram_tb.led[5] top.ram_tb.led[4] top.ram_tb.led[3] top.ram_tb.led[2] top.ram_tb.led[1] top.ram_tb.led[0]
 @200
 -RAM
 @28
@@ -72,7 +73,7 @@ top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][1]
 top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][0]
 @1401200
 -group_end
-@23
+@22
 #{top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][3:0]} top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][3] top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][2] top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][1] top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][0]
 [pattern_trace] 1
 [pattern_trace] 0

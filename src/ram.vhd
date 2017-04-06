@@ -17,8 +17,8 @@ entity ram is
              -- Data input and output
              data_io     : inout std_logic_vector(7 downto 0);
 
-             -- RAM contents
-             data_reg_o  : out std_logic_vector(7 downto 0);
+             -- LED's
+             led_o       : out std_logic_vector(7 downto 0);
 
              -- Control inputs
              wr_i        : in std_logic;
@@ -52,7 +52,7 @@ begin
                  data_o      => data(3 downto 0)
              );
 
-    data_reg_o <= data;
+    led_o <= data;
     data_io <= data when enable_i = '1' else "ZZZZZZZZ";
 
 end Structural;
