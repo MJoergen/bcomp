@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity address_register_tb is
-end address_register_tb ;
+entity memory_address_register_tb is
+end memory_address_register_tb ;
 
-architecture Structural of address_register_tb is
+architecture Structural of memory_address_register_tb is
 
     -- Clock
     signal clk : std_logic; -- 25 MHz
@@ -33,25 +33,25 @@ begin
     end process clk_gen;
 
     -- Instantiate DUT
-    inst_address_register : entity work.address_register
+    inst_memory_address_register : entity work.memory_address_register
     port map (
                  clk_i       => clk,
+                 load_i      => load,
                  address_i   => address_in,
-                 sw_i        => sw,
                  address_o   => address_out,
                  runmode_i   => runmode,
-                 load_i      => load
+                 sw_i        => sw
              );
 
     -- Start the main test
     main_test : process is
     begin
+        -- Switch to programming mode.
+        runmode <= '0';
 
-        -- Verify reading from slide switches
+        load <= '0';
         address_in <= "0000";
         sw <= "0000";
-        runmode <= '0';
-        load <= '0';
         wait for 80 ns;
         assert address_out = "0000";
 
@@ -59,9 +59,11 @@ begin
         wait for 80 ns;
         assert address_out = "0101";
 
-        -- Verify reading from data bus
+        -- Switch to programming mode.
+        runmode <= '1';
+
         address_in <= "0000";
-        load <= '1', '0' after 20 ns;
+        load <= '1', '0' after 50 ns;
         wait for 80 ns;
         assert address_out = "0000";
 
@@ -69,7 +71,7 @@ begin
         wait for 80 ns;
         assert address_out = "0000";
 
-        load <= '1', '0' after 20 ns;
+        load <= '1', '0' after 50 ns;
         wait for 80 ns;
         assert address_out = "1010";
 

@@ -2,32 +2,33 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
--- address_register.vhd
+-- memory_address_register.vhd
 -- This entity implements the feature described in the video
 -- https://www.youtube.com/watch?v=KNve2LCcSRc
 
-entity address_register is
+entity memory_address_register is
 
     port (
              -- Clock input
              clk_i       : in  std_logic;
 
+             -- Control inputs
+             load_i      : in  std_logic; -- called MI
+
              -- Data bus connection
              address_i   : in  std_logic_vector (3 downto 0);
 
-             -- Slide switches
-             sw_i        : in  std_logic_vector (3 downto 0);
-
-             -- Multiplexed address
+             -- To RAM module
              address_o   : out std_logic_vector (3 downto 0);
 
-             -- Control inputs
+             -- Switches and buttons
              runmode_i   : in  std_logic;
-             load_i      : in  std_logic);
+             sw_i        : in  std_logic_vector (3 downto 0)
+         );
 
-end address_register;
+end memory_address_register;
 
-architecture Structural of address_register is
+architecture Structural of memory_address_register is
 
     signal address : std_logic_vector(3 downto 0);
 

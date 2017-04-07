@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Fri Apr  7 13:19:54 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/memory_address_register_tb.ghw"
+[dumpfile_mtime] "Fri Apr  7 13:19:46 2017"
+[dumpfile_size] 910
+[savefile] "/home/mike/git/bcomp/src/memory_address_register_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-27.232664 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.memory_address_register_tb.
+[treeopen] top.memory_address_register_tb.inst_memory_address_register.
+[sst_width] 229
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@28
+top.memory_address_register_tb.clk
+top.memory_address_register_tb.load
+@22
+#{top.memory_address_register_tb.address_in[3:0]} top.memory_address_register_tb.address_in[3] top.memory_address_register_tb.address_in[2] top.memory_address_register_tb.address_in[1] top.memory_address_register_tb.address_in[0]
+#{top.memory_address_register_tb.address_out[3:0]} top.memory_address_register_tb.address_out[3] top.memory_address_register_tb.address_out[2] top.memory_address_register_tb.address_out[1] top.memory_address_register_tb.address_out[0]
+@28
+top.memory_address_register_tb.runmode
+@22
+#{top.memory_address_register_tb.sw[3:0]} top.memory_address_register_tb.sw[3] top.memory_address_register_tb.sw[2] top.memory_address_register_tb.sw[1] top.memory_address_register_tb.sw[0]
+@200
+-DUT
+@22
+#{top.memory_address_register_tb.inst_memory_address_register.address_i[3:0]} top.memory_address_register_tb.inst_memory_address_register.address_i[3] top.memory_address_register_tb.inst_memory_address_register.address_i[2] top.memory_address_register_tb.inst_memory_address_register.address_i[1] top.memory_address_register_tb.inst_memory_address_register.address_i[0]
+#{top.memory_address_register_tb.inst_memory_address_register.address[3:0]} top.memory_address_register_tb.inst_memory_address_register.address[3] top.memory_address_register_tb.inst_memory_address_register.address[2] top.memory_address_register_tb.inst_memory_address_register.address[1] top.memory_address_register_tb.inst_memory_address_register.address[0]
+#{top.memory_address_register_tb.inst_memory_address_register.address_o[3:0]} top.memory_address_register_tb.inst_memory_address_register.address_o[3] top.memory_address_register_tb.inst_memory_address_register.address_o[2] top.memory_address_register_tb.inst_memory_address_register.address_o[1] top.memory_address_register_tb.inst_memory_address_register.address_o[0]
+@28
+top.memory_address_register_tb.inst_memory_address_register.load_i
+top.memory_address_register_tb.inst_memory_address_register.runmode_i
+[pattern_trace] 1
+[pattern_trace] 0
