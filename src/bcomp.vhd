@@ -24,11 +24,6 @@ entity bcomp is
       -- Output LEDs
       led_o       : out std_logic_vector (7 downto 0);
 
-      -- Output segment display
-      seg_ca_o    : out std_logic_vector (6 downto 0);
-      seg_dp_o    : out std_logic;
-      seg_an_o    : out std_logic_vector (3 downto 0);
-
       -- pragma synthesis_off
       -- Used during testing
       databus_i       : in  std_logic_vector (7 downto 0);
@@ -38,8 +33,13 @@ entity bcomp is
       write_btn_i     : in  std_logic;
       alu_value_o     : out std_logic_vector (7 downto 0);
       ram_value_o     : out std_logic_vector (7 downto 0);
-      address_value_o : out std_logic_vector (3 downto 0)
+      address_value_o : out std_logic_vector (3 downto 0);
       -- pragma synthesis_on
+
+      -- Output segment display
+      seg_ca_o    : out std_logic_vector (6 downto 0);
+      seg_dp_o    : out std_logic;
+      seg_an_o    : out std_logic_vector (3 downto 0)
 
       );
 
@@ -95,9 +95,16 @@ architecture Structural of bcomp is
     alias  control_RI : std_logic is control(9);  -- RAM load (write)
     alias  control_RO : std_logic is control(10); -- RAM output enable
 
+    signal address_sw    : std_logic_vector (3 downto 0);
+    signal data_sw       : std_logic_vector (7 downto 0);
+    signal write_btn     : std_logic;
+
 begin
 
     -- pragma synthesis_off
+    address_sw <= address_sw_i;
+    data_sw <= data_sw_i;
+    write_btn <= write_btn_i;
     databus <= databus_i;
     control <= control_i;
     alu_value_o <= alu_value;
@@ -167,7 +174,7 @@ begin
                  address_i   => databus(3 downto 0) ,
                  address_o   => address_value       , -- to RAM module
                  runmode_i   => runmode             ,
-                 sw_i        => address_sw_i
+                 sw_i        => address_sw
              );
 
     -- Instantiate RAM module
@@ -179,8 +186,8 @@ begin
                  data_io     => databus       ,
                  address_i   => address_value ,
                  runmode_i   => runmode       ,
-                 sw_data_i   => data_sw_i     ,
-                 wr_button_i => write_btn_i   ,
+                 sw_data_i   => data_sw       ,
+                 wr_button_i => write_btn     ,
                  data_led_o  => ram_value -- Debug output
              );
 
