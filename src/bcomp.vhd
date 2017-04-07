@@ -27,7 +27,7 @@ entity bcomp is
       -- pragma synthesis_off
       -- Used during testing
       databus_i       : in  std_logic_vector (7 downto 0);
-      control_i       : in  std_logic_vector (10 downto 0);
+      control_i       : in  std_logic_vector (13 downto 0);
       address_sw_i    : in  std_logic_vector (3 downto 0);
       data_sw_i       : in  std_logic_vector (7 downto 0);
       write_btn_i     : in  std_logic;
@@ -80,9 +80,10 @@ architecture Structural of bcomp is
     -- Debug outputs connected to LEDs
     signal alu_value     : std_logic_vector (7 downto 0);
     signal ram_value     : std_logic_vector (7 downto 0);
+    signal pc_value      : std_logic_vector (3 downto 0);
 
     -- Control signals
-    signal control    : std_logic_vector (10 downto 0);
+    signal control    : std_logic_vector (13 downto 0);
     alias  control_AI : std_logic is control(0);  -- A register load
     alias  control_AO : std_logic is control(1);  -- A register output enable
     alias  control_BI : std_logic is control(2);  -- B register load
@@ -94,6 +95,9 @@ architecture Structural of bcomp is
     alias  control_MI : std_logic is control(8);  -- Memory address register load
     alias  control_RI : std_logic is control(9);  -- RAM load (write)
     alias  control_RO : std_logic is control(10); -- RAM output enable
+    alias  control_CO : std_logic is control(11); -- Program counter output enable
+    alias  control_J  : std_logic is control(12); -- Program counter jump
+    alias  control_CE : std_logic is control(13); -- Program counter count enable
 
     signal address_sw    : std_logic_vector (3 downto 0);
     signal data_sw       : std_logic_vector (7 downto 0);
@@ -190,6 +194,19 @@ begin
                  wr_button_i => write_btn     ,
                  data_led_o  => ram_value -- Debug output
              );
+
+    -- Instantiate Program counter
+    inst_program_counter : entity work.program_counter
+    port map (
+                 clk_i       => clk                 ,
+                 clr_i       => regs_clear          ,
+                 data_io     => databus(3 downto 0) ,
+                 load_i      => control_J           ,
+                 enable_i    => control_CO          ,
+                 count_i     => control_CE          ,
+                 led_o       => pc_value  -- Debug output
+             );
+
 
     -- For now, just copy the data bus to the output LED's.
     -- This will later be multiplxed based on the push buttons.

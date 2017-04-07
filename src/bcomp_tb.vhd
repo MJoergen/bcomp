@@ -25,7 +25,7 @@ architecture Structural of bcomp_tb is
 
     -- Used only for test purposes
     signal databus       : std_logic_vector (7 downto 0);
-    signal control       : std_logic_vector (10 downto 0);
+    signal control       : std_logic_vector (13 downto 0);
     signal address_sw    : std_logic_vector (3 downto 0);
     signal data_sw       : std_logic_vector (7 downto 0);
     signal write_btn     : std_logic;
@@ -45,6 +45,9 @@ architecture Structural of bcomp_tb is
     alias  control_MI : std_logic is control(8);  -- Memory address register load
     alias  control_RI : std_logic is control(9);  -- RAM load (write)
     alias  control_RO : std_logic is control(10); -- RAM output enable
+    alias  control_CO : std_logic is control(11); -- Program counter output enable
+    alias  control_J  : std_logic is control(12); -- Program counter jump
+    alias  control_CE : std_logic is control(13); -- Program counter count enable
 
 begin
     -- Simulate external crystal clock (25 MHz)
