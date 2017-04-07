@@ -12,19 +12,21 @@ architecture Structural of ram_module_tb is
     signal test_running : boolean := true;
 
     -- Inputs to the DUT
-    signal address_load : std_logic;
     signal wr           : std_logic;
     signal enable       : std_logic;
+
+    -- From memory address register
+    signal address      : std_logic_vector(3 downto 0);
+
+    -- Data bus connection
     signal data         : std_logic_vector(7 downto 0);
 
     -- Used only in programming mode
     signal runmode      : std_logic;
-    signal sw_address   : std_logic_vector(3 downto 0);
     signal sw_data      : std_logic_vector(7 downto 0);
     signal wr_button    : std_logic;
 
     -- Output from the DUT
-    signal address_led  : std_logic_vector(3 downto 0);
     signal data_led     : std_logic_vector(7 downto 0);
 
 begin
@@ -44,17 +46,16 @@ begin
     port map (
              clk_i          => clk          ,
 
-             address_load_i => address_load ,
              wr_i           => wr           ,
              enable_i       => enable       ,
+
              data_io        => data         ,
+             address_i      => address      ,
 
              runmode_i      => runmode      ,
-             sw_address_i   => sw_address   ,
              sw_data_i      => sw_data      ,
              wr_button_i    => wr_button    ,
 
-             address_led_o  => address_led  ,
              data_led_o     => data_led     
          );
 
@@ -65,11 +66,10 @@ begin
         runmode <= '0';
 
         -- Check tristate buffer
-        address_load <= '0';
         wr <= '0';
         enable <= '0';
         data <= "ZZZZZZZZ";
-        sw_address <= "0000";
+        address <= "0000";
         sw_data <= "00000000";
         wr_button <= '0';
         wait for 80 ns;
@@ -77,7 +77,7 @@ begin
         assert data_led = "ZZZZZZZZ";
 
         -- Check write to address 0
-        sw_address <= "0000";
+        address <= "0000";
         sw_data <= "01010011";
         wr_button <= '1' after 20 ns, '0' after 40 ns;
         enable <= '0';
@@ -86,7 +86,7 @@ begin
         assert data     = "ZZZZZZZZ";
 
         -- Check read from address 0
-        sw_address <= "0000";
+        address <= "0000";
         wr_button <= '0';
         wait for 80 ns;
         assert data_led = "01010011";
@@ -98,7 +98,7 @@ begin
         assert data     = "01010011";
 
         -- Check write to address 1
-        sw_address <= "0001";
+        address <= "0001";
         sw_data <= "10100110";
         wr_button <= '1' after 20 ns, '0' after 40 ns;
         enable <= '0';
@@ -107,7 +107,7 @@ begin
         assert data     = "ZZZZZZZZ";
 
         -- Check read from address 0
-        sw_address <= "0000";
+        address <= "0000";
         wait for 80 ns;
         assert data_led = "01010011";
         assert data     = "ZZZZZZZZ";
@@ -118,7 +118,7 @@ begin
         assert data     = "01010011";
 
         -- Check read from address 1
-        sw_address <= "0001";
+        address <= "0001";
         enable <= '0';
         wait for 80 ns;
         assert data_led = "10100110";
@@ -130,7 +130,7 @@ begin
         assert data     = "10100110";
 
         -- Check tristate buffer
-        sw_address <= "0000";
+        address <= "0000";
         sw_data <= "ZZZZZZZZ";
         wr_button <= '0';
         enable <= '0';
@@ -141,25 +141,33 @@ begin
         -- Switch to run mode.
         runmode <= '1';
 
-        -- Read from address 0
-        address_load <= '1';
-        wr <= '0';
+        -- Write to address 0
+        wr <= '1' after 10 ns, '0' after 30 ns;
         enable <= '0';
-        data <= "00000000";
+        data <= "11001100";
+        address <= "0000";
         wait for 80 ns;
-        assert address_led = "0000";
-        assert data_led    = "01010011";
-        assert data        = "00000000";
+        assert data_led = "11001100";
+        assert data     = "11001100";
+
+        -- Check tristate buffer
+        data <= "ZZZZZZZZ";
+        wait for 80 ns;
+        assert data_led = "11001100";
+        assert data     = "ZZZZZZZZ";
 
         -- Read from address 0
-        address_load <= '1';
-        wr <= '0';
-        enable <= '0';
-        data <= "00000001";
+        enable <= '1';
         wait for 80 ns;
-        assert address_led = "0001";
-        assert data_led    = "10100110";
-        assert data        = "00000001";
+        assert data_led = "11001100";
+        assert data     = "11001100";
+
+        -- Read from address 1
+        address <= "0001";
+        enable <= '1';
+        wait for 80 ns;
+        assert data_led = "10100110";
+        assert data     = "10100110";
 
         test_running <= false;
         wait;

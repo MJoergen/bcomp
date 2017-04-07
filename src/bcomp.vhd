@@ -2,6 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
+-- This is the top level
+-- The video in https://www.youtube.com/watch?v=g_1HyxBzjl0 gives a 
+-- high level view of the computer.
+
 entity bcomp is
 
    generic (
@@ -50,6 +54,7 @@ architecture Structural of bcomp is
     --   instruction register
     --   ALU
     --   RAM
+    --   Program counter
     signal databus       : std_logic_vector(7 downto 0);
 
     -- Interpretation of input switches.

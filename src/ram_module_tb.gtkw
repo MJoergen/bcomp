@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Fri Apr  7 11:59:41 2017
+[*] Fri Apr  7 13:49:57 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/ram_module_tb.ghw"
-[dumpfile_mtime] "Fri Apr  7 11:59:35 2017"
-[dumpfile_size] 2762
+[dumpfile_mtime] "Fri Apr  7 13:49:41 2017"
+[dumpfile_size] 2763
 [savefile] "/home/mike/git/bcomp/src/ram_module_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-28.502291 73700000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-28.716415 406000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.ram_module_tb.
 [treeopen] top.ram_module_tb.inst_ram_module.
@@ -20,7 +20,6 @@
 [sst_vpaned_height] 146
 @28
 top.ram_module_tb.clk
-top.ram_module_tb.address_load
 top.ram_module_tb.wr
 top.ram_module_tb.enable
 @22
@@ -28,12 +27,10 @@ top.ram_module_tb.enable
 @28
 top.ram_module_tb.runmode
 @22
-#{top.ram_module_tb.sw_address[3:0]} top.ram_module_tb.sw_address[3] top.ram_module_tb.sw_address[2] top.ram_module_tb.sw_address[1] top.ram_module_tb.sw_address[0]
 #{top.ram_module_tb.sw_data[7:0]} top.ram_module_tb.sw_data[7] top.ram_module_tb.sw_data[6] top.ram_module_tb.sw_data[5] top.ram_module_tb.sw_data[4] top.ram_module_tb.sw_data[3] top.ram_module_tb.sw_data[2] top.ram_module_tb.sw_data[1] top.ram_module_tb.sw_data[0]
 @28
 top.ram_module_tb.wr_button
 @22
-#{top.ram_module_tb.address_led[3:0]} top.ram_module_tb.address_led[3] top.ram_module_tb.address_led[2] top.ram_module_tb.address_led[1] top.ram_module_tb.address_led[0]
 #{top.ram_module_tb.data_led[7:0]} top.ram_module_tb.data_led[7] top.ram_module_tb.data_led[6] top.ram_module_tb.data_led[5] top.ram_module_tb.data_led[4] top.ram_module_tb.data_led[3] top.ram_module_tb.data_led[2] top.ram_module_tb.data_led[1] top.ram_module_tb.data_led[0]
 @200
 -RAM
