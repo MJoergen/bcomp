@@ -14,9 +14,10 @@ architecture Structural of ram_tb is
     signal wr         : std_logic;
     signal enable     : std_logic;
     signal address    : std_logic_vector (3 downto 0);
+    signal data_in    : std_logic_vector(7 downto 0);
 
     -- Output from the DUT
-    signal data       : std_logic_vector(7 downto 0);
+    signal data_out   : std_logic_vector(7 downto 0);
     signal led        : std_logic_vector(7 downto 0);
 
 begin
@@ -24,10 +25,11 @@ begin
     -- Instantiate DUT
     inst_ram : entity work.ram
     port map (
-                 address_i   => address ,
-                 data_io     => data    ,
-                 led_o       => led     ,
-                 wr_i        => wr      ,
+                 address_i   => address  ,
+                 data_in_i   => data_in  ,
+                 data_out_o  => data_out ,
+                 led_o       => led      ,
+                 wr_i        => wr       ,
                  enable_i    => enable
              );
 
@@ -36,74 +38,69 @@ begin
     begin
         -- Check tristate buffer
         address <= "0000";
-        data <= "ZZZZZZZZ";
+        data_in <= "ZZZZZZZZ";
         wr <= '0';
         enable <= '0';
         wait for 80 ns;
-        assert data    = "ZZZZZZZZ";
+        assert data_out = "ZZZZZZZZ";
 
         -- Check write to address 0
         address <= "0000";
-        data <= "01010011";
-        wr <= '1' after 20 ns;
+        data_in <= "01010011";
+        wr <= '1' after 20 ns, '0' after 40 ns;
         enable <= '0';
         wait for 80 ns;
-        assert led     = "ZZZZZZZZ";
-        assert data    = "01010011";
+        assert data_out = "ZZZZZZZZ";
+        assert led      = "01010011";
 
         -- Check tristate buffer
         address <= "0000";
-        data <= "ZZZZZZZZ";
-        wr <= '0';
+        data_in <= "ZZZZZZZZ";
         enable <= '0';
         wait for 80 ns;
         assert led     = "01010011";
-        assert data    = "ZZZZZZZZ";
+        assert data_out    = "ZZZZZZZZ";
 
         -- Check read from address 0
         address <= "0000";
-        data <= "ZZZZZZZZ";
-        wr <= '0';
+        data_in <= "ZZZZZZZZ";
         enable <= '1';
         wait for 80 ns;
         assert led     = "01010011";
-        assert data    = "01010011";
+        assert data_out    = "01010011";
 
         -- Check write to address 1
         address <= "0001";
-        data <= "10100110";
-        wr <= '1' after 20 ns;
+        data_in <= "10100110";
+        wr <= '1' after 20 ns, '0' after 40 ns;
         enable <= '0';
         wait for 80 ns;
-        assert led     = "ZZZZZZZZ";
-        assert data    = "10100110";
+        assert led      = "10100110";
+        assert data_out = "ZZZZZZZZ";
 
         -- Check read from address 0
         address <= "0000";
-        data <= "ZZZZZZZZ";
-        wr <= '0';
+        data_in <= "ZZZZZZZZ";
         enable <= '1';
         wait for 80 ns;
-        assert led     = "01010011";
-        assert data    = "01010011";
+        assert led       = "01010011";
+        assert data_out  = "01010011";
 
         -- Check read from address 1
         address <= "0001";
-        data <= "ZZZZZZZZ";
-        wr <= '0';
+        data_in <= "ZZZZZZZZ";
         enable <= '0', '1' after 20 ns;
         wait for 80 ns;
-        assert led     = "10100110";
-        assert data    = "10100110";
+        assert led       = "10100110";
+        assert data_out  = "10100110";
 
         -- Check tristate buffer
         address <= "0000";
-        data <= "ZZZZZZZZ";
-        wr <= '0';
+        data_in <= "ZZZZZZZZ";
         enable <= '0';
         wait for 80 ns;
-        assert led     = "01010011";
-        assert data    = "ZZZZZZZZ";
+        assert led       = "01010011";
+        assert data_out  = "ZZZZZZZZ";
 
         wait;
     end process main_test;

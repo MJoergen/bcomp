@@ -1,21 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Thu Apr  6 09:54:37 2017
+[*] Fri Apr  7 11:40:08 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/ram_tb.ghw"
-[dumpfile_mtime] "Thu Apr  6 09:54:22 2017"
-[dumpfile_size] 1601
+[dumpfile_mtime] "Fri Apr  7 11:39:57 2017"
+[dumpfile_size] 1746
 [savefile] "/home/mike/git/bcomp/src/ram_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] 178 0
-*-27.781010 139000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.809891 139000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.ram_tb.
-[treeopen] top.ram_tb.inst_ram.inst_ram74ls189_low.
-[treeopen] top.ram_tb.inst_ram.inst_ram74ls189_low.data.
+[treeopen] top.ram_tb.inst_ram.
 [sst_width] 229
-[signals_width] 161
+[signals_width] 172
 [sst_expanded] 1
 [sst_vpaned_height] 146
 @28
@@ -23,9 +22,9 @@ top.ram_tb.enable
 top.ram_tb.wr
 @22
 #{top.ram_tb.address[3:0]} top.ram_tb.address[3] top.ram_tb.address[2] top.ram_tb.address[1] top.ram_tb.address[0]
-#{top.ram_tb.data[7:0]} top.ram_tb.data[7] top.ram_tb.data[6] top.ram_tb.data[5] top.ram_tb.data[4] top.ram_tb.data[3] top.ram_tb.data[2] top.ram_tb.data[1] top.ram_tb.data[0]
-@23
 #{top.ram_tb.led[7:0]} top.ram_tb.led[7] top.ram_tb.led[6] top.ram_tb.led[5] top.ram_tb.led[4] top.ram_tb.led[3] top.ram_tb.led[2] top.ram_tb.led[1] top.ram_tb.led[0]
+#{top.ram_tb.data_in[7:0]} top.ram_tb.data_in[7] top.ram_tb.data_in[6] top.ram_tb.data_in[5] top.ram_tb.data_in[4] top.ram_tb.data_in[3] top.ram_tb.data_in[2] top.ram_tb.data_in[1] top.ram_tb.data_in[0]
+#{top.ram_tb.data_out[7:0]} top.ram_tb.data_out[7] top.ram_tb.data_out[6] top.ram_tb.data_out[5] top.ram_tb.data_out[4] top.ram_tb.data_out[3] top.ram_tb.data_out[2] top.ram_tb.data_out[1] top.ram_tb.data_out[0]
 @200
 -RAM
 @28
@@ -33,47 +32,8 @@ top.ram_tb.inst_ram.enable_i
 top.ram_tb.inst_ram.wr_i
 @22
 #{top.ram_tb.inst_ram.address_i[3:0]} top.ram_tb.inst_ram.address_i[3] top.ram_tb.inst_ram.address_i[2] top.ram_tb.inst_ram.address_i[1] top.ram_tb.inst_ram.address_i[0]
-#{top.ram_tb.inst_ram.data_io[7:0]} top.ram_tb.inst_ram.data_io[7] top.ram_tb.inst_ram.data_io[6] top.ram_tb.inst_ram.data_io[5] top.ram_tb.inst_ram.data_io[4] top.ram_tb.inst_ram.data_io[3] top.ram_tb.inst_ram.data_io[2] top.ram_tb.inst_ram.data_io[1] top.ram_tb.inst_ram.data_io[0]
-@c00022
-#{top.ram_tb.inst_ram.data[7:0]} top.ram_tb.inst_ram.data[7] top.ram_tb.inst_ram.data[6] top.ram_tb.inst_ram.data[5] top.ram_tb.inst_ram.data[4] top.ram_tb.inst_ram.data[3] top.ram_tb.inst_ram.data[2] top.ram_tb.inst_ram.data[1] top.ram_tb.inst_ram.data[0]
-@28
-top.ram_tb.inst_ram.data[7]
-top.ram_tb.inst_ram.data[6]
-top.ram_tb.inst_ram.data[5]
-top.ram_tb.inst_ram.data[4]
-top.ram_tb.inst_ram.data[3]
-top.ram_tb.inst_ram.data[2]
-top.ram_tb.inst_ram.data[1]
-top.ram_tb.inst_ram.data[0]
-@1401200
--group_end
-@200
--RAM74LS189
-@28
-top.ram_tb.inst_ram.inst_ram74ls189_low.we_i
-@22
-#{top.ram_tb.inst_ram.inst_ram74ls189_low.address_i[3:0]} top.ram_tb.inst_ram.inst_ram74ls189_low.address_i[3] top.ram_tb.inst_ram.inst_ram74ls189_low.address_i[2] top.ram_tb.inst_ram.inst_ram74ls189_low.address_i[1] top.ram_tb.inst_ram.inst_ram74ls189_low.address_i[0]
-@c00022
-#{top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[3:0]} top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[3] top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[2] top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[1] top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[0]
-@28
-top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[3]
-top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[2]
-top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[1]
-top.ram_tb.inst_ram.inst_ram74ls189_low.data_i[0]
-@1401200
--group_end
-@22
-#{top.ram_tb.inst_ram.inst_ram74ls189_low.data_o[3:0]} top.ram_tb.inst_ram.inst_ram74ls189_low.data_o[3] top.ram_tb.inst_ram.inst_ram74ls189_low.data_o[2] top.ram_tb.inst_ram.inst_ram74ls189_low.data_o[1] top.ram_tb.inst_ram.inst_ram74ls189_low.data_o[0]
-@c00022
-#{top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][3:0]} top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][3] top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][2] top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][1] top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][0]
-@28
-top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][3]
-top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][2]
-top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][1]
-top.ram_tb.inst_ram.inst_ram74ls189_low.data[0][0]
-@1401200
--group_end
-@22
-#{top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][3:0]} top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][3] top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][2] top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][1] top.ram_tb.inst_ram.inst_ram74ls189_low.data[1][0]
+#{top.ram_tb.inst_ram.data_in_i[7:0]} top.ram_tb.inst_ram.data_in_i[7] top.ram_tb.inst_ram.data_in_i[6] top.ram_tb.inst_ram.data_in_i[5] top.ram_tb.inst_ram.data_in_i[4] top.ram_tb.inst_ram.data_in_i[3] top.ram_tb.inst_ram.data_in_i[2] top.ram_tb.inst_ram.data_in_i[1] top.ram_tb.inst_ram.data_in_i[0]
+@23
+#{top.ram_tb.inst_ram.data_out_o[7:0]} top.ram_tb.inst_ram.data_out_o[7] top.ram_tb.inst_ram.data_out_o[6] top.ram_tb.inst_ram.data_out_o[5] top.ram_tb.inst_ram.data_out_o[4] top.ram_tb.inst_ram.data_out_o[3] top.ram_tb.inst_ram.data_out_o[2] top.ram_tb.inst_ram.data_out_o[1] top.ram_tb.inst_ram.data_out_o[0]
 [pattern_trace] 1
 [pattern_trace] 0
