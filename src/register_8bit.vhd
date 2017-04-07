@@ -15,18 +15,18 @@ entity register_8bit is
              -- Clock input
              clk_i       : in std_logic;
 
-             -- Clear input
+             -- Control inputs
+             load_i      : in std_logic; -- called AI or BI or II.
+             enable_i    : in std_logic; -- called AO or BO or IO.
              clr_i       : in std_logic;
 
              -- Data bus connection
              data_io     : inout std_logic_vector(7 downto 0);
 
-             -- Register output
-             reg_o       : out std_logic_vector(7 downto 0);
+             -- To ALU or Instruction decoder
+             reg_o       : out std_logic_vector(7 downto 0)
+         );
 
-             -- Control inputs
-             load_i      : in std_logic;
-             enable_i    : in std_logic);
 
 end register_8bit;
 

@@ -9,18 +9,15 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity alu is
 
     port (
+             -- Control input:
+             sub_i       : in  std_logic; -- called SU
+             enable_i    : in  std_logic; -- called EO
+
              -- Data inputs
              areg_i      : in  std_logic_vector (7 downto 0);
              breg_i      : in  std_logic_vector (7 downto 0);
 
-             -- Control input:
-             -- '0' for addition, '1' for subtraction.
-             sub_i       : in  std_logic;
-
-             -- Output enable
-             enable_i    : in  std_logic;
-
-             -- Result output
+             -- Data bus connection
              result_o    : out std_logic_vector (7 downto 0);
 
              -- LED output

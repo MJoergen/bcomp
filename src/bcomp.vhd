@@ -67,7 +67,12 @@ architecture Structural of bcomp is
 
     signal areg_value    : std_logic_vector (7 downto 0);
     signal breg_value    : std_logic_vector (7 downto 0);
+    signal ireg_value    : std_logic_vector (7 downto 0);
+    signal alu_value     : std_logic_vector (7 downto 0);
     signal address_value : std_logic_vector (3 downto 0);
+
+    constant ireg_load   : std_logic := '0';  -- Temporary
+    constant ireg_enable : std_logic := '0';  -- Temporary
 
 begin
 
@@ -91,56 +96,55 @@ begin
     inst_a_register : entity work.register_8bit
     port map (
                  clk_i       => clk          ,
+                 load_i      => areg_load    , -- called AI
+                 enable_i    => areg_enable  , -- called AO
                  clr_i       => regs_clear   ,
                  data_io     => databus      ,
-                 reg_o       => areg_value   ,
-                 load_i      => areg_load    ,
-                 enable_i    => areg_enable
+                 reg_o       => areg_value     -- to ALU
              );
 
     -- Instantiate B-register
     inst_b_register : entity work.register_8bit
     port map (
                  clk_i       => clk          ,
+                 load_i      => breg_load    , -- called BI
+                 enable_i    => breg_enable  , -- called BO
                  clr_i       => regs_clear   ,
                  data_io     => databus      ,
-                 reg_o       => breg_value   ,
-                 load_i      => breg_load    ,
-                 enable_i    => breg_enable
+                 reg_o       => breg_value     -- to ALU
              );
 
---    -- Instantiate instruction register
---    inst_instruction_register : entity work.register_8bit
---    port map (
---                 clk_i       => clk    ,
---                 clr_i       => regs_clear,
---                 data_io     => data   ,
---                 reg_o       => open   , -- For now leave this unconnected
---                 load_i      => regs_ir_load,
---                 enable_i    => regs_ir_enable
---             );
+    -- Instantiate instruction register
+    inst_instruction_register : entity work.register_8bit
+    port map (
+                 clk_i       => clk          ,
+                 load_i      => ireg_load    , -- called II
+                 enable_i    => ireg_enable  , -- called IO
+                 clr_i       => regs_clear   ,
+                 data_io     => databus      ,
+                 reg_o       => ireg_value     -- to instruction decoder
+             );
 
     -- Instantiate ALU
     inst_alu : entity work.alu
     port map (
+                 sub_i       => alu_sub    , -- called SU
+                 enable_i    => alu_enable , -- called EO
                  areg_i      => areg_value ,
                  breg_i      => breg_value ,
-                 sub_i       => alu_sub    ,
-                 enable_i    => alu_enable ,
                  result_o    => databus    ,
-                 led_o       => open
+                 led_o       => alu_value
              );
 
-
     -- Instantiate address register
-    inst_address_register : entity work.address_register
+    inst_memory_address_register : entity work.memory_address_register
     port map (
                  clk_i       => clk,
+                 load_i      => address_load, -- called MI
                  address_i   => databus(3 downto 0),
-                 sw_i        => sw_i(3 downto 0),
                  address_o   => address_value,
                  runmode_i   => address_runmode,
-                 load_i      => address_load
+                 sw_i        => sw_i(3 downto 0)
              );
 
     -- For now, just copy the data bus to the output LED's.
