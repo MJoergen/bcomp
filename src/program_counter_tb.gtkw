@@ -1,0 +1,29 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Fri Apr  7 20:23:10 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/program_counter_tb.ghw"
+[dumpfile_mtime] "Fri Apr  7 20:22:38 2017"
+[dumpfile_size] 999
+[savefile] "/home/mike/git/bcomp/src/program_counter_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-27.542149 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.program_counter_tb.
+[sst_width] 229
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@28
+top.program_counter_tb.load
+top.program_counter_tb.enable
+top.program_counter_tb.count
+top.program_counter_tb.clr
+@22
+#{top.program_counter_tb.data[3:0]} top.program_counter_tb.data[3] top.program_counter_tb.data[2] top.program_counter_tb.data[1] top.program_counter_tb.data[0]
+@23
+#{top.program_counter_tb.led[3:0]} top.program_counter_tb.led[3] top.program_counter_tb.led[2] top.program_counter_tb.led[1] top.program_counter_tb.led[0]
+[pattern_trace] 1
+[pattern_trace] 0
