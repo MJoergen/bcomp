@@ -138,6 +138,29 @@ begin
         assert data_led = "01010011";
         assert data     = "ZZZZZZZZ";
 
+        -- Switch to run mode.
+        runmode <= '1';
+
+        -- Read from address 0
+        address_load <= '1';
+        wr <= '0';
+        enable <= '0';
+        data <= "00000000";
+        wait for 80 ns;
+        assert address_led = "0000";
+        assert data_led    = "01010011";
+        assert data        = "00000000";
+
+        -- Read from address 0
+        address_load <= '1';
+        wr <= '0';
+        enable <= '0';
+        data <= "00000001";
+        wait for 80 ns;
+        assert address_led = "0001";
+        assert data_led    = "10100110";
+        assert data        = "00000001";
+
         test_running <= false;
         wait;
     end process main_test;

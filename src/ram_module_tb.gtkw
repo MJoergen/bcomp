@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Fri Apr  7 11:43:31 2017
+[*] Fri Apr  7 11:59:41 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/ram_module_tb.ghw"
-[dumpfile_mtime] "Fri Apr  7 11:43:27 2017"
-[dumpfile_size] 2612
+[dumpfile_mtime] "Fri Apr  7 11:59:35 2017"
+[dumpfile_size] 2762
 [savefile] "/home/mike/git/bcomp/src/ram_module_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-28.250751 73700000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-28.502291 73700000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.ram_module_tb.
 [treeopen] top.ram_module_tb.inst_ram_module.
