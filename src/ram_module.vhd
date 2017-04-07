@@ -44,18 +44,29 @@ begin
 
     data_in <= data_io when runmode_i = '1' else sw_data_i;
     wr <= wr_i when runmode_i = '1' else wr_button_i;
-    data_io <= data_out;
 
-    -- Instantiate RAM
-    inst_ram : entity work.ram
+    -- Instantiate high nibble
+    inst_ram74ls189_high : entity work.ram74ls189
     port map (
-                 address_i    => address_i  ,
-                 data_in_i    => data_in    ,
-                 data_out_o   => data_out   ,
-                 led_o        => data_led_o ,
-                 wr_i         => wr         ,
-                 enable_i     => enable_i
+                 address_i   => address_i           ,
+                 data_i      => data_in(7 downto 4) ,
+                 we_i        => wr                  ,
+                 cs_i        => '1'                 ,
+                 data_o      => data_out(7 downto 4)
              );
+
+    -- Instantiate low nibble
+    inst_ram74ls189_low : entity work.ram74ls189
+    port map (
+                 address_i   => address_i           ,
+                 data_i      => data_in(3 downto 0) ,
+                 we_i        => wr                  ,
+                 cs_i        => '1'                 ,
+                 data_o      => data_out(3 downto 0)
+             );
+
+    data_led_o <= data_out;
+    data_io <= data_out when enable_i = '1' else "ZZZZZZZZ";
 
 end Structural;
 
