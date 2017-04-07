@@ -8,14 +8,21 @@
 #vfiles    += alu.vhd
 #vfiles    += address_register.vhd
 
+project    = ram_module
+top_module = ram_module
+vfiles     = ram_module.vhd # Top level
+vfiles    += ram74ls189.vhd 
+vfiles    += ram.vhd 
+vfiles    += address_register.vhd 
+
 #project    = ram
 #top_module = ram
 #vfiles     = ram.vhd # Top level
-#vfiles    += ram74ls189.vhd # Top level
+#vfiles    += ram74ls189.vhd 
 
-project    = address_register
-top_module = address_register
-vfiles     = address_register.vhd # Top level
+#project    = address_register
+#top_module = address_register
+#vfiles     = address_register.vhd # Top level
 
 #project    = ram74ls189
 #top_module = ram74ls189
