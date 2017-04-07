@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Thu Apr  6 10:02:12 2017
+[*] Fri Apr  7 14:35:12 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Thu Apr  6 10:02:01 2017"
-[dumpfile_size] 2996
+[dumpfile_mtime] "Fri Apr  7 14:35:02 2017"
+[dumpfile_size] 4679
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1185 668
-[pos] -1 -1
-*-27.290516 240100000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 20 0
+*-27.383625 540000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
@@ -20,7 +20,7 @@
 [sst_vpaned_height] 169
 @200
 -Test bench
-@28
+@29
 top.bcomp_tb.clk
 @22
 #{top.bcomp_tb.btn[3:0]} top.bcomp_tb.btn[3] top.bcomp_tb.btn[2] top.bcomp_tb.btn[1] top.bcomp_tb.btn[0]
@@ -41,9 +41,7 @@ top.bcomp_tb.led[0]
 @200
 -DUT
 @22
-#{top.bcomp_tb.inst_bcomp.data[7:0]} top.bcomp_tb.inst_bcomp.data[7] top.bcomp_tb.inst_bcomp.data[6] top.bcomp_tb.inst_bcomp.data[5] top.bcomp_tb.inst_bcomp.data[4] top.bcomp_tb.inst_bcomp.data[3] top.bcomp_tb.inst_bcomp.data[2] top.bcomp_tb.inst_bcomp.data[1] top.bcomp_tb.inst_bcomp.data[0]
 #{top.bcomp_tb.inst_bcomp.led_o[7:0]} top.bcomp_tb.inst_bcomp.led_o[7] top.bcomp_tb.inst_bcomp.led_o[6] top.bcomp_tb.inst_bcomp.led_o[5] top.bcomp_tb.inst_bcomp.led_o[4] top.bcomp_tb.inst_bcomp.led_o[3] top.bcomp_tb.inst_bcomp.led_o[2] top.bcomp_tb.inst_bcomp.led_o[1] top.bcomp_tb.inst_bcomp.led_o[0]
-#{top.bcomp_tb.inst_bcomp.data_i[7:0]} top.bcomp_tb.inst_bcomp.data_i[7] top.bcomp_tb.inst_bcomp.data_i[6] top.bcomp_tb.inst_bcomp.data_i[5] top.bcomp_tb.inst_bcomp.data_i[4] top.bcomp_tb.inst_bcomp.data_i[3] top.bcomp_tb.inst_bcomp.data_i[2] top.bcomp_tb.inst_bcomp.data_i[1] top.bcomp_tb.inst_bcomp.data_i[0]
 @200
 -A register
 @28
@@ -67,7 +65,7 @@ top.bcomp_tb.inst_bcomp.inst_b_register.enable_i
 @28
 top.bcomp_tb.inst_bcomp.inst_alu.sub_i
 top.bcomp_tb.inst_bcomp.inst_alu.enable_i
-@23
+@22
 #{top.bcomp_tb.inst_bcomp.inst_alu.result_o[7:0]} top.bcomp_tb.inst_bcomp.inst_alu.result_o[7] top.bcomp_tb.inst_bcomp.inst_alu.result_o[6] top.bcomp_tb.inst_bcomp.inst_alu.result_o[5] top.bcomp_tb.inst_bcomp.inst_alu.result_o[4] top.bcomp_tb.inst_bcomp.inst_alu.result_o[3] top.bcomp_tb.inst_bcomp.inst_alu.result_o[2] top.bcomp_tb.inst_bcomp.inst_alu.result_o[1] top.bcomp_tb.inst_bcomp.inst_alu.result_o[0]
 [pattern_trace] 1
 [pattern_trace] 0

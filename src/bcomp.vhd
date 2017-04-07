@@ -21,18 +21,23 @@ entity bcomp is
       -- Input buttons
       btn_i       : in  std_logic_vector (3 downto 0);
 
-      -- pragma synthesis_off
-      -- Used during testing to inject data onto the main data bus.
-      data_i      : in  std_logic_vector (7 downto 0);
-      -- pragma synthesis_on
-
       -- Output LEDs
       led_o       : out std_logic_vector (7 downto 0);
 
       -- Output segment display
       seg_ca_o    : out std_logic_vector (6 downto 0);
       seg_dp_o    : out std_logic;
-      seg_an_o    : out std_logic_vector (3 downto 0)
+      seg_an_o    : out std_logic_vector (3 downto 0);
+
+      -- pragma synthesis_off
+      -- Used during testing
+      databus_i    : in  std_logic_vector (7 downto 0);
+      control_i    : in  std_logic_vector (10 downto 0);
+      address_sw_i : in  std_logic_vector (3 downto 0);
+      data_sw_i    : in  std_logic_vector (7 downto 0);
+      write_btn_i  : in  std_logic
+      -- pragma synthesis_on
+
       );
 
 end bcomp;
@@ -58,31 +63,40 @@ architecture Structural of bcomp is
     signal databus       : std_logic_vector(7 downto 0);
 
     -- Interpretation of input switches.
-    alias regs_clear     : std_logic is sw_i(0);
-    alias areg_load      : std_logic is sw_i(1);
-    alias areg_enable    : std_logic is sw_i(2);
-    alias breg_load      : std_logic is sw_i(3);
-    alias breg_enable    : std_logic is sw_i(4);
-    alias alu_sub        : std_logic is sw_i(5);
-    alias alu_enable     : std_logic is sw_i(6);
     alias clk_switch     : std_logic is sw_i(7);
+    alias clk_button     : std_logic is btn_i(0);
+    alias regs_clear     : std_logic is sw_i(0);
+    alias runmode        : std_logic is sw_i(1);
 
-    alias address_load   : std_logic is sw_i(5); -- Same as alu_sub for now.
-    alias address_runmode: std_logic is sw_i(7); -- Same as clk_switch for now.
-
+    -- Communication between blocks
     signal areg_value    : std_logic_vector (7 downto 0);
     signal breg_value    : std_logic_vector (7 downto 0);
     signal ireg_value    : std_logic_vector (7 downto 0);
-    signal alu_value     : std_logic_vector (7 downto 0);
     signal address_value : std_logic_vector (3 downto 0);
 
-    constant ireg_load   : std_logic := '0';  -- Temporary
-    constant ireg_enable : std_logic := '0';  -- Temporary
+    -- Debug outputs connected to LEDs
+    signal alu_value     : std_logic_vector (7 downto 0);
+    signal ram_value     : std_logic_vector (7 downto 0);
+
+    -- Control signals
+    signal control    : std_logic_vector (10 downto 0);
+    alias  control_AI : std_logic is control(0);  -- A register load
+    alias  control_AO : std_logic is control(1);  -- A register output enable
+    alias  control_BI : std_logic is control(2);  -- B register load
+    alias  control_BO : std_logic is control(3);  -- B register output enable
+    alias  control_II : std_logic is control(4);  -- Instruction register load
+    alias  control_IO : std_logic is control(5);  -- Instruction register output enable
+    alias  control_EO : std_logic is control(6);  -- ALU output enable
+    alias  control_SU : std_logic is control(7);  -- ALU subtract
+    alias  control_MI : std_logic is control(8);  -- Memory address register load
+    alias  control_RI : std_logic is control(9);  -- RAM load (write)
+    alias  control_RO : std_logic is control(10); -- RAM output enable
 
 begin
 
     -- pragma synthesis_off
-    databus <= data_i;
+    databus <= databus_i;
+    control <= control_i;
     -- pragma synthesis_on
 
     -- Instantiate clock module
@@ -90,19 +104,17 @@ begin
     port map (
                  clk_i       => clk_i      , -- External crystal
                  sw_i        => clk_switch ,
-                 btn_i       => btn_i(0)   ,
+                 btn_i       => clk_button ,
                  hlt_i       => '0'        ,
                  clk_deriv_o => clk         -- Main internal clock
              );
-
-    -- Connect the registers to the main data bus
 
     -- Instantiate A-register
     inst_a_register : entity work.register_8bit
     port map (
                  clk_i       => clk          ,
-                 load_i      => areg_load    , -- called AI
-                 enable_i    => areg_enable  , -- called AO
+                 load_i      => control_AI   ,
+                 enable_i    => control_AO   ,
                  clr_i       => regs_clear   ,
                  data_io     => databus      ,
                  reg_o       => areg_value     -- to ALU
@@ -112,8 +124,8 @@ begin
     inst_b_register : entity work.register_8bit
     port map (
                  clk_i       => clk          ,
-                 load_i      => breg_load    , -- called BI
-                 enable_i    => breg_enable  , -- called BO
+                 load_i      => control_BI   ,
+                 enable_i    => control_BO   ,
                  clr_i       => regs_clear   ,
                  data_io     => databus      ,
                  reg_o       => breg_value     -- to ALU
@@ -123,8 +135,8 @@ begin
     inst_instruction_register : entity work.register_8bit
     port map (
                  clk_i       => clk          ,
-                 load_i      => ireg_load    , -- called II
-                 enable_i    => ireg_enable  , -- called IO
+                 load_i      => control_II   ,
+                 enable_i    => control_IO   ,
                  clr_i       => regs_clear   ,
                  data_io     => databus      ,
                  reg_o       => ireg_value     -- to instruction decoder
@@ -133,23 +145,37 @@ begin
     -- Instantiate ALU
     inst_alu : entity work.alu
     port map (
-                 sub_i       => alu_sub    , -- called SU
-                 enable_i    => alu_enable , -- called EO
+                 sub_i       => control_SU ,
+                 enable_i    => control_EO ,
                  areg_i      => areg_value ,
                  breg_i      => breg_value ,
                  result_o    => databus    ,
-                 led_o       => alu_value
+                 led_o       => alu_value -- Debug output
              );
 
-    -- Instantiate address register
+    -- Instantiate memory address register
     inst_memory_address_register : entity work.memory_address_register
     port map (
-                 clk_i       => clk,
-                 load_i      => address_load, -- called MI
-                 address_i   => databus(3 downto 0),
-                 address_o   => address_value,
-                 runmode_i   => address_runmode,
-                 sw_i        => sw_i(3 downto 0)
+                 clk_i       => clk                 ,
+                 load_i      => control_MI          ,
+                 address_i   => databus(3 downto 0) ,
+                 address_o   => address_value       , -- to RAM module
+                 runmode_i   => runmode             ,
+                 sw_i        => address_sw_i
+             );
+
+    -- Instantiate RAM module
+    inst_ram_module : entity work.ram_module
+    port map (
+                 clk_i       => clk           ,
+                 wr_i        => control_RI    ,
+                 enable_i    => control_RO    ,
+                 data_io     => databus       ,
+                 address_i   => address_value ,
+                 runmode_i   => runmode       ,
+                 sw_data_i   => data_sw_i     ,
+                 wr_button_i => write_btn_i   ,
+                 data_led_o  => ram_value -- Debug output
              );
 
     -- For now, just copy the data bus to the output LED's.
