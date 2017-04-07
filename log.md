@@ -38,12 +38,12 @@ Blocks needed:
 * A-register   -- DONE
 * B-register   -- DONE
 * Instruction Register  -- DONE
-* ALU
+* ALU -- DONE
+* Memory Address Register -- DONE
+* RAM -- DONE
 * Program Counter
-* Memory Address Register
-* RAM
-* Control Unit
 * Output-register
+* Control Unit
 
 So far, I've set up the build environment. Kind of like a "Hello World".
 
@@ -71,4 +71,14 @@ works similarly to the video number 13.
 One caveat so far is that in the video, the instruction register only connects the 
 four least significant bits to the data bus. At this moment, it's not clear why,
 so I'm just connecting all eight bits.
+
+# 2017-04-07
+
+Video number 25 starts of with a good high level diagram of the computer.
+
+It seems that the number of I/O pins necessary to control the computer is
+way more than I originally estimated. At least if I want to be
+able to program the computer using slide switches and push buttons.
+This would suggest we move to a Basys3 board with double the number of slide
+switches and LED's. But so far, I'll continue with the Basys2 board I have.
 
