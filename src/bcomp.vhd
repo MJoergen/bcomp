@@ -31,11 +31,14 @@ entity bcomp is
 
       -- pragma synthesis_off
       -- Used during testing
-      databus_i    : in  std_logic_vector (7 downto 0);
-      control_i    : in  std_logic_vector (10 downto 0);
-      address_sw_i : in  std_logic_vector (3 downto 0);
-      data_sw_i    : in  std_logic_vector (7 downto 0);
-      write_btn_i  : in  std_logic
+      databus_i       : in  std_logic_vector (7 downto 0);
+      control_i       : in  std_logic_vector (10 downto 0);
+      address_sw_i    : in  std_logic_vector (3 downto 0);
+      data_sw_i       : in  std_logic_vector (7 downto 0);
+      write_btn_i     : in  std_logic;
+      alu_value_o     : out std_logic_vector (7 downto 0);
+      ram_value_o     : out std_logic_vector (7 downto 0);
+      address_value_o : out std_logic_vector (3 downto 0)
       -- pragma synthesis_on
 
       );
@@ -97,6 +100,9 @@ begin
     -- pragma synthesis_off
     databus <= databus_i;
     control <= control_i;
+    alu_value_o <= alu_value;
+    ram_value_o <= ram_value;
+    address_value_o <= address_value;
     -- pragma synthesis_on
 
     -- Instantiate clock module

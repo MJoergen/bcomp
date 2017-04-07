@@ -23,16 +23,15 @@ architecture Structural of bcomp_tb is
     -- LED
     signal led : std_logic_vector (7 downto 0) := (others => 'Z');
 
-    -- Useful constants
---    constant ZERO : std_logic_vector (7 downto 0) := (others => '0');
---    constant ZZZZ : std_logic_vector (7 downto 0) := (others => 'Z');
-
     -- Used only for test purposes
-    signal databus    : std_logic_vector (7 downto 0);
-    signal control    : std_logic_vector (10 downto 0);
-    signal address_sw : std_logic_vector (3 downto 0);
-    signal data_sw    : std_logic_vector (7 downto 0);
-    signal write_btn  : std_logic;
+    signal databus       : std_logic_vector (7 downto 0);
+    signal control       : std_logic_vector (10 downto 0);
+    signal address_sw    : std_logic_vector (3 downto 0);
+    signal data_sw       : std_logic_vector (7 downto 0);
+    signal write_btn     : std_logic;
+    signal alu_value     : std_logic_vector (7 downto 0);
+    signal ram_value     : std_logic_vector (7 downto 0);
+    signal address_value : std_logic_vector (3 downto 0);
 
     -- Control signals
     alias  control_AI : std_logic is control(0);  -- A register load
@@ -74,11 +73,14 @@ begin
                  seg_an_o     => open   ,
 
                  -- Used only for test purposes
-                 databus_i    => databus    ,
-                 control_i    => control    ,
-                 address_sw_i => address_sw ,
-                 data_sw_i    => data_sw    ,
-                 write_btn_i  => write_btn  
+                 databus_i       => databus       ,
+                 control_i       => control       ,
+                 address_sw_i    => address_sw    ,
+                 data_sw_i       => data_sw       ,
+                 write_btn_i     => write_btn     ,
+                 alu_value_o     => alu_value     ,
+                 ram_value_o     => ram_value     ,
+                 address_value_o => address_value
              );
 
     -- Start the main test
@@ -88,6 +90,7 @@ begin
         sw  <= "00000000";
         btn <= "0000";
         sw_clk_free <= '1'; -- Use freerunning (astable) clock
+        sw_runmode <= '1'; -- Set memory to run mode.
 
         databus    <= "ZZZZZZZZ";
         control    <= (others => '0');
@@ -158,8 +161,31 @@ begin
         assert led = "11101110"; -- 0xbb + 0x33 = 0xee
 
         control_EO <= '0';
+        control_AO <= '1';
+        control_AI <= '0';
+        wait for 40 ns;
+        assert led = "10111011"; -- Verify A-register
+
+        control_AO <= '0';
         wait for 40 ns;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
+
+        -- Verify from A-register to memory address register
+        control_AO <= '1';
+        wait for 40 ns;
+        control_MI <= '1';
+        wait for 40 ns;
+        assert led = "10111011";
+        assert address_value = "1011";
+
+        -- Verify from B-register to memory contents
+        control_AO <= '0';
+        control_MI <= '0';
+        control_BO <= '1';
+        control_RI <= '1';
+        wait for 40 ns;
+        assert led = "00110011";
+
 
         test_running <= false;
         wait;

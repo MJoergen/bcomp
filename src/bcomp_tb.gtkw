@@ -1,26 +1,27 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Fri Apr  7 14:35:12 2017
+[*] Fri Apr  7 15:57:24 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Fri Apr  7 14:35:02 2017"
-[dumpfile_size] 4679
+[dumpfile_mtime] "Fri Apr  7 15:57:16 2017"
+[dumpfile_size] 5288
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1185 668
 [pos] 20 0
-*-27.383625 540000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.705553 223000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
 [treeopen] top.bcomp_tb.inst_bcomp.inst_alu.
+[treeopen] top.bcomp_tb.inst_bcomp.inst_memory_address_register.
 [sst_width] 229
 [signals_width] 170
 [sst_expanded] 1
 [sst_vpaned_height] 169
 @200
 -Test bench
-@29
+@28
 top.bcomp_tb.clk
 @22
 #{top.bcomp_tb.btn[3:0]} top.bcomp_tb.btn[3] top.bcomp_tb.btn[2] top.bcomp_tb.btn[1] top.bcomp_tb.btn[0]
@@ -67,5 +68,12 @@ top.bcomp_tb.inst_bcomp.inst_alu.sub_i
 top.bcomp_tb.inst_bcomp.inst_alu.enable_i
 @22
 #{top.bcomp_tb.inst_bcomp.inst_alu.result_o[7:0]} top.bcomp_tb.inst_bcomp.inst_alu.result_o[7] top.bcomp_tb.inst_bcomp.inst_alu.result_o[6] top.bcomp_tb.inst_bcomp.inst_alu.result_o[5] top.bcomp_tb.inst_bcomp.inst_alu.result_o[4] top.bcomp_tb.inst_bcomp.inst_alu.result_o[3] top.bcomp_tb.inst_bcomp.inst_alu.result_o[2] top.bcomp_tb.inst_bcomp.inst_alu.result_o[1] top.bcomp_tb.inst_bcomp.inst_alu.result_o[0]
+@200
+-Address register
+@28
+top.bcomp_tb.inst_bcomp.inst_memory_address_register.load_i
+@22
+#{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[0]
+#{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[0]
 [pattern_trace] 1
 [pattern_trace] 0
