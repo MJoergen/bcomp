@@ -14,6 +14,24 @@ NET "clk_i"  LOC = "M6"; # Bank = 2, Signal name = UCLK, PAD = GCLK0
 NET "clk_i" TNM_NET = clk_i;
 TIMESPEC TS_clk_i = PERIOD "clk_i" 40 ns HIGH 50%;  # 25 MHz
 
+# Pin assignments for PMOD's
+NET "pmod_i<0>"  LOC = "B2";   # Signal name = JA1
+NET "pmod_i<1>"  LOC = "A3";   # Signal name = JA2
+NET "pmod_i<2>"  LOC = "J3";   # Signal name = JA3
+NET "pmod_i<3>"  LOC = "B5";   # Signal name = JA4
+NET "pmod_i<4>"  LOC = "C6";   # Signal name = JB1
+NET "pmod_i<5>"  LOC = "B6";   # Signal name = JB2
+NET "pmod_i<6>"  LOC = "C5";   # Signal name = JB3
+NET "pmod_i<7>"  LOC = "B7";   # Signal name = JB4
+NET "pmod_i<8>"  LOC = "A9";   # Signal name = JC1
+NET "pmod_i<9>"  LOC = "B9";   # Signal name = JC2
+NET "pmod_i<10>" LOC = "A10";  # Signal name = JC3
+NET "pmod_i<11>" LOC = "C9";   # Signal name = JC4
+NET "pmod_i<12>" LOC = "C12";  # Signal name = JD1
+NET "pmod_i<13>" LOC = "A13";  # Signal name = JD2
+NET "pmod_i<14>" LOC = "C13";  # Signal name = JD3
+NET "pmod_i<15>" LOC = "D12";  # Signal name = JD4
+
 # Pin assignments for slide switches
 NET "sw_i<7>" LOC = "N3";  # Bank = 2, Signal name = SW7
 NET "sw_i<6>" LOC = "E2";  # Bank = 3, Signal name = SW6

@@ -12,8 +12,9 @@ architecture Structural of bcomp_tb is
     signal test_running : boolean := true;
 
     -- slide-switches and push-buttons
-    signal sw  : std_logic_vector (7 downto 0);
-    signal btn : std_logic_vector (3 downto 0);
+    signal sw   : std_logic_vector (7 downto 0);
+    signal btn  : std_logic_vector (3 downto 0);
+    signal pmod : std_logic_vector (15 downto 0);
 
     alias btn_clk_step   : std_logic is btn(0);
     alias sw_clk_free    : std_logic is sw(7);
@@ -70,6 +71,7 @@ begin
                  clk_i        => clk    ,
                  sw_i         => sw     ,
                  btn_i        => btn    ,
+                 pmod_i       => pmod   ,
                  led_o        => led    , 
                  seg_ca_o     => open   ,
                  seg_dp_o     => open   ,

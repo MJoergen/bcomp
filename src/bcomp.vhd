@@ -18,6 +18,9 @@ entity bcomp is
       -- Input switches
       sw_i        : in  std_logic_vector (7 downto 0);
 
+      -- Inputs from PMOD's
+      pmod_i      : in  std_logic_vector (15 downto 0);
+
       -- Input buttons
       btn_i       : in  std_logic_vector (3 downto 0);
 
