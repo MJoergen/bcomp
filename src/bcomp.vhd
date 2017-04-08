@@ -31,8 +31,6 @@ entity bcomp is
       -- Used during testing
       databus_i       : in  std_logic_vector (7 downto 0);
       control_i       : in  std_logic_vector (13 downto 0);
-      address_sw_i    : in  std_logic_vector (3 downto 0);
-      data_sw_i       : in  std_logic_vector (7 downto 0);
       write_btn_i     : in  std_logic;
       alu_value_o     : out std_logic_vector (7 downto 0);
       ram_value_o     : out std_logic_vector (7 downto 0);
@@ -73,6 +71,8 @@ architecture Structural of bcomp is
     alias clk_button     : std_logic is btn_i(0);
     alias regs_clear     : std_logic is sw_i(0);
     alias runmode        : std_logic is sw_i(1);
+    alias address_sw     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
+    alias data_sw        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
 
     -- Communication between blocks
     signal areg_value    : std_logic_vector (7 downto 0);
@@ -102,15 +102,11 @@ architecture Structural of bcomp is
     alias  control_J  : std_logic is control(12); -- Program counter jump
     alias  control_CE : std_logic is control(13); -- Program counter count enable
 
-    signal address_sw    : std_logic_vector (3 downto 0);
-    signal data_sw       : std_logic_vector (7 downto 0);
     signal write_btn     : std_logic;
 
 begin
 
     -- pragma synthesis_off
-    address_sw <= address_sw_i;
-    data_sw <= data_sw_i;
     write_btn <= write_btn_i;
     databus <= databus_i;
     control <= control_i;

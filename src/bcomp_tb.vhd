@@ -20,6 +20,8 @@ architecture Structural of bcomp_tb is
     alias sw_clk_free    : std_logic is sw(7);
     alias sw_regs_clear  : std_logic is sw(0);
     alias sw_runmode     : std_logic is sw(1);
+    alias address_sw     : std_logic_vector (3 downto 0) is pmod(11 downto 8);
+    alias data_sw        : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
 
     -- LED
     signal led : std_logic_vector (7 downto 0) := (others => 'Z');
@@ -27,8 +29,6 @@ architecture Structural of bcomp_tb is
     -- Used only for test purposes
     signal databus       : std_logic_vector (7 downto 0);
     signal control       : std_logic_vector (13 downto 0);
-    signal address_sw    : std_logic_vector (3 downto 0);
-    signal data_sw       : std_logic_vector (7 downto 0);
     signal write_btn     : std_logic;
     signal alu_value     : std_logic_vector (7 downto 0);
     signal ram_value     : std_logic_vector (7 downto 0);
@@ -80,8 +80,6 @@ begin
                  -- Used only for test purposes
                  databus_i       => databus       ,
                  control_i       => control       ,
-                 address_sw_i    => address_sw    ,
-                 data_sw_i       => data_sw       ,
                  write_btn_i     => write_btn     ,
                  alu_value_o     => alu_value     ,
                  ram_value_o     => ram_value     ,
