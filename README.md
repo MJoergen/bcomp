@@ -6,14 +6,14 @@ https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU
 
 This will implement everything in VHDL, taylored for the BASYS2 FPGA board
 http://store.digilentinc.com/basys-2-spartan-3e-fpga-trainer-board-limited-time-see-basys-3/ , see picture below:
-![alt text](https://github.com/MJoergen/bcomp/blob/master/src/Basys2.png "")
+![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Basys2.png "")
 
 The FPGA board is based on a Spartan-3E FPGA chip from Xilinx.
 
 Suggestions and contributions are welcome.
 
 The overall block diagram of the computer is the picture below taken from video number 25 in Ben Eater's series:
-![alt text](https://github.com/MJoergen/bcomp/blob/master/src/Block_Diagram.png "")
+![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Block_Diagram.png "")
 
 Please see the [log file](https://github.com/MJoergen/bcomp/blob/master/log.md)
 for additional implementation details and links to individual videos.
