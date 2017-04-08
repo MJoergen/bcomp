@@ -82,3 +82,8 @@ able to program the computer using slide switches and push buttons.
 This would suggest we move to a Basys3 board with double the number of slide
 switches and LED's. But so far, I'll continue with the Basys2 board I have.
 
+# 2017-04-08
+
+I just realized the Basys2 board has 16 extra I/O pins in the form of
+PMOD's. So it is not necessary after all to use the Basys3 board.
+
