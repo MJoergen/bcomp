@@ -13,7 +13,7 @@ The FPGA board is based on a Spartan-3E FPGA chip from Xilinx.
 Suggestions and contributions are welcome.
 
 The overall block diagram of the computer is the picture below taken from video number 25 in Ben Eater's series:
-![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Block_Diagram.png "")
+![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Block_diagram.png "")
 
 Please see the [log file](https://github.com/MJoergen/bcomp/blob/master/log.md)
 for additional implementation details and links to individual videos.
