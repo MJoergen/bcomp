@@ -141,16 +141,16 @@ architecture Structural of bcomp_tb is
         ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
 
         -- Verify simple addition program
-        -- LDA [4]
+        -- LDA [4]  "0001 0100"
         ("00000100", BUS_TO_ADDR,  LED_SELECT_ADDR, "00000100"), -- Decimal 4
         ("ZZZZZZZZ", MEM_TO_AREG,  LED_SELECT_BUS,  "00001110"), -- Decimal 14
 
-        -- ADD [5]
+        -- ADD [5]  "0010 0101"
         ("00000101", BUS_TO_ADDR,  LED_SELECT_ADDR, "00000101"), -- Decimal 5
         ("ZZZZZZZZ", MEM_TO_BREG,  LED_SELECT_BUS,  "00011100"), -- Decimal 28
         ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "00101010"), -- 14 + 28 = 42
 
-        -- OUT
+        -- OUT      "0101 0000"
         ("ZZZZZZZZ", AREG_TO_OUT,  LED_SELECT_OUT,  "00101010")  -- Decimal 42
     );
 
