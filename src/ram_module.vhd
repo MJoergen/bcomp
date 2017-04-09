@@ -9,9 +9,6 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity ram_module is
 
     port (
-             -- System clock
-             clk_i          : in std_logic;
-
              -- Control inputs
              wr_i           : in std_logic; -- called RI
              enable_i       : in std_logic; -- called RO
@@ -35,7 +32,6 @@ end ram_module;
 
 architecture Structural of ram_module is
 
-    signal address  : std_logic_vector(3 downto 0);
     signal data_in  : std_logic_vector(7 downto 0);
     signal data_out : std_logic_vector(7 downto 0);
     signal wr       : std_logic;

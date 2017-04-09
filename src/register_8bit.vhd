@@ -35,8 +35,9 @@ architecture Structural of register_8bit is
     signal data : std_logic_vector(7 downto 0);
 
 begin
+    -- pragma synthesis_off
     assert (load_i and enable_i) /= '1';
-
+    -- pragma synthesis_on
     
     process(clk_i, clr_i)
     begin

@@ -9,7 +9,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- way the switches are hooked up on the Basys2 board. In the video,
 -- he uses a double throw switch, but the Basys2 board only has 
 -- single throw switches. So instead we implement debouncing
--- uses a regular timer, based on the crystal clock.
+-- using a regular timer, based on the crystal clock.
 
 entity bistable_clock is
 

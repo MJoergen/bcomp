@@ -189,7 +189,6 @@ begin
     -- Instantiate RAM module
     inst_ram_module : entity work.ram_module
     port map (
-                 clk_i       => clk           ,
                  wr_i        => control_RI    ,
                  enable_i    => control_RO    ,
                  data_io     => databus       ,

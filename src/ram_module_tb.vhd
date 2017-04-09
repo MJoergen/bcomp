@@ -44,8 +44,6 @@ begin
     -- Instantiate DUT
     inst_ram_module : entity work.ram_module
     port map (
-             clk_i          => clk          ,
-
              wr_i           => wr           ,
              enable_i       => enable       ,
 
