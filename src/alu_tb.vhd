@@ -16,6 +16,7 @@ architecture Structural of alu_tb is
     -- Output from the DUT
     signal led        : std_logic_vector (7 downto 0);
     signal result     : std_logic_vector (7 downto 0);
+    signal carry      : std_logic;
 
 begin
     -- Instantiate DUT
@@ -26,6 +27,7 @@ begin
                  sub_i       => sub       ,
                  enable_i    => enable    ,
                  led_o       => led       ,
+                 carry_o     => carry     ,
                  result_o    => result
              );
 
@@ -52,6 +54,7 @@ begin
         wait for 40 ns;
         assert led      = "10001000";
         assert result   = "10001000"; -- 0x55 + 0x33 = 0x88
+        assert carry    = '0';
 
         enable <= '0';
         wait for 40 ns;
@@ -67,11 +70,26 @@ begin
         wait for 40 ns;
         assert led      = "00100010";
         assert result   = "00100010"; -- 0x55 - 0x33 = 0x22
+        assert carry    = '0';
 
         enable <= '0';
         wait for 40 ns;
         assert led      = "00100010";
         assert result   = "ZZZZZZZZ";
+
+        areg <= "01010101";
+        breg <= "11001100";
+        sub <= '0';
+        wait for 40 ns;
+        assert led      = "00100001"; -- 0x55 + 0xcc = 0x121
+        assert result   = "ZZZZZZZZ";
+        assert carry    = '1';
+
+        enable <= '1';
+        wait for 40 ns;
+        assert led      = "00100001";
+        assert result   = "00100001"; 
+        assert carry    = '1';
 
         wait;
     end process main_test;

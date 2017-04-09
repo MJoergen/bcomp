@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Wed Apr  5 17:56:10 2017
+[*] Sun Apr  9 20:52:34 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/alu_tb.ghw"
-[dumpfile_mtime] "Wed Apr  5 17:55:26 2017"
-[dumpfile_size] 922
+[dumpfile_mtime] "Sun Apr  9 20:52:15 2017"
+[dumpfile_size] 1131
 [savefile] "/home/mike/git/bcomp/src/alu_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-26.519833 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-26.882402 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.alu_tb.
 [treeopen] top.alu_tb.inst_alu.
@@ -34,5 +34,7 @@ top.alu_tb.enable
 #{top.alu_tb.inst_alu.minus[7:0]} top.alu_tb.inst_alu.minus[7] top.alu_tb.inst_alu.minus[6] top.alu_tb.inst_alu.minus[5] top.alu_tb.inst_alu.minus[4] top.alu_tb.inst_alu.minus[3] top.alu_tb.inst_alu.minus[2] top.alu_tb.inst_alu.minus[1] top.alu_tb.inst_alu.minus[0]
 #{top.alu_tb.inst_alu.result[7:0]} top.alu_tb.inst_alu.result[7] top.alu_tb.inst_alu.result[6] top.alu_tb.inst_alu.result[5] top.alu_tb.inst_alu.result[4] top.alu_tb.inst_alu.result[3] top.alu_tb.inst_alu.result[2] top.alu_tb.inst_alu.result[1] top.alu_tb.inst_alu.result[0]
 #{top.alu_tb.inst_alu.result_o[7:0]} top.alu_tb.inst_alu.result_o[7] top.alu_tb.inst_alu.result_o[6] top.alu_tb.inst_alu.result_o[5] top.alu_tb.inst_alu.result_o[4] top.alu_tb.inst_alu.result_o[3] top.alu_tb.inst_alu.result_o[2] top.alu_tb.inst_alu.result_o[1] top.alu_tb.inst_alu.result_o[0]
+@29
+top.alu_tb.inst_alu.carry_o
 [pattern_trace] 1
 [pattern_trace] 0

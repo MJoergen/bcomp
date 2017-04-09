@@ -19,6 +19,7 @@ entity alu is
 
              -- Data bus connection
              result_o    : out std_logic_vector (7 downto 0);
+             carry_o     : out std_logic;
 
              -- LED output
              led_o       : out std_logic_vector (7 downto 0)
@@ -28,9 +29,9 @@ end alu;
 
 architecture Structural of alu is
 
-    signal plus   : std_logic_vector (7 downto 0);
-    signal minus  : std_logic_vector (7 downto 0);
-    signal result : std_logic_vector (7 downto 0);
+    signal plus   : std_logic_vector (8 downto 0);
+    signal minus  : std_logic_vector (8 downto 0);
+    signal result : std_logic_vector (8 downto 0);
 
 begin
 
@@ -38,16 +39,17 @@ begin
     -- Note. This is slightly cheating compared to the video
     -- because we're here relying on the synthesis tool
     -- using the chip's builtin adders and subtractors.
-    plus  <= areg_i + breg_i;
-    minus <= areg_i - breg_i;
+    plus  <= ("0" & areg_i) + ("0" & breg_i);
+    minus <= ("0" & areg_i) - ("0" & breg_i);
 
     -- Multiplex the correct result depending on the operation.
     result <= minus when sub_i = '1' else plus;
 
-    led_o <= result;
+    led_o <= result(7 downto 0);
+    carry_o <= result(8);
 
     -- The output is a tristate buffer.
-    result_o <= result when enable_i = '1' else (others => 'Z');
+    result_o <= result(7 downto 0) when enable_i = '1' else (others => 'Z');
 
 end Structural;
 
