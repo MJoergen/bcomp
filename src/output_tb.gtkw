@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Sun Apr  9 10:32:27 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/output_tb.ghw"
+[dumpfile_mtime] "Sun Apr  9 10:32:21 2017"
+[dumpfile_size] 2039
+[savefile] "/home/mike/git/bcomp/src/output_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-29.555994 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.output_tb.
+[sst_width] 229
+[signals_width] 118
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@29
+top.output_tb.clk
+@22
+#{top.output_tb.value[7:0]} top.output_tb.value[7] top.output_tb.value[6] top.output_tb.value[5] top.output_tb.value[4] top.output_tb.value[3] top.output_tb.value[2] top.output_tb.value[1] top.output_tb.value[0]
+#{top.output_tb.seg_an[3:0]} top.output_tb.seg_an[3] top.output_tb.seg_an[2] top.output_tb.seg_an[1] top.output_tb.seg_an[0]
+#{top.output_tb.seg_ca[6:0]} top.output_tb.seg_ca[6] top.output_tb.seg_ca[5] top.output_tb.seg_ca[4] top.output_tb.seg_ca[3] top.output_tb.seg_ca[2] top.output_tb.seg_ca[1] top.output_tb.seg_ca[0]
+@28
+top.output_tb.seg_dp
+[pattern_trace] 1
+[pattern_trace] 0
