@@ -32,9 +32,6 @@ entity bcomp is
       databus_i       : in  std_logic_vector (7 downto 0);
       control_i       : in  std_logic_vector (13 downto 0);
       write_btn_i     : in  std_logic;
-      alu_value_o     : out std_logic_vector (7 downto 0);
-      ram_value_o     : out std_logic_vector (7 downto 0);
-      address_value_o : out std_logic_vector (3 downto 0);
       -- pragma synthesis_on
 
       -- Output segment display
@@ -67,12 +64,18 @@ architecture Structural of bcomp is
     signal databus       : std_logic_vector(7 downto 0);
 
     -- Interpretation of input switches.
-    alias clk_switch     : std_logic is sw_i(7);
     alias clk_button     : std_logic is btn_i(0);
+    alias clk_switch     : std_logic is sw_i(7);
     alias regs_clear     : std_logic is sw_i(0);
     alias runmode        : std_logic is sw_i(1);
+    alias led_select     : std_logic_vector (1 downto 0) is sw_i(3 downto 2);
     alias address_sw     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
     alias data_sw        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
+
+    constant LED_SELECT_BUS  : std_logic_vector (1 downto 0) := "00";
+    constant LED_SELECT_ALU  : std_logic_vector (1 downto 0) := "01";
+    constant LED_SELECT_RAM  : std_logic_vector (1 downto 0) := "10";
+    constant LED_SELECT_ADDR : std_logic_vector (1 downto 0) := "11";
 
     -- Communication between blocks
     signal areg_value    : std_logic_vector (7 downto 0);
@@ -110,10 +113,12 @@ begin
     write_btn <= write_btn_i;
     databus <= databus_i;
     control <= control_i;
-    alu_value_o <= alu_value;
-    ram_value_o <= ram_value;
-    address_value_o <= address_value;
     -- pragma synthesis_on
+
+    led_o <= databus       when led_select = LED_SELECT_BUS else
+             alu_value     when led_select = LED_SELECT_ALU else
+             ram_value     when led_select = LED_SELECT_RAM else
+             "0000" & address_value when led_select = LED_SELECT_ADDR;
 
     -- Instantiate clock module
     inst_clock_logic : entity work.clock_logic
@@ -206,10 +211,6 @@ begin
                  led_o       => pc_value  -- Debug output
              );
 
-
-    -- For now, just copy the data bus to the output LED's.
-    -- This will later be multiplxed based on the push buttons.
-    led_o <= databus;
 
     -- Not used at the moment.
     seg_ca_o <= "1111111";

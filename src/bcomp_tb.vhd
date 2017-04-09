@@ -23,6 +23,12 @@ architecture Structural of bcomp_tb is
     alias address_sw     : std_logic_vector (3 downto 0) is pmod(11 downto 8);
     alias data_sw        : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
 
+    alias sw_led_select  : std_logic_vector (1 downto 0) is sw(3 downto 2);
+    constant LED_SELECT_BUS  : std_logic_vector (1 downto 0) := "00";
+    constant LED_SELECT_ALU  : std_logic_vector (1 downto 0) := "01";
+    constant LED_SELECT_RAM  : std_logic_vector (1 downto 0) := "10";
+    constant LED_SELECT_ADDR : std_logic_vector (1 downto 0) := "11";
+
     -- LED
     signal led : std_logic_vector (7 downto 0) := (others => 'Z');
 
@@ -30,9 +36,6 @@ architecture Structural of bcomp_tb is
     signal databus       : std_logic_vector (7 downto 0);
     signal control       : std_logic_vector (13 downto 0);
     signal write_btn     : std_logic;
-    signal alu_value     : std_logic_vector (7 downto 0);
-    signal ram_value     : std_logic_vector (7 downto 0);
-    signal address_value : std_logic_vector (3 downto 0);
 
     -- Bus commands
     constant control_AI : integer :=  0; -- A register load
@@ -110,10 +113,7 @@ begin
                  -- Used only for test purposes
                  databus_i       => databus       ,
                  control_i       => control       ,
-                 write_btn_i     => write_btn     ,
-                 alu_value_o     => alu_value     ,
-                 ram_value_o     => ram_value     ,
-                 address_value_o => address_value
+                 write_btn_i     => write_btn     
              );
 
     -- Start the main test
@@ -134,78 +134,96 @@ begin
         -- Test register clear
         sw_regs_clear <= '1';
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         sw_regs_clear <= '0';
         control <= AREG_TO_BUS;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "00000000"; -- Verify register A clear
 
         control <= NOP;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         -- Test register load
         databus <= "01010101"; -- 0x55 into register A
         control <= BUS_TO_AREG;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "01010101";
 
         databus <= "00110011"; -- 0x33 into register B
         control <= BUS_TO_BREG;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "00110011";
 
         databus <= "ZZZZZZZZ"; -- Clear data bus
         control <= NOP;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "ZZZZZZZZ";
 
         control <= AREG_TO_BUS;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "01010101"; -- Verify register A
 
         control <= BREG_TO_BUS;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "00110011"; -- Verify register B
 
         control <= ALU_TO_BUS;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "10001000"; -- Verify addition: 0x88
 
         control <= ALU_TO_BUS + ALU_SUB;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "00100010"; -- Verify subtraction: 0x22
 
         -- Verify counting.
         control <= ALU_TO_AREG;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "10001000"; -- 0x55 + 0x33 = 0x88
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "10111011"; -- 0x88 + 0x33 = 0xbb
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "11101110"; -- 0xbb + 0x33 = 0xee
 
         control <= AREG_TO_BUS;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "11101110"; -- Verify A-register
 
         control <= NOP;
         wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         -- Verify from A-register to memory address register
         control <= AREG_TO_ADDR;
-        wait until rising_edge(clk);
+        sw_led_select <= LED_SELECT_BUS;
         wait until rising_edge(clk);
         assert led = "11101110";
-        assert address_value = "1110";
+
+        sw_led_select <= LED_SELECT_ADDR;
+        wait until rising_edge(clk);
+        assert led = "00001110";
 
         -- Verify from B-register to memory contents
         control <= BREG_TO_MEM;
+        sw_led_select <= LED_SELECT_BUS;
         wait until rising_edge(clk);
         assert led = "00110011";
-
 
         test_running <= false;
         wait;
