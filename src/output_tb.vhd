@@ -13,6 +13,7 @@ architecture Structural of output_tb is
 
     -- Inputs to the DUT
     signal value      : std_logic_vector (7 downto 0);
+    signal two_comp   : std_logic;
 
     -- Output from the DUT
     signal seg_ca     : std_logic_vector (6 downto 0);
@@ -38,6 +39,7 @@ begin
                 )
     port map (
                  clk_i       => clk       ,
+                 two_comp_i  => two_comp  ,
                  value_i     => value     ,
                  seg_ca_o    => seg_ca    ,
                  seg_dp_o    => seg_dp    ,
@@ -47,29 +49,59 @@ begin
 
     -- Start the main test
     main_test : process is
-        type digits_type is array(0 to 9) of std_logic_vector(7 downto 0);
-        constant digits : digits_type :=
-            ("01000000", "01111001", "00100100", "00110000", "00011001",
-            "00010010", "00000010", "01111000", "00000000", "00010000");
+        constant DIG_0    : std_logic_vector (7 downto 0) := "11000000";
+        constant DIG_1    : std_logic_vector (7 downto 0) := "11111001";
+        constant DIG_2    : std_logic_vector (7 downto 0) := "10100100";
+        constant DIG_3    : std_logic_vector (7 downto 0) := "10110000";
+        constant DIG_4    : std_logic_vector (7 downto 0) := "10011001";
+        constant DIG_5    : std_logic_vector (7 downto 0) := "10010010";
+        constant DIG_6    : std_logic_vector (7 downto 0) := "10000010";
+        constant DIG_7    : std_logic_vector (7 downto 0) := "11111000";
+        constant DIG_8    : std_logic_vector (7 downto 0) := "10000000";
+        constant DIG_9    : std_logic_vector (7 downto 0) := "10010000";
+        constant DIG_NONE : std_logic_vector (7 downto 0) := "11111111";
+        constant DIG_NEG  : std_logic_vector (7 downto 0) := "10111111";
     begin
         wait for 3*8*40 ns;
         wait for 40 ns;
-        value <= "01111011"; -- 123 decimal
+
+        two_comp <= '0';
+        value <= "11010101"; -- 213 decimal
         wait for 40 ns;
-        assert seg_ca = digits(3);
-        assert seg_dp = '1';
+        assert seg_ca = DIG_3(6 downto 0);
+        assert seg_dp = DIG_3(7);
         assert seg_an = "1110";
         wait for 8*40 ns;
-        assert seg_ca = digits(2);
-        assert seg_dp = '1';
+        assert seg_ca = DIG_1(6 downto 0);
+        assert seg_dp = DIG_1(7);
         assert seg_an = "1101";
         wait for 8*40 ns;
-        assert seg_ca = digits(1);
-        assert seg_dp = '1';
+        assert seg_ca = DIG_2(6 downto 0);
+        assert seg_dp = DIG_2(7);
         assert seg_an = "1011";
         wait for 8*40 ns;
-        assert seg_ca = "1111111";
-        assert seg_dp = '1';
+        assert seg_ca = DIG_NONE(6 downto 0);
+        assert seg_dp = DIG_NONE(7);
+        assert seg_an = "0111";
+        wait for 8*40 ns;
+
+        two_comp <= '1';
+        value <= "11010101"; -- -43 decimal
+        wait for 40 ns;
+        assert seg_ca = DIG_3(6 downto 0);
+        assert seg_dp = DIG_3(7);
+        assert seg_an = "1110";
+        wait for 8*40 ns;
+        assert seg_ca = DIG_4(6 downto 0);
+        assert seg_dp = DIG_4(7);
+        assert seg_an = "1101";
+        wait for 8*40 ns;
+        assert seg_ca = DIG_0(6 downto 0);
+        assert seg_dp = DIG_0(7);
+        assert seg_an = "1011";
+        wait for 8*40 ns;
+        assert seg_ca = DIG_NEG(6 downto 0);
+        assert seg_dp = DIG_NEG(7);
         assert seg_an = "0111";
         wait for 8*40 ns;
 
