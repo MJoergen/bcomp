@@ -24,7 +24,7 @@ architecture Structural of control_tb is
     signal rst : std_logic;
 
     -- Inputs to the DUT
-    signal instruct :  std_logic_vector (3 downto 0);
+    signal instruct :  std_logic_vector (3 downto 0) := "0000";
 
     -- Output from the DUT
     signal control  :  std_logic_vector (15 downto 0);
@@ -65,12 +65,15 @@ begin
         assert control = X"0060" -- MEM to IR
             report "received " & slv_to_string(control);
 
+        wait until rising_edge(clk);
+        instruct <= "0111";  -- LDI 5
+
         wait until falling_edge(clk);
         assert control = X"0001" -- PC count
             report "received " & slv_to_string(control);
 
         wait until falling_edge(clk);
-        assert control = X"0000" -- NOP
+        assert control = X"0180" -- IR to AREG
             report "received " & slv_to_string(control);
 
         wait until falling_edge(clk);

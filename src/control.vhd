@@ -20,7 +20,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- 1000  JC   Jump if carry flag set
 -- 1111  HLT  Halt execution
 
--- Each instruction takes six cycles - three fetch and three execute.
+-- All instructions take six cycles - three fetch and three execute.
 
 entity control is
 
@@ -62,7 +62,7 @@ architecture Structural of control is
     constant control_HLT : integer := 14; -- Output register load
     constant control_JC  : integer := 15; -- B register output enable
 
-    signal counter       : std_logic_vector(2 downto 0); -- Eight possible states
+    signal counter       : std_logic_vector(2 downto 0) := "000"; -- Eight possible states
     signal micro_op_addr : std_logic_vector(6 downto 0);
 
     ------------------------------------------
