@@ -1,18 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Sun Apr  9 16:22:11 2017
+[*] Sun Apr  9 17:11:52 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Sun Apr  9 16:20:44 2017"
-[dumpfile_size] 5817
+[dumpfile_mtime] "Sun Apr  9 17:11:40 2017"
+[dumpfile_size] 6673
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1491 935
 [pos] 20 0
-*-27.447935 736000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.782354 1000000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
+[treeopen] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.
+[treeopen] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.data.
 [sst_width] 229
 [signals_width] 202
 [sst_expanded] 1
@@ -51,9 +53,9 @@ top.bcomp_tb.led[0]
 -group_end
 @200
 -DUT
-@c00023
+@c00022
 #{top.bcomp_tb.inst_bcomp.control[13:0]} top.bcomp_tb.inst_bcomp.control[13] top.bcomp_tb.inst_bcomp.control[12] top.bcomp_tb.inst_bcomp.control[11] top.bcomp_tb.inst_bcomp.control[10] top.bcomp_tb.inst_bcomp.control[9] top.bcomp_tb.inst_bcomp.control[8] top.bcomp_tb.inst_bcomp.control[7] top.bcomp_tb.inst_bcomp.control[6] top.bcomp_tb.inst_bcomp.control[5] top.bcomp_tb.inst_bcomp.control[4] top.bcomp_tb.inst_bcomp.control[3] top.bcomp_tb.inst_bcomp.control[2] top.bcomp_tb.inst_bcomp.control[1] top.bcomp_tb.inst_bcomp.control[0]
-@29
+@28
 top.bcomp_tb.inst_bcomp.control[13]
 top.bcomp_tb.inst_bcomp.control[12]
 top.bcomp_tb.inst_bcomp.control[11]
@@ -68,10 +70,12 @@ top.bcomp_tb.inst_bcomp.control[3]
 top.bcomp_tb.inst_bcomp.control[2]
 top.bcomp_tb.inst_bcomp.control[1]
 top.bcomp_tb.inst_bcomp.control[0]
-@1401201
+@1401200
 -group_end
 @22
 #{top.bcomp_tb.inst_bcomp.led_o[7:0]} top.bcomp_tb.inst_bcomp.led_o[7] top.bcomp_tb.inst_bcomp.led_o[6] top.bcomp_tb.inst_bcomp.led_o[5] top.bcomp_tb.inst_bcomp.led_o[4] top.bcomp_tb.inst_bcomp.led_o[3] top.bcomp_tb.inst_bcomp.led_o[2] top.bcomp_tb.inst_bcomp.led_o[1] top.bcomp_tb.inst_bcomp.led_o[0]
+@23
+#{top.bcomp_tb.inst_bcomp.databus[7:0]} top.bcomp_tb.inst_bcomp.databus[7] top.bcomp_tb.inst_bcomp.databus[6] top.bcomp_tb.inst_bcomp.databus[5] top.bcomp_tb.inst_bcomp.databus[4] top.bcomp_tb.inst_bcomp.databus[3] top.bcomp_tb.inst_bcomp.databus[2] top.bcomp_tb.inst_bcomp.databus[1] top.bcomp_tb.inst_bcomp.databus[0]
 @200
 -A register
 @28
@@ -105,5 +109,6 @@ top.bcomp_tb.inst_bcomp.inst_memory_address_register.load_i
 #{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[0]
 #{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[0]
 #{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[0]
+#{top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.data[4][3:0]} top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.data[4][3] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.data[4][2] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.data[4][1] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.data[4][0]
 [pattern_trace] 1
 [pattern_trace] 0

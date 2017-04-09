@@ -72,11 +72,15 @@ architecture Structural of bcomp is
     alias address_sw     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
     alias data_sw        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
 
-    alias led_select     : std_logic_vector (1 downto 0) is sw_i(3 downto 2);
-    constant LED_SELECT_BUS  : std_logic_vector (1 downto 0) := "00";
-    constant LED_SELECT_ALU  : std_logic_vector (1 downto 0) := "01";
-    constant LED_SELECT_RAM  : std_logic_vector (1 downto 0) := "10";
-    constant LED_SELECT_ADDR : std_logic_vector (1 downto 0) := "11";
+    alias led_select     : std_logic_vector (2 downto 0) is sw_i(4 downto 2);
+    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000";
+    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "001";
+    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "010";
+    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "011";
+    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "100";
+    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101";
+    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110";
+    constant LED_SELECT_IREG : std_logic_vector (2 downto 0) := "111";
 
     -- Communication between blocks
     signal areg_value    : std_logic_vector (7 downto 0);
@@ -116,10 +120,14 @@ begin
     control <= control_i;
     -- pragma synthesis_on
 
-    led_o <= databus                when led_select = LED_SELECT_BUS else
-             alu_value              when led_select = LED_SELECT_ALU else
-             ram_value              when led_select = LED_SELECT_RAM else
-             "0000" & address_value when led_select = LED_SELECT_ADDR;
+    led_o <= databus                when led_select = LED_SELECT_BUS  else
+             alu_value              when led_select = LED_SELECT_ALU  else
+             ram_value              when led_select = LED_SELECT_RAM  else
+             "0000" & address_value when led_select = LED_SELECT_ADDR else
+             areg_value             when led_select = LED_SELECT_AREG else
+             breg_value             when led_select = LED_SELECT_BREG else
+             disp_value             when led_select = LED_SELECT_OUT  else
+             ireg_value             when led_select = LED_SELECT_IREG;
 
     -- Instantiate clock module
     inst_clock_logic : entity work.clock_logic

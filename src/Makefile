@@ -80,7 +80,8 @@ tb_sources = $(testbench).vhd
 wave       = $(testbench).ghw
 wavesave   = $(testbench).gtkw
 unisim_lib = unisim-obj93.cf
-stoptime   = --stop-time=4000us
+#stoptime   = --stop-time=4000us
+stoptime   = --stop-time=4000us --assert-level=none
 
 # Host PC application
 app_source = $(project).cpp
