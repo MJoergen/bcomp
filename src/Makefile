@@ -1,15 +1,16 @@
-#project    = bcomp
-#top_module = bcomp
-#vfiles     = bcomp.vhd # Top level
-#vfiles    += clock_logic.vhd
-#vfiles    += bistable_clock.vhd
-#vfiles    += monostable_clock.vhd
-#vfiles    += register_8bit.vhd
-#vfiles    += alu.vhd
-#vfiles    += memory_address_register.vhd
-#vfiles    += ram_module.vhd
-#vfiles    += ram74ls189.vhd 
-#vfiles    += program_counter.vhd 
+project    = bcomp
+top_module = bcomp
+vfiles     = bcomp.vhd # Top level
+vfiles    += clock_logic.vhd
+vfiles    += bistable_clock.vhd
+vfiles    += monostable_clock.vhd
+vfiles    += register_8bit.vhd
+vfiles    += alu.vhd
+vfiles    += memory_address_register.vhd
+vfiles    += ram_module.vhd
+vfiles    += ram74ls189.vhd 
+vfiles    += program_counter.vhd 
+vfiles    += display.vhd 
 
 #project    = program_counter
 #top_module = program_counter
@@ -55,9 +56,9 @@
 #top_module = alu
 #vfiles     = alu.vhd # Top level
 
-project    = display
-top_module = display
-vfiles     = display.vhd # Top level
+#project    = display
+#top_module = display
+#vfiles     = display.vhd # Top level
 
 # Synthesis
 vendor     = xilinx

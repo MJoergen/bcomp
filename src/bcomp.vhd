@@ -83,6 +83,8 @@ architecture Structural of bcomp is
     signal breg_value    : std_logic_vector (7 downto 0);
     signal ireg_value    : std_logic_vector (7 downto 0);
     signal address_value : std_logic_vector (3 downto 0);
+    signal disp_two_comp : std_logic;
+    signal disp_value    : std_logic_vector (7 downto 0);
 
     -- Debug outputs connected to LEDs
     signal alu_value     : std_logic_vector (7 downto 0);
@@ -207,6 +209,17 @@ begin
                  enable_i    => control_CO          ,
                  count_i     => control_CE          ,
                  led_o       => pc_value              -- Debug output
+             );
+
+    -- Instantiate Display
+    inst_display : entity work.display
+    port map (
+                 clk_i       => clk_i         , -- Use crystal clock
+                 two_comp_i  => disp_two_comp ,
+                 value_i     => disp_value    ,
+                 seg_ca_o    => seg_ca_o      ,
+                 seg_dp_o    => seg_dp_o      ,
+                 seg_an_o    => seg_an_o 
              );
 
     -- Not used at the moment.
