@@ -169,7 +169,7 @@ begin
                  areg_i      => areg_value ,
                  breg_i      => breg_value ,
                  result_o    => databus    ,
-                 led_o       => alu_value -- Debug output
+                 led_o       => alu_value    -- Debug output
              );
 
     -- Instantiate memory address register
@@ -178,9 +178,9 @@ begin
                  clk_i       => clk                 ,
                  load_i      => control_MI          ,
                  address_i   => databus(3 downto 0) ,
-                 address_o   => address_value       , -- to RAM module
                  runmode_i   => runmode             ,
-                 sw_i        => address_sw
+                 sw_i        => address_sw          ,
+                 address_o   => address_value         -- to RAM module
              );
 
     -- Instantiate RAM module
@@ -194,7 +194,7 @@ begin
                  runmode_i   => runmode       ,
                  sw_data_i   => data_sw       ,
                  wr_button_i => write_btn     ,
-                 data_led_o  => ram_value -- Debug output
+                 data_led_o  => ram_value       -- Debug output
              );
 
     -- Instantiate Program counter
@@ -206,7 +206,7 @@ begin
                  load_i      => control_J           ,
                  enable_i    => control_CO          ,
                  count_i     => control_CE          ,
-                 led_o       => pc_value  -- Debug output
+                 led_o       => pc_value              -- Debug output
              );
 
     -- Not used at the moment.
