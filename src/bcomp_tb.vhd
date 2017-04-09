@@ -35,7 +35,6 @@ architecture Structural of bcomp_tb is
     -- Used only for test purposes
     signal databus       : std_logic_vector (7 downto 0);
     signal control       : std_logic_vector (13 downto 0);
-    signal write_btn     : std_logic;
 
     -- Bus commands
     constant control_AI : integer :=  0; -- A register load
@@ -112,8 +111,7 @@ begin
 
                  -- Used only for test purposes
                  databus_i       => databus       ,
-                 control_i       => control       ,
-                 write_btn_i     => write_btn     
+                 control_i       => control       
              );
 
     -- Start the main test
@@ -129,7 +127,6 @@ begin
         control    <= (others => '0');
         address_sw <= (others => '0');
         data_sw    <= (others => '0');
-        write_btn  <= '0';
 
         -- Test register clear
         sw_regs_clear <= '1';

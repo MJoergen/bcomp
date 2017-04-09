@@ -31,7 +31,6 @@ entity bcomp is
       -- Used during testing
       databus_i       : in  std_logic_vector (7 downto 0);
       control_i       : in  std_logic_vector (13 downto 0);
-      write_btn_i     : in  std_logic;
       -- pragma synthesis_on
 
       -- Output segment display
@@ -65,6 +64,7 @@ architecture Structural of bcomp is
 
     -- Interpretation of input switches.
     alias clk_button     : std_logic is btn_i(0);
+    alias write_btn      : std_logic is btn_i(1);
     alias clk_switch     : std_logic is sw_i(7);
     alias regs_clear     : std_logic is sw_i(0);
     alias runmode        : std_logic is sw_i(1);
@@ -105,12 +105,9 @@ architecture Structural of bcomp is
     alias  control_J  : std_logic is control(12); -- Program counter jump
     alias  control_CE : std_logic is control(13); -- Program counter count enable
 
-    signal write_btn     : std_logic;
-
 begin
 
     -- pragma synthesis_off
-    write_btn <= write_btn_i;
     databus <= databus_i;
     control <= control_i;
     -- pragma synthesis_on
