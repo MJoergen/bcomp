@@ -19,7 +19,7 @@ entity program_counter is
              clr_i       : in std_logic;
 
              -- Data bus connection
-             data_io     : inout std_logic_vector(3 downto 0);
+             data_io     : inout std_logic_vector(7 downto 0);
 
              -- LED output
              led_o       : out std_logic_vector (3 downto 0)
@@ -43,7 +43,7 @@ begin
             data <= (others => '0');
         elsif rising_edge(clk_i) then
             if load_i = '1' then
-                data <= data_io;
+                data <= data_io(3 downto 0);
             elsif count_i = '1' then
                 data <= data + "0001";
             end if;
@@ -51,7 +51,7 @@ begin
     end process;
 
     led_o <= data;
-    data_io <= data when (enable_i = '1') else "ZZZZ";
+    data_io <= "0000" & data when (enable_i = '1') else "ZZZZZZZZ";
 
 end Structural;
 

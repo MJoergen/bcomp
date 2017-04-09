@@ -21,7 +21,7 @@ architecture Structural of program_counter_tb is
     signal led        : std_logic_vector(3 downto 0);
 
     -- Main data bus
-    signal data       : std_logic_vector(3 downto 0);
+    signal data       : std_logic_vector(7 downto 0);
 
 begin
     -- Generate clock
@@ -52,65 +52,65 @@ begin
     begin
         -- Check reset state
         clr    <= '1';
-        data   <= "ZZZZ";
+        data   <= "ZZZZZZZZ";
         load   <= '0';
         enable <= '1';
         count  <= '0';
         wait for 80 ns;
         assert led     = "0000";
-        assert data    = "0000";
+        assert data    = "00000000";
 
         -- Check tristate buffer
         enable <= '0';
         wait for 80 ns;
         assert led     = "0000";
-        assert data    = "ZZZZ";
+        assert data    = "ZZZZZZZZ";
 
         -- Check setting register
         clr    <= '0';
-        data   <= "0101";
+        data   <= "00000101";
         load   <= '1';
         enable <= '0'; -- When setting load, remember to clear enable.
         wait for 80 ns;
-        assert data    = "0101";
         assert led     = "0101";
+        assert data    = "00000101";
 
         -- Check tristate buffer
-        data   <= "ZZZZ";
+        data   <= "ZZZZZZZZ";
         load   <= '0';
         enable <= '0';
         wait for 80 ns;
-        assert data    = "ZZZZ";
         assert led     = "0101";
+        assert data    = "ZZZZZZZZ";
 
         -- Check counter
         count  <= '1';
         wait for 40 ns;
         assert led     = "0110";
-        assert data    = "ZZZZ";
+        assert data    = "ZZZZZZZZ";
 
         wait for 40 ns;
         assert led     = "0111";
-        assert data    = "ZZZZ";
+        assert data    = "ZZZZZZZZ";
 
         wait for 40 ns;
         assert led     = "1000";
-        assert data    = "ZZZZ";
+        assert data    = "ZZZZZZZZ";
 
         enable <= '1';
         wait for 40 ns;
         assert led     = "1001";
-        assert data    = "1001";
+        assert data    = "00001001";
 
         -- Check reset state
         clr    <= '1';
-        data   <= "ZZZZ";
+        data   <= "ZZZZZZZZ";
         load   <= '0';
         enable <= '1';
         count  <= '0';
         wait for 80 ns;
         assert led     = "0000";
-        assert data    = "0000";
+        assert data    = "00000000";
 
         test_running <= false;
         wait;
