@@ -133,79 +133,77 @@ begin
 
         -- Test register clear
         sw_regs_clear <= '1';
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         sw_regs_clear <= '0';
         control <= AREG_TO_BUS;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "00000000"; -- Verify register A clear
 
         control <= NOP;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         -- Test register load
         databus <= "01010101"; -- 0x55 into register A
         control <= BUS_TO_AREG;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "01010101";
 
         databus <= "00110011"; -- 0x33 into register B
         control <= BUS_TO_BREG;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "00110011";
 
         databus <= "ZZZZZZZZ"; -- Clear data bus
         control <= NOP;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "ZZZZZZZZ";
 
         control <= AREG_TO_BUS;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "01010101"; -- Verify register A
 
         control <= BREG_TO_BUS;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "00110011"; -- Verify register B
 
         control <= ALU_TO_BUS;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "10001000"; -- Verify addition: 0x88
 
         control <= ALU_TO_BUS + ALU_SUB;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "00100010"; -- Verify subtraction: 0x22
 
         -- Verify counting.
         control <= ALU_TO_AREG;
-        wait for 40 ns;
-        assert led = "01010101"; -- 0x22 + 0x33 = 0x55
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "10001000"; -- 0x55 + 0x33 = 0x88
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "10111011"; -- 0x88 + 0x33 = 0xbb
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "11101110"; -- 0xbb + 0x33 = 0xee
 
         control <= AREG_TO_BUS;
-        wait for 40 ns;
-        assert led = "10111011"; -- Verify A-register
+        wait until rising_edge(clk);
+        assert led = "11101110"; -- Verify A-register
 
         control <= NOP;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         -- Verify from A-register to memory address register
         control <= AREG_TO_ADDR;
-        wait for 40 ns;
-        wait for 40 ns;
-        assert led = "10111011";
-        assert address_value = "1011";
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+        assert led = "11101110";
+        assert address_value = "1110";
 
         -- Verify from B-register to memory contents
         control <= BREG_TO_MEM;
-        wait for 40 ns;
+        wait until rising_edge(clk);
         assert led = "00110011";
 
 
