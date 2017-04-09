@@ -1,0 +1,18 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Sun Apr  9 18:00:52 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/control_tb.ghw"
+[dumpfile_mtime] "Sun Apr  9 18:00:45 2017"
+[dumpfile_size] 635
+[savefile] "/home/mike/git/bcomp/src/control_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-23.579941 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 229
+[signals_width] 78
+[sst_expanded] 1
+[sst_vpaned_height] 146
+[pattern_trace] 1
+[pattern_trace] 0
