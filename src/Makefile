@@ -55,9 +55,9 @@
 #top_module = alu
 #vfiles     = alu.vhd # Top level
 
-project    = output
-top_module = output
-vfiles     = output.vhd # Top level
+project    = display
+top_module = display
+vfiles     = display.vhd # Top level
 
 # Synthesis
 vendor     = xilinx

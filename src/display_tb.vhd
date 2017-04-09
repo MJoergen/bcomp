@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity output_tb is
-end output_tb ;
+entity display_tb is
+end display_tb ;
 
-architecture Structural of output_tb is
+architecture Structural of display_tb is
 
     -- Clock
     signal clk : std_logic; -- 25 MHz
@@ -33,7 +33,7 @@ begin
     end process clk_gen;
 
     -- Instantiate DUT
-    inst_output : entity work.output
+    inst_display : entity work.display
     generic map (
                     COUNTER_SIZE => 3
                 )

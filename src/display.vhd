@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
--- output.vhd
+-- display.vhd
 -- This entity implements the feature described in the video
 -- https://www.youtube.com/watch?v=dLh1n2dErzE
 
@@ -11,7 +11,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- bit in seg_ca_o and/or seg_dp_o.
 -- Likewise, the four anode signals are active low too.
 
-entity output is
+entity display is
 
     generic (
                 COUNTER_SIZE : integer := 15
@@ -30,9 +30,9 @@ entity output is
              seg_dp_o    : out std_logic;
              seg_an_o    : out std_logic_vector (3 downto 0));
 
-end output;
+end display;
 
-architecture Structural of output is
+architecture Structural of display is
     signal segment : std_logic_vector(1 downto 0) := (others => '0');
     signal counter : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
     (others => '0');
