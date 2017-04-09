@@ -86,6 +86,7 @@ architecture Structural of bcomp_tb is
             control_BI => '1', others => '0');
 
 
+    -- This contains a single microcode operation.
     type step_type is record
         databus    : std_logic_vector (7 downto 0);
         control    : control_type;
@@ -118,7 +119,6 @@ architecture Structural of bcomp_tb is
         ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_BUS,  "10001000"), -- 0x55 + 0x33 = 0x88
         ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_BUS,  "10111011"), -- 0x88 + 0x33 = 0xbb
         ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_BUS,  "11101110"), -- 0xbb + 0x33 = 0xee
-
         ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "11101110"), 
         ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
 
@@ -162,22 +162,23 @@ begin
     main_test : process is
     begin
         -- Set initial values
-        sw  <= "00000000";
-        btn <= "0000";
+        sw          <= "00000000";
+        btn         <= "0000";
         sw_clk_free <= '1'; -- Use freerunning (astable) clock
-        sw_runmode <= '1'; -- Set memory to run mode.
+        sw_runmode  <= '1'; -- Set memory to run mode.
 
-        databus    <= "ZZZZZZZZ";
-        control    <= (others => '0');
-        address_sw <= (others => '0');
-        data_sw    <= (others => '0');
+        databus     <= "ZZZZZZZZ";
+        control     <= (others => '0');
+        address_sw  <= (others => '0');
+        data_sw     <= (others => '0');
 
-        -- Test register clear
+        -- Reset DUT
         reset_btn <= '1';
         wait until rising_edge(clk);
         reset_btn <= '0';
         wait until rising_edge(clk);
 
+        -- Run through program in microcode.
         for i in steps'range loop
             databus       <= steps(i).databus;
             control       <= steps(i).control;
