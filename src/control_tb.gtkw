@@ -1,18 +1,29 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Sun Apr  9 18:00:52 2017
+[*] Sun Apr  9 20:09:17 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/control_tb.ghw"
-[dumpfile_mtime] "Sun Apr  9 18:00:45 2017"
-[dumpfile_size] 635
+[dumpfile_mtime] "Sun Apr  9 20:08:49 2017"
+[dumpfile_size] 938
 [savefile] "/home/mike/git/bcomp/src/control_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-23.579941 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-26.836657 20000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.control_tb.
+[treeopen] top.control_tb.inst_control.
 [sst_width] 229
-[signals_width] 78
+[signals_width] 182
 [sst_expanded] 1
 [sst_vpaned_height] 146
+@28
+top.control_tb.rst
+top.control_tb.clk
+@22
+#{top.control_tb.instruct[3:0]} top.control_tb.instruct[3] top.control_tb.instruct[2] top.control_tb.instruct[1] top.control_tb.instruct[0]
+#{top.control_tb.control[15:0]} top.control_tb.control[15] top.control_tb.control[14] top.control_tb.control[13] top.control_tb.control[12] top.control_tb.control[11] top.control_tb.control[10] top.control_tb.control[9] top.control_tb.control[8] top.control_tb.control[7] top.control_tb.control[6] top.control_tb.control[5] top.control_tb.control[4] top.control_tb.control[3] top.control_tb.control[2] top.control_tb.control[1] top.control_tb.control[0]
+@29
+#{top.control_tb.inst_control.counter[2:0]} top.control_tb.inst_control.counter[2] top.control_tb.inst_control.counter[1] top.control_tb.inst_control.counter[0]
 [pattern_trace] 1
 [pattern_trace] 0
