@@ -36,7 +36,7 @@ architecture Structural of bcomp_tb is
 
     -- Used only for test purposes
     signal databus       : std_logic_vector (7 downto 0);
-    signal control       : std_logic_vector (13 downto 0);
+    signal control       : std_logic_vector (14 downto 0);
 
     -- Bus commands
     constant control_AI : integer :=  0; -- A register load
@@ -51,12 +51,13 @@ architecture Structural of bcomp_tb is
     constant control_RO : integer := 10; -- RAM output enable
     constant control_CO : integer := 11; -- Program counter output enable
     constant control_J  : integer := 12; -- Program counter jump
+    constant control_OI : integer := 14; -- Output register load
 
     -- Additional control signals
     constant control_SU : integer :=  7; -- ALU subtract
     constant control_CE : integer := 13; -- Program counter count enable
 
-    subtype control_type is std_logic_vector(13 downto 0);
+    subtype control_type is std_logic_vector(14 downto 0);
     constant MEM_TO_AREG : control_type := (
             control_RO => '1', control_AI => '1', others => '0');
     constant ALU_TO_AREG : control_type := (

@@ -30,7 +30,7 @@ entity bcomp is
       -- pragma synthesis_off
       -- Used during testing
       databus_i       : in  std_logic_vector (7 downto 0);
-      control_i       : in  std_logic_vector (13 downto 0);
+      control_i       : in  std_logic_vector (14 downto 0);
       -- pragma synthesis_on
 
       -- Output segment display
@@ -92,7 +92,7 @@ architecture Structural of bcomp is
     signal pc_value      : std_logic_vector (3 downto 0);
 
     -- Control signals
-    signal control    : std_logic_vector (13 downto 0);
+    signal control    : std_logic_vector (14 downto 0);
     alias  control_AI : std_logic is control(0);  -- A register load
     alias  control_AO : std_logic is control(1);  -- A register output enable
     alias  control_BI : std_logic is control(2);  -- B register load
@@ -107,6 +107,7 @@ architecture Structural of bcomp is
     alias  control_CO : std_logic is control(11); -- Program counter output enable
     alias  control_J  : std_logic is control(12); -- Program counter jump
     alias  control_CE : std_logic is control(13); -- Program counter count enable
+    alias  control_OI : std_logic is control(14); -- Program counter count enable
 
 begin
 
@@ -220,6 +221,16 @@ begin
                  seg_ca_o    => seg_ca_o      ,
                  seg_dp_o    => seg_dp_o      ,
                  seg_an_o    => seg_an_o 
+             );
+
+    -- Instantiate output register
+    inst_output_register : entity work.output_register
+    port map (
+                 clk_i       => clk        ,
+                 clr_i       => reset_btn  ,
+                 data_i      => databus    ,
+                 load_i      => control_OI ,
+                 reg_o       => disp_value  -- Connected to display module
              );
 
     -- Not used at the moment.
