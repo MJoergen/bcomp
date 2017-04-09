@@ -48,29 +48,29 @@ architecture Structural of bcomp_tb is
     signal led : std_logic_vector (7 downto 0);
 
     -- Used only for test purposes
-    signal databus       : std_logic_vector (7 downto 0);
-    signal control       : std_logic_vector (14 downto 0);
+    signal databus       : std_logic_vector (7 downto 0) := "ZZZZZZZZ";
+    signal control       : std_logic_vector (15 downto 0) := (others => '0');
 
     -- Bus commands
-    constant control_AI : integer :=  0; -- A register load
-    constant control_AO : integer :=  1; -- A register output enable
-    constant control_BI : integer :=  2; -- B register load
-    constant control_BO : integer :=  3; -- B register output enable
-    constant control_II : integer :=  4; -- Instruction register load
-    constant control_IO : integer :=  5; -- Inttruction register output enable
-    constant control_EO : integer :=  6; -- ALU output enable
-    constant control_MI : integer :=  8; -- Memory address register load
-    constant control_RI : integer :=  9; -- RAM load (write)
-    constant control_RO : integer := 10; -- RAM output enable
-    constant control_CO : integer := 11; -- Program counter output enable
-    constant control_J  : integer := 12; -- Program counter jump
-    constant control_OI : integer := 14; -- Output register load
+    constant control_CE  : integer :=  0; -- Program counter count enable
+    constant control_CO  : integer :=  1; -- Program counter output enable
+    constant control_J   : integer :=  2; -- Program counter jump
+    constant control_MI  : integer :=  3; -- Memory address register load
+    constant control_RI  : integer :=  4; -- RAM load (write)
+    constant control_RO  : integer :=  5; -- RAM output enable
+    constant control_II  : integer :=  6; -- Instruction register load
+    constant control_IO  : integer :=  7; -- Inttruction register output enable
 
-    -- Additional control signals
-    constant control_SU : integer :=  7; -- ALU subtract
-    constant control_CE : integer := 13; -- Program counter count enable
-
-    subtype control_type is std_logic_vector(14 downto 0);
+    constant control_AI  : integer :=  8; -- A register load
+    constant control_AO  : integer :=  9; -- A register output enable
+    constant control_SU  : integer := 10; -- ALU subtract
+    constant control_EO  : integer := 11; -- ALU output enable
+    constant control_BI  : integer := 12; -- B register load
+    constant control_OI  : integer := 13; -- Output register load
+    constant control_HLT : integer := 14; -- Halt clock
+    constant control_JC  : integer := 15; -- Jump if carry
+ 
+    subtype control_type is std_logic_vector(15 downto 0);
     constant MEM_TO_AREG : control_type := (
             control_RO => '1', control_AI => '1', others => '0');
     constant MEM_TO_BREG : control_type := (
@@ -79,8 +79,6 @@ architecture Structural of bcomp_tb is
             control_EO => '1', control_AI => '1', others => '0');
     constant AREG_TO_MEM : control_type := (
             control_AO => '1', control_RI => '1', others => '0');
-    constant BREG_TO_MEM : control_type := (
-            control_BO => '1', control_RI => '1', others => '0');
     constant AREG_TO_ADDR : control_type := (
             control_AO => '1', control_MI => '1', others => '0');
     constant ALU_SUB : control_type := (
@@ -93,8 +91,6 @@ architecture Structural of bcomp_tb is
     -- No specific opcodes, only used for testing.
     constant AREG_TO_BUS : control_type := (
             control_AO => '1', others => '0');
-    constant BREG_TO_BUS : control_type := (
-            control_BO => '1', others => '0');
     constant ALU_TO_BUS : control_type := (
             control_EO => '1', others => '0');
     constant BUS_TO_AREG : control_type := (
@@ -118,13 +114,16 @@ architecture Structural of bcomp_tb is
         -- Verify idle state
        (("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
 
+        -- Verify initial values
+        ("ZZZZZZZZ", NOP,          LED_SELECT_AREG, "00000000"),
+        ("ZZZZZZZZ", NOP,          LED_SELECT_BREG, "00000000"),
+
         -- Verify register transfer
         ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "00000000"),
-        ("01010101", BUS_TO_AREG,  LED_SELECT_BUS,  "01010101"),
-        ("00110011", BUS_TO_BREG,  LED_SELECT_BUS,  "00110011"),
+        ("01010101", BUS_TO_AREG,  LED_SELECT_AREG, "01010101"),
+        ("00110011", BUS_TO_BREG,  LED_SELECT_BREG, "00110011"),
         ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
         ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "01010101"), -- A := 0x55
-        ("ZZZZZZZZ", BREG_TO_BUS,  LED_SELECT_BUS,  "00110011"), -- B := 0x33
 
         -- Verify ALU
         ("ZZZZZZZZ", NOP,          LED_SELECT_ALU,  "10001000"), -- 0x55 + 0x33 = 0x88
@@ -137,7 +136,7 @@ architecture Structural of bcomp_tb is
         ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "10001000"), -- 0x55 + 0x33 = 0x88
         ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "10111011"), -- 0x88 + 0x33 = 0xbb
         ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "11101110"), -- 0xbb + 0x33 = 0xee
-        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "10111011"), 
+        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "11101110"), 
         ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
 
         -- Verify simple addition program

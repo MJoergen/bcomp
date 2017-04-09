@@ -30,7 +30,7 @@ entity bcomp is
       -- pragma synthesis_off
       -- Used during testing
       databus_i       : in  std_logic_vector (7 downto 0);
-      control_i       : in  std_logic_vector (14 downto 0);
+      control_i       : in  std_logic_vector (15 downto 0);
       -- pragma synthesis_on
 
       -- Output segment display
@@ -89,6 +89,8 @@ architecture Structural of bcomp is
     signal address_value : std_logic_vector (3 downto 0);
     signal disp_two_comp : std_logic;
     signal disp_value    : std_logic_vector (7 downto 0);
+    signal carry         : std_logic;
+    signal pc_load       : std_logic;
 
     -- Debug outputs connected to LEDs
     signal alu_value     : std_logic_vector (7 downto 0);
@@ -96,22 +98,24 @@ architecture Structural of bcomp is
     signal pc_value      : std_logic_vector (3 downto 0);
 
     -- Control signals
-    signal control    : std_logic_vector (14 downto 0);
-    alias  control_AI : std_logic is control(0);  -- A register load
-    alias  control_AO : std_logic is control(1);  -- A register output enable
-    alias  control_BI : std_logic is control(2);  -- B register load
-    alias  control_BO : std_logic is control(3);  -- B register output enable
-    alias  control_II : std_logic is control(4);  -- Instruction register load
-    alias  control_IO : std_logic is control(5);  -- Instruction register output enable
-    alias  control_EO : std_logic is control(6);  -- ALU output enable
-    alias  control_SU : std_logic is control(7);  -- ALU subtract
-    alias  control_MI : std_logic is control(8);  -- Memory address register load
-    alias  control_RI : std_logic is control(9);  -- RAM load (write)
-    alias  control_RO : std_logic is control(10); -- RAM output enable
-    alias  control_CO : std_logic is control(11); -- Program counter output enable
-    alias  control_J  : std_logic is control(12); -- Program counter jump
-    alias  control_CE : std_logic is control(13); -- Program counter count enable
-    alias  control_OI : std_logic is control(14); -- Program counter count enable
+    signal control    : std_logic_vector (15 downto 0);
+    alias  control_CE : std_logic is control(0);   -- Program counter count enable
+    alias  control_CO : std_logic is control(1);   -- Program counter output enable
+    alias  control_J  : std_logic is control(2);   -- Program counter jump
+    alias  control_MI : std_logic is control(3);   -- Memory address register load
+    alias  control_RI : std_logic is control(4);   -- RAM load (write)
+    alias  control_RO : std_logic is control(5);   -- RAM output enable
+    alias  control_II : std_logic is control(6);   -- Instruction register load
+    alias  control_IO : std_logic is control(7);   -- Instruction register output enable
+
+    alias  control_AI : std_logic is control(8);   -- A register load
+    alias  control_AO : std_logic is control(9);   -- A register output enable
+    alias  control_SU : std_logic is control(10);  -- ALU subtract
+    alias  control_EO : std_logic is control(11);  -- ALU output enable
+    alias  control_BI : std_logic is control(12);  -- B register load
+    alias  control_OI : std_logic is control(13);  -- Program counter count enable
+    alias  control_HLT: std_logic is control(14);  -- Halt clock
+    alias  control_JC : std_logic is control(15);  -- Jump if carry
 
 begin
 
@@ -132,11 +136,11 @@ begin
     -- Instantiate clock module
     inst_clock_logic : entity work.clock_logic
     port map (
-                 clk_i       => clk_i      , -- External crystal
-                 sw_i        => clk_switch ,
-                 btn_i       => clk_button ,
-                 hlt_i       => '0'        ,
-                 clk_deriv_o => clk         -- Main internal clock
+                 clk_i       => clk_i       , -- External crystal
+                 sw_i        => clk_switch  ,
+                 btn_i       => clk_button  ,
+                 hlt_i       => control_HLT ,
+                 clk_deriv_o => clk           -- Main internal clock
              );
 
     -- Instantiate A-register
@@ -155,7 +159,7 @@ begin
     port map (
                  clk_i       => clk          ,
                  load_i      => control_BI   ,
-                 enable_i    => control_BO   ,
+                 enable_i    => '0'          ,
                  clr_i       => reset_btn    ,
                  data_io     => databus      ,
                  reg_o       => breg_value     -- to ALU
@@ -180,6 +184,7 @@ begin
                  areg_i      => areg_value ,
                  breg_i      => breg_value ,
                  result_o    => databus    ,
+                 carry_o     => carry      ,
                  led_o       => alu_value    -- Debug output
              );
 
@@ -207,13 +212,15 @@ begin
                  data_led_o  => ram_value       -- Debug output
              );
 
+    pc_load <= control_J or (control_JC and carry);
+
     -- Instantiate Program counter
     inst_program_counter : entity work.program_counter
     port map (
                  clk_i       => clk                 ,
                  clr_i       => reset_btn           ,
                  data_io     => databus(3 downto 0) ,
-                 load_i      => control_J           ,
+                 load_i      => pc_load             ,
                  enable_i    => control_CO          ,
                  count_i     => control_CE          ,
                  led_o       => pc_value              -- Debug output

@@ -30,7 +30,7 @@ end memory_address_register;
 
 architecture Structural of memory_address_register is
 
-    signal address : std_logic_vector(3 downto 0);
+    signal address : std_logic_vector(3 downto 0) := "0000";
 
 begin
 

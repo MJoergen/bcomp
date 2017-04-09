@@ -65,6 +65,10 @@ vfiles    += output_register.vhd
 #top_module = output_register
 #vfiles     = output_register.vhd # Top level
 
+#project    = control
+#top_module = control
+#vfiles     = control.vhd # Top level
+
 # Synthesis
 vendor     = xilinx
 family     = spartan3e
