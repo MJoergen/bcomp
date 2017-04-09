@@ -1,24 +1,23 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Fri Apr  7 15:57:24 2017
+[*] Sun Apr  9 05:43:56 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Fri Apr  7 15:57:16 2017"
-[dumpfile_size] 5288
+[dumpfile_mtime] "Sun Apr  9 05:43:44 2017"
+[dumpfile_size] 5517
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
-[size] 1185 668
+[size] 1185 718
 [pos] 20 0
-*-27.705553 223000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.770132 640000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
-[treeopen] top.bcomp_tb.inst_bcomp.inst_alu.
 [treeopen] top.bcomp_tb.inst_bcomp.inst_memory_address_register.
 [sst_width] 229
-[signals_width] 170
+[signals_width] 202
 [sst_expanded] 1
-[sst_vpaned_height] 169
+[sst_vpaned_height] 185
 @200
 -Test bench
 @28
@@ -41,6 +40,25 @@ top.bcomp_tb.led[0]
 -group_end
 @200
 -DUT
+@c00023
+#{top.bcomp_tb.inst_bcomp.control[13:0]} top.bcomp_tb.inst_bcomp.control[13] top.bcomp_tb.inst_bcomp.control[12] top.bcomp_tb.inst_bcomp.control[11] top.bcomp_tb.inst_bcomp.control[10] top.bcomp_tb.inst_bcomp.control[9] top.bcomp_tb.inst_bcomp.control[8] top.bcomp_tb.inst_bcomp.control[7] top.bcomp_tb.inst_bcomp.control[6] top.bcomp_tb.inst_bcomp.control[5] top.bcomp_tb.inst_bcomp.control[4] top.bcomp_tb.inst_bcomp.control[3] top.bcomp_tb.inst_bcomp.control[2] top.bcomp_tb.inst_bcomp.control[1] top.bcomp_tb.inst_bcomp.control[0]
+@28
+top.bcomp_tb.inst_bcomp.control[13]
+top.bcomp_tb.inst_bcomp.control[12]
+top.bcomp_tb.inst_bcomp.control[11]
+top.bcomp_tb.inst_bcomp.control[10]
+top.bcomp_tb.inst_bcomp.control[9]
+top.bcomp_tb.inst_bcomp.control[8]
+top.bcomp_tb.inst_bcomp.control[7]
+top.bcomp_tb.inst_bcomp.control[6]
+top.bcomp_tb.inst_bcomp.control[5]
+top.bcomp_tb.inst_bcomp.control[4]
+top.bcomp_tb.inst_bcomp.control[3]
+top.bcomp_tb.inst_bcomp.control[2]
+top.bcomp_tb.inst_bcomp.control[1]
+top.bcomp_tb.inst_bcomp.control[0]
+@1401201
+-group_end
 @22
 #{top.bcomp_tb.inst_bcomp.led_o[7:0]} top.bcomp_tb.inst_bcomp.led_o[7] top.bcomp_tb.inst_bcomp.led_o[6] top.bcomp_tb.inst_bcomp.led_o[5] top.bcomp_tb.inst_bcomp.led_o[4] top.bcomp_tb.inst_bcomp.led_o[3] top.bcomp_tb.inst_bcomp.led_o[2] top.bcomp_tb.inst_bcomp.led_o[1] top.bcomp_tb.inst_bcomp.led_o[0]
 @200
@@ -74,6 +92,7 @@ top.bcomp_tb.inst_bcomp.inst_alu.enable_i
 top.bcomp_tb.inst_bcomp.inst_memory_address_register.load_i
 @22
 #{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_i[0]
+#{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address[0]
 #{top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[3:0]} top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[3] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[2] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[1] top.bcomp_tb.inst_bcomp.inst_memory_address_register.address_o[0]
 [pattern_trace] 1
 [pattern_trace] 0

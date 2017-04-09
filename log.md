@@ -87,3 +87,6 @@ switches and LED's. But so far, I'll continue with the Basys2 board I have.
 I just realized the Basys2 board has 16 extra I/O pins in the form of
 PMOD's. So it is not necessary after all to use the Basys3 board.
 
+Slowly, the project is beginning to resemble a computer. Like an embryo growing into 
+a fetus.
+

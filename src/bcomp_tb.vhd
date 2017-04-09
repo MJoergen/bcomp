@@ -34,21 +34,51 @@ architecture Structural of bcomp_tb is
     signal ram_value     : std_logic_vector (7 downto 0);
     signal address_value : std_logic_vector (3 downto 0);
 
-    -- Control signals
-    alias  control_AI : std_logic is control(0);  -- A register load
-    alias  control_AO : std_logic is control(1);  -- A register output enable
-    alias  control_BI : std_logic is control(2);  -- B register load
-    alias  control_BO : std_logic is control(3);  -- B register output enable
-    alias  control_II : std_logic is control(4);  -- Instruction register load
-    alias  control_IO : std_logic is control(5);  -- Instruction register output enable
-    alias  control_EO : std_logic is control(6);  -- ALU output enable
-    alias  control_SU : std_logic is control(7);  -- ALU subtract
-    alias  control_MI : std_logic is control(8);  -- Memory address register load
-    alias  control_RI : std_logic is control(9);  -- RAM load (write)
-    alias  control_RO : std_logic is control(10); -- RAM output enable
-    alias  control_CO : std_logic is control(11); -- Program counter output enable
-    alias  control_J  : std_logic is control(12); -- Program counter jump
-    alias  control_CE : std_logic is control(13); -- Program counter count enable
+    -- Bus commands
+    constant control_AI : integer :=  0; -- A register load
+    constant control_AO : integer :=  1; -- A register output enable
+    constant control_BI : integer :=  2; -- B register load
+    constant control_BO : integer :=  3; -- B register output enable
+    constant control_II : integer :=  4; -- Instruction register load
+    constant control_IO : integer :=  5; -- Inttruction register output enable
+    constant control_EO : integer :=  6; -- ALU output enable
+    constant control_MI : integer :=  8; -- Memory address register load
+    constant control_RI : integer :=  9; -- RAM load (write)
+    constant control_RO : integer := 10; -- RAM output enable
+    constant control_CO : integer := 11; -- Program counter output enable
+    constant control_J  : integer := 12; -- Program counter jump
+
+    -- Additional control signals
+    constant control_SU : integer :=  7; -- ALU subtract
+    constant control_CE : integer := 13; -- Program counter count enable
+
+    subtype control_type is std_logic_vector(13 downto 0);
+    constant MEM_TO_AREG : control_type := (
+            control_RO => '1', control_AI => '1', others => '0');
+    constant ALU_TO_AREG : control_type := (
+            control_EO => '1', control_AI => '1', others => '0');
+    constant AREG_TO_MEM : control_type := (
+            control_AO => '1', control_RI => '1', others => '0');
+    constant BREG_TO_MEM : control_type := (
+            control_BO => '1', control_RI => '1', others => '0');
+    constant AREG_TO_ADDR : control_type := (
+            control_AO => '1', control_MI => '1', others => '0');
+    constant ALU_SUB : control_type := (
+            control_SU => '1', others => '0');
+    constant NOP : control_type := (
+            others => '0');
+
+    -- No specific opcodes, only used for testing.
+    constant AREG_TO_BUS : control_type := (
+            control_AO => '1', others => '0');
+    constant BREG_TO_BUS : control_type := (
+            control_BO => '1', others => '0');
+    constant ALU_TO_BUS : control_type := (
+            control_EO => '1', others => '0');
+    constant BUS_TO_AREG : control_type := (
+            control_AI => '1', others => '0');
+    constant BUS_TO_BREG : control_type := (
+            control_BI => '1', others => '0');
 
 begin
     -- Simulate external crystal clock (25 MHz)
@@ -107,53 +137,48 @@ begin
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         sw_regs_clear <= '0';
-        control_AO    <= '1';
+        control <= AREG_TO_BUS;
         wait for 40 ns;
         assert led = "00000000"; -- Verify register A clear
 
-        control_AO    <= '0';
+        control <= NOP;
         wait for 40 ns;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         -- Test register load
         databus <= "01010101"; -- 0x55 into register A
-        control_AI <= '1';
+        control <= BUS_TO_AREG;
         wait for 40 ns;
         assert led = "01010101";
 
         databus <= "00110011"; -- 0x33 into register B
-        control_AI <= '0';
-        control_BI <= '1';
+        control <= BUS_TO_BREG;
         wait for 40 ns;
         assert led = "00110011";
 
         databus <= "ZZZZZZZZ"; -- Clear data bus
-        control_BI <= '0';
+        control <= NOP;
         wait for 40 ns;
         assert led = "ZZZZZZZZ";
 
-        control_AO <= '1';
+        control <= AREG_TO_BUS;
         wait for 40 ns;
         assert led = "01010101"; -- Verify register A
 
-        control_AO <= '0';
-        control_BO <= '1';
+        control <= BREG_TO_BUS;
         wait for 40 ns;
         assert led = "00110011"; -- Verify register B
 
-        control_BO <= '0';
-        control_SU <= '0';
-        control_EO <= '1';
+        control <= ALU_TO_BUS;
         wait for 40 ns;
         assert led = "10001000"; -- Verify addition: 0x88
 
-        control_SU <= '1';
+        control <= ALU_TO_BUS + ALU_SUB;
         wait for 40 ns;
         assert led = "00100010"; -- Verify subtraction: 0x22
 
         -- Verify counting.
-        control_SU <= '0';
-        control_AI <= '1';
+        control <= ALU_TO_AREG;
         wait for 40 ns;
         assert led = "01010101"; -- 0x22 + 0x33 = 0x55
         wait for 40 ns;
@@ -163,29 +188,23 @@ begin
         wait for 40 ns;
         assert led = "11101110"; -- 0xbb + 0x33 = 0xee
 
-        control_EO <= '0';
-        control_AO <= '1';
-        control_AI <= '0';
+        control <= AREG_TO_BUS;
         wait for 40 ns;
         assert led = "10111011"; -- Verify A-register
 
-        control_AO <= '0';
+        control <= NOP;
         wait for 40 ns;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
         -- Verify from A-register to memory address register
-        control_AO <= '1';
+        control <= AREG_TO_ADDR;
         wait for 40 ns;
-        control_MI <= '1';
         wait for 40 ns;
         assert led = "10111011";
         assert address_value = "1011";
 
         -- Verify from B-register to memory contents
-        control_AO <= '0';
-        control_MI <= '0';
-        control_BO <= '1';
-        control_RI <= '1';
+        control <= BREG_TO_MEM;
         wait for 40 ns;
         assert led = "00110011";
 
