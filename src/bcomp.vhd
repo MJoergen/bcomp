@@ -233,10 +233,5 @@ begin
                  reg_o       => disp_value  -- Connected to display module
              );
 
-    -- Not used at the moment.
-    seg_ca_o <= "1111111";
-    seg_dp_o <= '1';
-    seg_an_o <= "1111";
-
 end Structural;
 
