@@ -20,7 +20,7 @@ architecture Structural of bcomp_tb is
     alias write_btn      : std_logic is btn(1);
     alias reset_btn      : std_logic is btn(2);
     
-    alias sw_clk_free    : std_logic is sw(7);
+    alias sw_clk_free    : std_logic is sw(0);
     alias sw_runmode     : std_logic is sw(1);
     alias address_sw     : std_logic_vector (3 downto 0) is pmod(11 downto 8);
     alias data_sw        : std_logic_vector (7 downto 0) is pmod( 7 downto 0);

@@ -67,7 +67,7 @@ architecture Structural of bcomp is
     alias write_btn      : std_logic is btn_i(1);
     alias reset_btn      : std_logic is btn_i(2);
 
-    alias clk_switch     : std_logic is sw_i(7);
+    alias clk_switch     : std_logic is sw_i(0);
     alias runmode        : std_logic is sw_i(1);
     alias address_sw     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
     alias data_sw        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
