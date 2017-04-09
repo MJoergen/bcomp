@@ -85,6 +85,47 @@ architecture Structural of bcomp_tb is
     constant BUS_TO_BREG : control_type := (
             control_BI => '1', others => '0');
 
+
+    type step_type is record
+        databus    : std_logic_vector (7 downto 0);
+        control    : control_type;
+        led_select : std_logic_vector (1 downto 0);
+        led_value  : std_logic_vector (7 downto 0);
+    end record;
+
+    type steps_array is array (integer range <>) of step_type;
+    constant steps : steps_array :=
+        -- Verify idle state
+       (("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
+
+        -- Verify register transfer
+        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "00000000"),
+        ("01010101", BUS_TO_AREG,  LED_SELECT_BUS,  "01010101"),
+        ("00110011", BUS_TO_BREG,  LED_SELECT_BUS,  "00110011"),
+        ("00110011", BUS_TO_BREG,  LED_SELECT_BUS,  "00110011"),
+        ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
+        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "01010101"), -- A := 0x55
+        ("ZZZZZZZZ", BREG_TO_BUS,  LED_SELECT_BUS,  "00110011"), -- B := 0x33
+
+        -- Verify ALU
+        ("ZZZZZZZZ", NOP,          LED_SELECT_ALU,  "10001000"), -- 0x55 + 0x33 = 0x88
+        ("ZZZZZZZZ", ALU_SUB,      LED_SELECT_ALU,  "00100010"), -- 0x55 - 0x33 = 0x22
+        ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
+        ("ZZZZZZZZ", ALU_TO_BUS,   LED_SELECT_BUS,  "10001000"),
+        ("ZZZZZZZZ", ALU_TO_BUS + ALU_SUB, LED_SELECT_BUS, "00100010"),
+
+        -- Verify counting.
+        ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_BUS,  "10001000"), -- 0x55 + 0x33 = 0x88
+        ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_BUS,  "10111011"), -- 0x88 + 0x33 = 0xbb
+        ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_BUS,  "11101110"), -- 0xbb + 0x33 = 0xee
+
+        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "11101110"), 
+        ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
+
+        -- Verify from B-register to memory contents
+        ("ZZZZZZZZ", AREG_TO_ADDR, LED_SELECT_ADDR, "00001110"), 
+        ("ZZZZZZZZ", BREG_TO_MEM,  LED_SELECT_BUS,  "00110011"));
+
 begin
     -- Simulate external crystal clock (25 MHz)
     clk_gen : process
@@ -134,96 +175,17 @@ begin
         -- Test register clear
         reset_btn <= '1';
         wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "ZZZZZZZZ"; -- All enable bits clear
-
         reset_btn <= '0';
-        control <= AREG_TO_BUS;
         wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "00000000"; -- Verify register A clear
 
-        control <= NOP;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "ZZZZZZZZ"; -- All enable bits clear
-
-        -- Test register load
-        databus <= "01010101"; -- 0x55 into register A
-        control <= BUS_TO_AREG;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "01010101";
-
-        databus <= "00110011"; -- 0x33 into register B
-        control <= BUS_TO_BREG;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "00110011";
-
-        databus <= "ZZZZZZZZ"; -- Clear data bus
-        control <= NOP;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "ZZZZZZZZ";
-
-        control <= AREG_TO_BUS;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "01010101"; -- Verify register A
-
-        control <= BREG_TO_BUS;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "00110011"; -- Verify register B
-
-        control <= ALU_TO_BUS;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "10001000"; -- Verify addition: 0x88
-
-        control <= ALU_TO_BUS + ALU_SUB;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "00100010"; -- Verify subtraction: 0x22
-
-        -- Verify counting.
-        control <= ALU_TO_AREG;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "10001000"; -- 0x55 + 0x33 = 0x88
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "10111011"; -- 0x88 + 0x33 = 0xbb
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "11101110"; -- 0xbb + 0x33 = 0xee
-
-        control <= AREG_TO_BUS;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "11101110"; -- Verify A-register
-
-        control <= NOP;
-        wait until rising_edge(clk);
-        sw_led_select <= LED_SELECT_BUS;
-        assert led = "ZZZZZZZZ"; -- All enable bits clear
-
-        -- Verify from A-register to memory address register
-        control <= AREG_TO_ADDR;
-        sw_led_select <= LED_SELECT_BUS;
-        wait until rising_edge(clk);
-        assert led = "11101110";
-
-        sw_led_select <= LED_SELECT_ADDR;
-        wait until rising_edge(clk);
-        assert led = "00001110";
-
-        -- Verify from B-register to memory contents
-        control <= BREG_TO_MEM;
-        sw_led_select <= LED_SELECT_BUS;
-        wait until rising_edge(clk);
-        assert led = "00110011";
+        for i in steps'range loop
+            databus       <= steps(i).databus;
+            control       <= steps(i).control;
+            sw_led_select <= steps(i).led_select;
+            wait until rising_edge(clk);
+            assert  led = steps(i).led_value;
+            wait until falling_edge(clk);
+        end loop;
 
         test_running <= false;
         wait;

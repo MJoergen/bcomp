@@ -1,30 +1,41 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Sun Apr  9 05:50:16 2017
+[*] Sun Apr  9 16:22:11 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Sun Apr  9 05:49:59 2017"
-[dumpfile_size] 5331
+[dumpfile_mtime] "Sun Apr  9 16:20:44 2017"
+[dumpfile_size] 5817
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
-[size] 1185 718
+[size] 1491 935
 [pos] 20 0
-*-27.696133 640000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.447935 736000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
-[treeopen] top.bcomp_tb.inst_bcomp.inst_memory_address_register.
 [sst_width] 229
 [signals_width] 202
 [sst_expanded] 1
-[sst_vpaned_height] 185
+[sst_vpaned_height] 260
 @200
 -Test bench
 @28
 top.bcomp_tb.clk
 @22
 #{top.bcomp_tb.btn[3:0]} top.bcomp_tb.btn[3] top.bcomp_tb.btn[2] top.bcomp_tb.btn[1] top.bcomp_tb.btn[0]
+@800022
 #{top.bcomp_tb.sw[7:0]} top.bcomp_tb.sw[7] top.bcomp_tb.sw[6] top.bcomp_tb.sw[5] top.bcomp_tb.sw[4] top.bcomp_tb.sw[3] top.bcomp_tb.sw[2] top.bcomp_tb.sw[1] top.bcomp_tb.sw[0]
+@28
+top.bcomp_tb.sw[7]
+top.bcomp_tb.sw[6]
+top.bcomp_tb.sw[5]
+top.bcomp_tb.sw[4]
+top.bcomp_tb.sw[3]
+top.bcomp_tb.sw[2]
+top.bcomp_tb.sw[1]
+top.bcomp_tb.sw[0]
+@1001200
+-group_end
 @c00022
 #{top.bcomp_tb.led[7:0]} top.bcomp_tb.led[7] top.bcomp_tb.led[6] top.bcomp_tb.led[5] top.bcomp_tb.led[4] top.bcomp_tb.led[3] top.bcomp_tb.led[2] top.bcomp_tb.led[1] top.bcomp_tb.led[0]
 @28
