@@ -122,7 +122,6 @@ architecture Structural of bcomp_tb is
         ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "00000000"),
         ("01010101", BUS_TO_AREG,  LED_SELECT_BUS,  "01010101"),
         ("00110011", BUS_TO_BREG,  LED_SELECT_BUS,  "00110011"),
-        ("00110011", BUS_TO_BREG,  LED_SELECT_BUS,  "00110011"),
         ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
         ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "01010101"), -- A := 0x55
         ("ZZZZZZZZ", BREG_TO_BUS,  LED_SELECT_BUS,  "00110011"), -- B := 0x33
