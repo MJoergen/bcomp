@@ -62,16 +62,17 @@ architecture Structural of bcomp is
     --   Program counter
     signal databus       : std_logic_vector(7 downto 0);
 
-    -- Interpretation of input switches.
+    -- Interpretation of input button and switches.
     alias clk_button     : std_logic is btn_i(0);
     alias write_btn      : std_logic is btn_i(1);
+    alias reset_btn      : std_logic is btn_i(2);
+
     alias clk_switch     : std_logic is sw_i(7);
-    alias regs_clear     : std_logic is sw_i(0);
     alias runmode        : std_logic is sw_i(1);
-    alias led_select     : std_logic_vector (1 downto 0) is sw_i(3 downto 2);
     alias address_sw     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
     alias data_sw        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
 
+    alias led_select     : std_logic_vector (1 downto 0) is sw_i(3 downto 2);
     constant LED_SELECT_BUS  : std_logic_vector (1 downto 0) := "00";
     constant LED_SELECT_ALU  : std_logic_vector (1 downto 0) := "01";
     constant LED_SELECT_RAM  : std_logic_vector (1 downto 0) := "10";
@@ -112,9 +113,9 @@ begin
     control <= control_i;
     -- pragma synthesis_on
 
-    led_o <= databus       when led_select = LED_SELECT_BUS else
-             alu_value     when led_select = LED_SELECT_ALU else
-             ram_value     when led_select = LED_SELECT_RAM else
+    led_o <= databus                when led_select = LED_SELECT_BUS else
+             alu_value              when led_select = LED_SELECT_ALU else
+             ram_value              when led_select = LED_SELECT_RAM else
              "0000" & address_value when led_select = LED_SELECT_ADDR;
 
     -- Instantiate clock module
@@ -133,7 +134,7 @@ begin
                  clk_i       => clk          ,
                  load_i      => control_AI   ,
                  enable_i    => control_AO   ,
-                 clr_i       => regs_clear   ,
+                 clr_i       => reset_btn    ,
                  data_io     => databus      ,
                  reg_o       => areg_value     -- to ALU
              );
@@ -144,7 +145,7 @@ begin
                  clk_i       => clk          ,
                  load_i      => control_BI   ,
                  enable_i    => control_BO   ,
-                 clr_i       => regs_clear   ,
+                 clr_i       => reset_btn    ,
                  data_io     => databus      ,
                  reg_o       => breg_value     -- to ALU
              );
@@ -155,7 +156,7 @@ begin
                  clk_i       => clk          ,
                  load_i      => control_II   ,
                  enable_i    => control_IO   ,
-                 clr_i       => regs_clear   ,
+                 clr_i       => reset_btn    ,
                  data_io     => databus      ,
                  reg_o       => ireg_value     -- to instruction decoder
              );
@@ -200,14 +201,13 @@ begin
     inst_program_counter : entity work.program_counter
     port map (
                  clk_i       => clk                 ,
-                 clr_i       => regs_clear          ,
+                 clr_i       => reset_btn           ,
                  data_io     => databus(3 downto 0) ,
                  load_i      => control_J           ,
                  enable_i    => control_CO          ,
                  count_i     => control_CE          ,
                  led_o       => pc_value  -- Debug output
              );
-
 
     -- Not used at the moment.
     seg_ca_o <= "1111111";

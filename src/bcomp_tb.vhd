@@ -17,8 +17,10 @@ architecture Structural of bcomp_tb is
     signal pmod : std_logic_vector (15 downto 0);
 
     alias btn_clk_step   : std_logic is btn(0);
+    alias write_btn      : std_logic is btn(1);
+    alias reset_btn      : std_logic is btn(2);
+    
     alias sw_clk_free    : std_logic is sw(7);
-    alias sw_regs_clear  : std_logic is sw(0);
     alias sw_runmode     : std_logic is sw(1);
     alias address_sw     : std_logic_vector (3 downto 0) is pmod(11 downto 8);
     alias data_sw        : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
@@ -30,7 +32,7 @@ architecture Structural of bcomp_tb is
     constant LED_SELECT_ADDR : std_logic_vector (1 downto 0) := "11";
 
     -- LED
-    signal led : std_logic_vector (7 downto 0) := (others => 'Z');
+    signal led : std_logic_vector (7 downto 0);
 
     -- Used only for test purposes
     signal databus       : std_logic_vector (7 downto 0);
@@ -100,18 +102,18 @@ begin
                     FREQ => 25000000
                 )
     port map (
-                 clk_i        => clk    ,
-                 sw_i         => sw     ,
-                 btn_i        => btn    ,
-                 pmod_i       => pmod   ,
-                 led_o        => led    , 
-                 seg_ca_o     => open   ,
-                 seg_dp_o     => open   ,
-                 seg_an_o     => open   ,
+                 clk_i        => clk     ,
+                 sw_i         => sw      ,
+                 btn_i        => btn     ,
+                 pmod_i       => pmod    ,
+                 led_o        => led     , 
+                 seg_ca_o     => open    ,
+                 seg_dp_o     => open    ,
+                 seg_an_o     => open    ,
 
                  -- Used only for test purposes
-                 databus_i       => databus       ,
-                 control_i       => control       
+                 databus_i    => databus ,
+                 control_i    => control       
              );
 
     -- Start the main test
@@ -129,12 +131,12 @@ begin
         data_sw    <= (others => '0');
 
         -- Test register clear
-        sw_regs_clear <= '1';
+        reset_btn <= '1';
         wait until rising_edge(clk);
         sw_led_select <= LED_SELECT_BUS;
         assert led = "ZZZZZZZZ"; -- All enable bits clear
 
-        sw_regs_clear <= '0';
+        reset_btn <= '0';
         control <= AREG_TO_BUS;
         wait until rising_edge(clk);
         sw_led_select <= LED_SELECT_BUS;
