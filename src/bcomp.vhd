@@ -124,7 +124,7 @@ begin
              areg_value             when led_select = LED_SELECT_AREG else
              breg_value             when led_select = LED_SELECT_BREG else
              disp_value             when led_select = LED_SELECT_OUT  else
-             pc_value               when led_select = LED_SELECT_PC;
+             "0000" & pc_value      when led_select = LED_SELECT_PC;
 
     pc_load <= control_J or (control_JC and carry_reg);
 
