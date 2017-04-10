@@ -12,6 +12,7 @@ vfiles    += ram74ls189.vhd
 vfiles    += program_counter.vhd 
 vfiles    += display.vhd 
 vfiles    += output_register.vhd 
+vfiles    += control.vhd 
 
 #project    = program_counter
 #top_module = program_counter
@@ -84,8 +85,8 @@ tb_sources = $(testbench).vhd
 wave       = $(testbench).ghw
 wavesave   = $(testbench).gtkw
 unisim_lib = unisim-obj93.cf
-stoptime   = --stop-time=4000us
-#stoptime   = --stop-time=4000us --assert-level=none
+#stoptime   = --stop-time=4000us
+stoptime   = --stop-time=4000us --assert-level=none
 
 # Host PC application
 app_source = $(project).cpp

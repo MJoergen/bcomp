@@ -8,9 +8,10 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity bcomp is
 
-   generic (
-       FREQ       : integer := 25000000 -- Input clock frequency
-       );
+    generic (
+                SIMULATION : boolean := false;
+                FREQ       : integer := 25000000 -- Input clock frequency
+            );
    port (
       -- Clock
       clk_i       : in  std_logic;  -- 25 MHz
@@ -30,7 +31,6 @@ entity bcomp is
       -- pragma synthesis_off
       -- Used during testing
       databus_i       : in  std_logic_vector (7 downto 0);
-      control_i       : in  std_logic_vector (15 downto 0);
       -- pragma synthesis_on
 
       -- Output segment display
@@ -63,14 +63,14 @@ architecture Structural of bcomp is
     signal databus       : std_logic_vector(7 downto 0);
 
     -- Interpretation of input button and switches.
-    alias clk_button     : std_logic is btn_i(0);
-    alias write_btn      : std_logic is btn_i(1);
-    alias reset_btn      : std_logic is btn_i(2);
+    alias btn_clk     : std_logic is btn_i(0);
+    alias btn_write      : std_logic is btn_i(1);
+    alias btn_reset      : std_logic is btn_i(2);
 
-    alias clk_switch     : std_logic is sw_i(0);
-    alias runmode        : std_logic is sw_i(1);
-    alias address_sw     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
-    alias data_sw        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
+    alias sw_clk_free     : std_logic is sw_i(0);
+    alias sw_runmode        : std_logic is sw_i(1);
+    alias sw_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
+    alias sw_data        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
 
     alias led_select     : std_logic_vector (2 downto 0) is sw_i(4 downto 2);
     constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000";
@@ -121,7 +121,6 @@ begin
 
     -- pragma synthesis_off
     databus <= databus_i;
-    control <= control_i;
     -- pragma synthesis_on
 
     led_o <= databus                when led_select = LED_SELECT_BUS  else
@@ -135,10 +134,13 @@ begin
 
     -- Instantiate clock module
     inst_clock_logic : entity work.clock_logic
+    generic map (
+                    SIMULATION => SIMULATION
+                )
     port map (
                  clk_i       => clk_i       , -- External crystal
-                 sw_i        => clk_switch  ,
-                 btn_i       => clk_button  ,
+                 sw_i        => sw_clk_free  ,
+                 btn_i       => btn_clk  ,
                  hlt_i       => control_HLT ,
                  clk_deriv_o => clk           -- Main internal clock
              );
@@ -149,7 +151,7 @@ begin
                  clk_i       => clk          ,
                  load_i      => control_AI   ,
                  enable_i    => control_AO   ,
-                 clr_i       => reset_btn    ,
+                 clr_i       => btn_reset    ,
                  data_io     => databus      ,
                  reg_o       => areg_value     -- to ALU
              );
@@ -160,7 +162,7 @@ begin
                  clk_i       => clk          ,
                  load_i      => control_BI   ,
                  enable_i    => '0'          ,
-                 clr_i       => reset_btn    ,
+                 clr_i       => btn_reset    ,
                  data_io     => databus      ,
                  reg_o       => breg_value     -- to ALU
              );
@@ -171,7 +173,7 @@ begin
                  clk_i       => clk          ,
                  load_i      => control_II   ,
                  enable_i    => control_IO   ,
-                 clr_i       => reset_btn    ,
+                 clr_i       => btn_reset    ,
                  data_io     => databus      ,
                  reg_o       => ireg_value     -- to instruction decoder
              );
@@ -194,8 +196,8 @@ begin
                  clk_i       => clk                 ,
                  load_i      => control_MI          ,
                  address_i   => databus(3 downto 0) ,
-                 runmode_i   => runmode             ,
-                 sw_i        => address_sw          ,
+                 runmode_i   => sw_runmode             ,
+                 sw_i        => sw_address          ,
                  address_o   => address_value         -- to RAM module
              );
 
@@ -206,9 +208,9 @@ begin
                  enable_i    => control_RO    ,
                  data_io     => databus       ,
                  address_i   => address_value ,
-                 runmode_i   => runmode       ,
-                 sw_data_i   => data_sw       ,
-                 wr_button_i => write_btn     ,
+                 runmode_i   => sw_runmode       ,
+                 sw_data_i   => sw_data       ,
+                 wr_button_i => btn_write     ,
                  data_led_o  => ram_value       -- Debug output
              );
 
@@ -217,13 +219,13 @@ begin
     -- Instantiate Program counter
     inst_program_counter : entity work.program_counter
     port map (
-                 clk_i       => clk                 ,
-                 clr_i       => reset_btn           ,
-                 data_io     => databus(3 downto 0) ,
-                 load_i      => pc_load             ,
-                 enable_i    => control_CO          ,
-                 count_i     => control_CE          ,
-                 led_o       => pc_value              -- Debug output
+                 clk_i       => clk         ,
+                 clr_i       => btn_reset   ,
+                 data_io     => databus     ,
+                 load_i      => pc_load     ,
+                 enable_i    => control_CO  ,
+                 count_i     => control_CE  ,
+                 led_o       => pc_value      -- Debug output
              );
 
     -- Instantiate Display
@@ -241,10 +243,19 @@ begin
     inst_output_register : entity work.output_register
     port map (
                  clk_i       => clk        ,
-                 clr_i       => reset_btn  ,
+                 clr_i       => btn_reset  ,
                  data_i      => databus    ,
                  load_i      => control_OI ,
                  reg_o       => disp_value  -- Connected to display module
+             );
+
+    -- Instantiate control module
+    inst_control : entity work.control
+    port map (
+                 clk_i       => clk                    ,
+                 rst_i       => btn_reset              ,
+                 instruct_i  => ireg_value(7 downto 4) ,
+                 control_o   => control
              );
 
 end Structural;

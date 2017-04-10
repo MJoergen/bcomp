@@ -1,6 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity bcomp_tb is
 end bcomp_tb ;
@@ -25,31 +25,30 @@ architecture Structural of bcomp_tb is
     signal btn  : std_logic_vector (3 downto 0);
     signal pmod : std_logic_vector (15 downto 0);
 
-    alias btn_clk_step   : std_logic is btn(0);
-    alias write_btn      : std_logic is btn(1);
-    alias reset_btn      : std_logic is btn(2);
+    alias btn_clk     : std_logic is btn(0);
+    alias btn_write   : std_logic is btn(1);
+    alias btn_reset   : std_logic is btn(2);
     
-    alias sw_clk_free    : std_logic is sw(0);
-    alias sw_runmode     : std_logic is sw(1);
-    alias address_sw     : std_logic_vector (3 downto 0) is pmod(11 downto 8);
-    alias data_sw        : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
+    alias sw_clk_free : std_logic is sw(0);
+    alias sw_runmode  : std_logic is sw(1);
+    alias sw_address  : std_logic_vector (3 downto 0) is pmod(11 downto 8);
+    alias sw_data     : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
 
     alias sw_led_select  : std_logic_vector (2 downto 0) is sw(4 downto 2);
-    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000";
-    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "001";
-    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "010";
-    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "011";
-    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "100";
-    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101";
-    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110";
-    constant LED_SELECT_IREG : std_logic_vector (2 downto 0) := "111";
+    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000"; -- Databus
+    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "001"; -- ALU output
+    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "010"; -- RAM output
+    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "011"; -- Memory address
+    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "100"; -- A register
+    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101"; -- B register
+    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110"; -- Output register
+    constant LED_SELECT_IREG : std_logic_vector (2 downto 0) := "111"; -- Instruction register
 
     -- LED
     signal led : std_logic_vector (7 downto 0);
 
     -- Used only for test purposes
     signal databus       : std_logic_vector (7 downto 0) := "ZZZZZZZZ";
-    signal control       : std_logic_vector (15 downto 0) := (others => '0');
 
     -- Bus commands
     constant control_CE  : integer :=  0; -- Program counter count enable
@@ -100,58 +99,26 @@ architecture Structural of bcomp_tb is
     constant BUS_TO_ADDR : control_type := (
             control_MI => '1', others => '0');
 
+    -- This contains the contents of the memory
+    type mem_type is array (0 to 15) of std_logic_vector(7 downto 0);
+    constant mem : mem_type := (
+        "01110001",  -- 71  LDI 0x01
+        "01001110",  -- 4E  STA [0x0E] (Y)
+        "01110000",  -- 70  LDI 0x00
+        "01010000",  -- 50  OUT
+        "00101110",  -- 2E  ADD [0x0E] (Y)
+        "01001111",  -- 4F  STA [0x0F] (Z)
+        "00011110",  -- 1E  LDA [0x0E] (Y)
+        "01001101",  -- 4D  STA [0x0D] (X)
+        "00011111",  -- 1F  LDA [0x0F] (Z)
+        "01001110",  -- 4E  STA [0x0E] (Y)
+        "00011101",  -- 1D  LDA [0x0D] (X)
+        "10000000",  -- 80  JC 0x00
+        "01100011",  -- 63  J 0x03
+        "00000000",  -- 00  X
+        "00000000",  -- 00  Y
+        "00000000"); -- 00  Z
 
-    -- This contains a single microcode operation.
-    type step_type is record
-        databus    : std_logic_vector (7 downto 0);
-        control    : control_type;
-        led_select : std_logic_vector (2 downto 0);
-        led_value  : std_logic_vector (7 downto 0);
-    end record;
-
-    type steps_array is array (integer range <>) of step_type;
-    constant steps : steps_array :=
-        -- Verify idle state
-       (("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
-
-        -- Verify initial values
-        ("ZZZZZZZZ", NOP,          LED_SELECT_AREG, "00000000"),
-        ("ZZZZZZZZ", NOP,          LED_SELECT_BREG, "00000000"),
-
-        -- Verify register transfer
-        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "00000000"),
-        ("01010101", BUS_TO_AREG,  LED_SELECT_AREG, "01010101"),
-        ("00110011", BUS_TO_BREG,  LED_SELECT_BREG, "00110011"),
-        ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
-        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "01010101"), -- A := 0x55
-
-        -- Verify ALU
-        ("ZZZZZZZZ", NOP,          LED_SELECT_ALU,  "10001000"), -- 0x55 + 0x33 = 0x88
-        ("ZZZZZZZZ", ALU_SUB,      LED_SELECT_ALU,  "00100010"), -- 0x55 - 0x33 = 0x22
-        ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
-        ("ZZZZZZZZ", ALU_TO_BUS,   LED_SELECT_BUS,  "10001000"),
-        ("ZZZZZZZZ", ALU_TO_BUS + ALU_SUB, LED_SELECT_BUS, "00100010"),
-
-        -- Verify counting.
-        ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "10001000"), -- 0x55 + 0x33 = 0x88
-        ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "10111011"), -- 0x88 + 0x33 = 0xbb
-        ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "11101110"), -- 0xbb + 0x33 = 0xee
-        ("ZZZZZZZZ", AREG_TO_BUS,  LED_SELECT_BUS,  "11101110"), 
-        ("ZZZZZZZZ", NOP,          LED_SELECT_BUS,  "ZZZZZZZZ"),
-
-        -- Verify simple addition program
-        -- LDA [4]  "0001 0100"
-        ("00000100", BUS_TO_ADDR,  LED_SELECT_ADDR, "00000100"), -- Decimal 4
-        ("ZZZZZZZZ", MEM_TO_AREG,  LED_SELECT_BUS,  "00001110"), -- Decimal 14
-
-        -- ADD [5]  "0010 0101"
-        ("00000101", BUS_TO_ADDR,  LED_SELECT_ADDR, "00000101"), -- Decimal 5
-        ("ZZZZZZZZ", MEM_TO_BREG,  LED_SELECT_BUS,  "00011100"), -- Decimal 28
-        ("ZZZZZZZZ", ALU_TO_AREG,  LED_SELECT_AREG, "00101010"), -- 14 + 28 = 42
-
-        -- OUT      "0101 0000"
-        ("ZZZZZZZZ", AREG_TO_OUT,  LED_SELECT_OUT,  "00101010")  -- Decimal 42
-    );
 
 begin
     -- Simulate external crystal clock (25 MHz)
@@ -168,6 +135,7 @@ begin
     -- Instantiate DUT
     inst_bcomp : entity work.bcomp
     generic map (
+                    SIMULATION => true ,
                     FREQ => 25000000
                 )
     port map (
@@ -181,57 +149,45 @@ begin
                  seg_an_o     => open    ,
 
                  -- Used only for test purposes
-                 databus_i    => databus ,
-                 control_i    => control       
+                 databus_i    => databus 
              );
 
     -- Start the main test
     main_test : process is
     begin
         -- Set initial values
-        sw          <= "00000000";
-        btn         <= "0000";
-        sw_clk_free <= '1'; -- Use freerunning (astable) clock
-        sw_runmode  <= '0'; -- Set RAM to programming mode
+        sw        <= "00000000";
+        btn       <= "0000";
+        pmod      <= (others => '0');
+        databus   <= "ZZZZZZZZ";
+        btn_reset <= '1';
 
-        databus     <= "ZZZZZZZZ";
-        control     <= (others => '0');
-        address_sw  <= (others => '0');
-        data_sw     <= (others => '0');
-
-        -- Reset DUT
-        reset_btn <= '1';
-        wait until rising_edge(clk);
-        reset_btn <= '0';
-        wait until rising_edge(clk);
+        -- Configure DUT
+        sw_clk_free   <= '0'; -- Use manual clock (switch off control logic)
+        sw_runmode    <= '0'; -- Set RAM to programming mode
+        sw_led_select <= LED_SELECT_IREG;
 
         -- Program the RAM
-        address_sw <= "0100";     -- decimal 4
-        data_sw    <= "00001110"; -- decimal 14
-        wait until falling_edge(clk);
-        write_btn  <= '1';
-        wait until rising_edge(clk);
-        write_btn  <= '0';
-
-        address_sw <= "0101";     -- decimal 5
-        data_sw    <= "00011100"; -- decimal 28
-        wait until falling_edge(clk);
-        write_btn  <= '1';
-        wait until rising_edge(clk);
-        write_btn  <= '0';
-
-        sw_runmode <= '1'; -- Set memory to run mode.
-
-        -- Run through program in microcode.
-        for i in steps'range loop
-            databus       <= steps(i).databus;
-            control       <= steps(i).control;
-            sw_led_select <= steps(i).led_select;
-            wait until rising_edge(clk);
+        for i in 0 to 15 loop
+            sw_address <= std_logic_vector(to_unsigned(i, 4));
+            sw_data    <= mem(i);
             wait until falling_edge(clk);
-            assert  led = steps(i).led_value
-                report "received " & slv_to_string(led);
+            btn_write  <= '1';
+            wait until rising_edge(clk);
+            assert led = std_logic_vector(to_unsigned(i, 8));
+            btn_write  <= '0';
         end loop;
+
+        -- Reset DUT
+        sw_clk_free <= '1'; -- Use freerunning (astable) clock
+        sw_runmode  <= '1'; -- Set memory to run mode.
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+
+        btn_reset <= '0';
+        wait until rising_edge(clk);
+
+        wait for 10000 ns;
 
         test_running <= false;
         wait;

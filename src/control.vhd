@@ -122,6 +122,11 @@ architecture Structural of control is
             control_IO => '1',
             control_AI => '1', others => '0');
 
+    -- JC
+    constant IR_TO_PC_CARRY : control_type := (
+            control_IO => '1',
+            control_JC => '1', others => '0');
+
     -- HLT
     constant HLT : control_type := (
             control_HLT => '1', others => '0');
@@ -153,8 +158,8 @@ architecture Structural of control is
     -- 0111  LDI
     PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_AREG, NOP, NOP, NOP, NOP,
 
-    -- 1000  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,
+    -- 1000  JC
+    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_PC_CARRY, NOP, NOP, NOP, NOP,
 
     -- 1001  HLT
     PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,

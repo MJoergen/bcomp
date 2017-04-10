@@ -46,7 +46,7 @@ architecture Structural of monostable_clock is
 
     signal counter   : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
                        (others => '0');
-    signal btn_delay : std_logic;
+    signal btn_delay : std_logic := '0';
     constant ZERO    : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
                        (others => '0');
     constant ONES    : std_logic_vector(COUNTER_SIZE-1 downto 0) :=

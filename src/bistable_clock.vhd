@@ -45,7 +45,7 @@ architecture Structural of bistable_clock is
 
     signal counter : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
                      (others => '0');
-    signal sw_reg  : std_logic;
+    signal sw_reg  : std_logic := '0';
     constant ZERO  : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
                      (others => '0');
     constant ONES  : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
