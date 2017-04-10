@@ -95,9 +95,13 @@ a fetus.
 
 I've gone ahead and finished the design, before the next video from Ben Eater.
 
+The following picture shows output from the simulation.
+![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Simulation.png "")
+
 The current design uses 19% of the available logic in the FPGA and can run at up to 141 MHz.
 
-TODO: Make a more extensive test of the CPU and all it's instructions and capabilities.
-TODO: Increase memory, so larger programs can be stored.
-TODO: Add more instructions.
+..* TODO: Make a more extensive test of the CPU and all it's instructions and capabilities.
+..* TODO: Increase memory, so larger programs can be stored.
+..* TODO: Add more instructions.
+
 
