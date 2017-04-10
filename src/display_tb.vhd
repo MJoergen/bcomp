@@ -49,18 +49,18 @@ begin
 
     -- Start the main test
     main_test : process is
-        constant DIG_0    : std_logic_vector (7 downto 0) := "11000000";
-        constant DIG_1    : std_logic_vector (7 downto 0) := "11111001";
-        constant DIG_2    : std_logic_vector (7 downto 0) := "10100100";
-        constant DIG_3    : std_logic_vector (7 downto 0) := "10110000";
-        constant DIG_4    : std_logic_vector (7 downto 0) := "10011001";
-        constant DIG_5    : std_logic_vector (7 downto 0) := "10010010";
-        constant DIG_6    : std_logic_vector (7 downto 0) := "10000010";
-        constant DIG_7    : std_logic_vector (7 downto 0) := "11111000";
-        constant DIG_8    : std_logic_vector (7 downto 0) := "10000000";
-        constant DIG_9    : std_logic_vector (7 downto 0) := "10010000";
-        constant DIG_NONE : std_logic_vector (7 downto 0) := "11111111";
-        constant DIG_NEG  : std_logic_vector (7 downto 0) := "10111111";
+        constant DIG_0 : std_logic_vector (7 downto 0) := "11000000";
+        constant DIG_1 : std_logic_vector (7 downto 0) := "11111001";
+        constant DIG_2 : std_logic_vector (7 downto 0) := "10100100";
+        constant DIG_3 : std_logic_vector (7 downto 0) := "10110000";
+        constant DIG_4 : std_logic_vector (7 downto 0) := "10011001";
+        constant DIG_5 : std_logic_vector (7 downto 0) := "10010010";
+        constant DIG_6 : std_logic_vector (7 downto 0) := "10000010";
+        constant DIG_7 : std_logic_vector (7 downto 0) := "11111000";
+        constant DIG_8 : std_logic_vector (7 downto 0) := "10000000";
+        constant DIG_9 : std_logic_vector (7 downto 0) := "10010000";
+        constant BLANK : std_logic_vector (7 downto 0) := "11111111";
+        constant NEGAT : std_logic_vector (7 downto 0) := "10111111";
     begin
         wait for 3*4*40 ns;
         wait for 40 ns;
@@ -80,8 +80,8 @@ begin
         assert seg_dp = DIG_2(7);
         assert seg_an = "1011";
         wait for 4*40 ns;
-        assert seg_ca = DIG_NONE(6 downto 0);
-        assert seg_dp = DIG_NONE(7);
+        assert seg_ca = BLANK(6 downto 0);
+        assert seg_dp = BLANK(7);
         assert seg_an = "0111";
         wait for 4*40 ns;
 
@@ -96,12 +96,12 @@ begin
         assert seg_dp = DIG_4(7);
         assert seg_an = "1101";
         wait for 4*40 ns;
-        assert seg_ca = DIG_0(6 downto 0);
-        assert seg_dp = DIG_0(7);
+        assert seg_ca = BLANK(6 downto 0);
+        assert seg_dp = BLANK(7);
         assert seg_an = "1011";
         wait for 4*40 ns;
-        assert seg_ca = DIG_NEG(6 downto 0);
-        assert seg_dp = DIG_NEG(7);
+        assert seg_ca = NEGAT(6 downto 0);
+        assert seg_dp = NEGAT(7);
         assert seg_an = "0111";
         wait for 4*40 ns;
 
