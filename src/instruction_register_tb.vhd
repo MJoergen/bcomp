@@ -69,7 +69,7 @@ begin
         data   <= "01010101";
         wait for 80 ns;
         assert data    = "01010101";
-        assert reg     = "00000101";
+        assert reg     = "01010101";
 
         -- Check tristate buffer
         enable <= '0';
@@ -77,7 +77,7 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "ZZZZZZZZ";
-        assert reg     = "00000101";
+        assert reg     = "01010101";
 
         -- Check reading register
         clr    <= '0';
@@ -86,7 +86,7 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "00000101";
-        assert reg     = "00000101";
+        assert reg     = "01010101";
 
         -- Check reset state
         clr    <= '1';

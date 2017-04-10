@@ -32,7 +32,7 @@ end instruction_register;
 
 architecture Structural of instruction_register is
 
-    signal data : std_logic_vector(3 downto 0);
+    signal data : std_logic_vector(7 downto 0);
 
 begin
     -- pragma synthesis_off
@@ -45,13 +45,13 @@ begin
             data <= (others => '0');
         elsif rising_edge(clk_i) then
             if load_i = '1' then
-                data <= data_io(3 downto 0);
+                data <= data_io;
             end if;
         end if;
     end process;
 
-    reg_o <= "0000" & data;
-    data_io <= "0000" & data when (enable_i = '1') else "ZZZZZZZZ";
+    reg_o <= data;
+    data_io <= "0000" & data(3 downto 0) when (enable_i = '1') else "ZZZZZZZZ";
 
 end Structural;
 
