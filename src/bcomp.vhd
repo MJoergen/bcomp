@@ -168,7 +168,7 @@ begin
              );
 
     -- Instantiate instruction register
-    inst_instruction_register : entity work.register_8bit
+    inst_instruction_register : entity work.instruction_register
     port map (
                  clk_i       => clk          ,
                  load_i      => control_II   ,

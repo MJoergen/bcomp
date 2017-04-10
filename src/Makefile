@@ -5,6 +5,7 @@ vfiles    += clock_logic.vhd
 vfiles    += bistable_clock.vhd
 vfiles    += monostable_clock.vhd
 vfiles    += register_8bit.vhd
+vfiles    += instruction_register.vhd
 vfiles    += alu.vhd
 vfiles    += memory_address_register.vhd
 vfiles    += ram_module.vhd
@@ -49,6 +50,10 @@ vfiles    += control.vhd
 #vfiles     = clock_logic.vhd # Top level
 #vfiles    += bistable_clock.vhd
 #vfiles    += monostable_clock.vhd
+
+#project    = instruction_register
+#top_module = instruction_register
+#vfiles     = instruction_register.vhd # Top level
 
 #project    = register_8bit
 #top_module = register_8bit
