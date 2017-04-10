@@ -23,8 +23,8 @@ entity instruction_register is
              -- Data bus connection
              data_io     : inout std_logic_vector(7 downto 0);
 
-             -- To ALU or Instruction decoder
-             reg_o       : out std_logic_vector(7 downto 0)
+             -- To instruction decoder
+             reg_o       : out std_logic_vector(3 downto 0)
          );
 
 
@@ -50,7 +50,7 @@ begin
         end if;
     end process;
 
-    reg_o <= data;
+    reg_o <= data(7 downto 4);
     data_io <= "0000" & data(3 downto 0) when (enable_i = '1') else "ZZZZZZZZ";
 
 end Structural;

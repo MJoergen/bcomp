@@ -17,7 +17,7 @@ architecture Structural of instruction_register_tb is
     signal enable     : std_logic;
 
     -- Output from the DUT
-    signal reg        : std_logic_vector(7 downto 0);
+    signal reg        : std_logic_vector(3 downto 0);
 
     -- Main data bus
     signal data       : std_logic_vector(7 downto 0);
@@ -54,22 +54,22 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "00000000";
-        assert reg     = "00000000";
+        assert reg     = "0000";
 
         -- Check tristate buffer
         enable <= '0';
         wait for 80 ns;
         assert data    = "ZZZZZZZZ";
-        assert reg     = "00000000";
+        assert reg     = "0000";
 
         -- Check setting register
         clr    <= '0';
         load   <= '1';
         enable <= '0'; -- When setting load, remember to clear enable.
-        data   <= "01010101";
+        data   <= "01011010";
         wait for 80 ns;
-        assert data    = "01010101";
-        assert reg     = "01010101";
+        assert data    = "01011010";
+        assert reg     = "0101";
 
         -- Check tristate buffer
         enable <= '0';
@@ -77,7 +77,7 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "ZZZZZZZZ";
-        assert reg     = "01010101";
+        assert reg     = "0101";
 
         -- Check reading register
         clr    <= '0';
@@ -85,8 +85,8 @@ begin
         enable <= '1';
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
-        assert data    = "00000101";
-        assert reg     = "01010101";
+        assert data    = "00001010";
+        assert reg     = "0101";
 
         -- Check reset state
         clr    <= '1';
@@ -94,7 +94,7 @@ begin
         data   <= "ZZZZZZZZ";
         wait for 80 ns;
         assert data    = "00000000";
-        assert reg     = "00000000";
+        assert reg     = "0000";
 
         test_running <= false;
         wait;
