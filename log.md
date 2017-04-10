@@ -34,14 +34,14 @@ Next thing is to have an overall block structure. The first video again gives
 all the answers.
 
 Blocks needed:
-* Clock  -- DONE
-* A-register   -- DONE
-* B-register   -- DONE
-* Instruction Register  -- DONE
-* ALU -- DONE
-* Memory Address Register -- DONE
-* RAM -- DONE
-* Program Counter -- DONE
+* Clock
+* A-register
+* B-register
+* Instruction Register
+* ALU
+* Memory Address Register
+* RAM
+* Program Counter
 * Output-register
 * Control Unit
 
