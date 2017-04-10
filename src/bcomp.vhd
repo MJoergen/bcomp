@@ -12,28 +12,27 @@ entity bcomp is
                 SIMULATION : boolean := false;
                 FREQ       : integer := 25000000 -- Input clock frequency
             );
-   port (
-      -- Clock
-      clk_i       : in  std_logic;  -- 25 MHz
+    port (
+             -- Clock
+             clk_i    : in  std_logic;  -- 25 MHz
 
-      -- Input switches
-      sw_i        : in  std_logic_vector (7 downto 0);
+             -- Input switches
+             sw_i     : in  std_logic_vector (7 downto 0);
 
-      -- Inputs from PMOD's
-      pmod_i      : in  std_logic_vector (15 downto 0);
+             -- Inputs from PMOD's
+             pmod_i   : in  std_logic_vector (15 downto 0);
 
-      -- Input buttons
-      btn_i       : in  std_logic_vector (3 downto 0);
+             -- Input buttons
+             btn_i    : in  std_logic_vector (3 downto 0);
 
-      -- Output LEDs
-      led_o       : out std_logic_vector (7 downto 0);
+             -- Output LEDs
+             led_o    : out std_logic_vector (7 downto 0);
 
-      -- Output segment display
-      seg_ca_o    : out std_logic_vector (6 downto 0);
-      seg_dp_o    : out std_logic;
-      seg_an_o    : out std_logic_vector (3 downto 0)
-
-      );
+             -- Output segment display
+             seg_ca_o : out std_logic_vector (6 downto 0);
+             seg_dp_o : out std_logic;
+             seg_an_o : out std_logic_vector (3 downto 0)
+         );
 
 end bcomp;
 
@@ -57,15 +56,13 @@ architecture Structural of bcomp is
     --   Program counter
     signal databus       : std_logic_vector(7 downto 0);
 
-    -- Interpretation of input button and switches.
-    alias btn_clk     : std_logic is btn_i(0);
+    -- Interpretation of input buttons and switches.
+    alias btn_clk        : std_logic is btn_i(0);
     alias btn_write      : std_logic is btn_i(1);
     alias btn_reset      : std_logic is btn_i(2);
 
-    alias sw_clk_free     : std_logic is sw_i(0);
-    alias sw_runmode        : std_logic is sw_i(1);
-    alias sw_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
-    alias sw_data        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
+    alias sw_clk_free    : std_logic is sw_i(0);
+    alias sw_runmode     : std_logic is sw_i(1);
 
     alias led_select     : std_logic_vector (2 downto 0) is sw_i(4 downto 2);
     constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000";
@@ -77,6 +74,10 @@ architecture Structural of bcomp is
     constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110";
     constant LED_SELECT_IREG : std_logic_vector (2 downto 0) := "111";
 
+    -- Used for programming the RAM.
+    alias pmod_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
+    alias pmod_data        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
+
     -- Communication between blocks
     signal areg_value    : std_logic_vector (7 downto 0);
     signal breg_value    : std_logic_vector (7 downto 0);
@@ -85,6 +86,7 @@ architecture Structural of bcomp is
     signal disp_two_comp : std_logic;
     signal disp_value    : std_logic_vector (7 downto 0);
     signal carry         : std_logic;
+    signal carry_reg     : std_logic; -- Registered value of carry
     signal pc_load       : std_logic;
 
     -- Debug outputs connected to LEDs
@@ -123,6 +125,17 @@ begin
              disp_value             when led_select = LED_SELECT_OUT  else
              ireg_value             when led_select = LED_SELECT_IREG;
 
+    pc_load <= control_J or (control_JC and carry_reg);
+
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if control_EO = '1' then
+                carry_reg <= carry;
+            end if;
+        end if;
+    end process;
+
     -- Instantiate clock module
     inst_clock_logic : entity work.clock_logic
     generic map (
@@ -130,8 +143,8 @@ begin
                 )
     port map (
                  clk_i       => clk_i       , -- External crystal
-                 sw_i        => sw_clk_free  ,
-                 btn_i       => btn_clk  ,
+                 sw_i        => sw_clk_free ,
+                 btn_i       => btn_clk     ,
                  hlt_i       => control_HLT ,
                  clk_deriv_o => clk           -- Main internal clock
              );
@@ -139,34 +152,34 @@ begin
     -- Instantiate A-register
     inst_a_register : entity work.register_8bit
     port map (
-                 clk_i       => clk          ,
-                 load_i      => control_AI   ,
-                 enable_i    => control_AO   ,
-                 clr_i       => btn_reset    ,
-                 data_io     => databus      ,
-                 reg_o       => areg_value     -- to ALU
+                 clk_i       => clk        ,
+                 load_i      => control_AI ,
+                 enable_i    => control_AO ,
+                 clr_i       => btn_reset  ,
+                 data_io     => databus    ,
+                 reg_o       => areg_value   -- to ALU
              );
 
     -- Instantiate B-register
     inst_b_register : entity work.register_8bit
     port map (
-                 clk_i       => clk          ,
-                 load_i      => control_BI   ,
-                 enable_i    => '0'          ,
-                 clr_i       => btn_reset    ,
-                 data_io     => databus      ,
-                 reg_o       => breg_value     -- to ALU
+                 clk_i       => clk        ,
+                 load_i      => control_BI ,
+                 enable_i    => '0'        ,
+                 clr_i       => btn_reset  ,
+                 data_io     => databus    ,
+                 reg_o       => breg_value   -- to ALU
              );
 
     -- Instantiate instruction register
     inst_instruction_register : entity work.instruction_register
     port map (
-                 clk_i       => clk          ,
-                 load_i      => control_II   ,
-                 enable_i    => control_IO   ,
-                 clr_i       => btn_reset    ,
-                 data_io     => databus      ,
-                 reg_o       => ireg_value     -- to instruction decoder
+                 clk_i       => clk        ,
+                 load_i      => control_II ,
+                 enable_i    => control_IO ,
+                 clr_i       => btn_reset  ,
+                 data_io     => databus    ,
+                 reg_o       => ireg_value   -- to instruction decoder
              );
 
     -- Instantiate ALU
@@ -187,8 +200,8 @@ begin
                  clk_i       => clk                 ,
                  load_i      => control_MI          ,
                  address_i   => databus(3 downto 0) ,
-                 runmode_i   => sw_runmode             ,
-                 sw_i        => sw_address          ,
+                 runmode_i   => sw_runmode          ,
+                 sw_i        => pmod_address        ,
                  address_o   => address_value         -- to RAM module
              );
 
@@ -199,13 +212,11 @@ begin
                  enable_i    => control_RO    ,
                  data_io     => databus       ,
                  address_i   => address_value ,
-                 runmode_i   => sw_runmode       ,
-                 sw_data_i   => sw_data       ,
+                 runmode_i   => sw_runmode    ,
+                 sw_data_i   => pmod_data     ,
                  wr_button_i => btn_write     ,
                  data_led_o  => ram_value       -- Debug output
              );
-
-    pc_load <= control_J or (control_JC and carry);
 
     -- Instantiate Program counter
     inst_program_counter : entity work.program_counter

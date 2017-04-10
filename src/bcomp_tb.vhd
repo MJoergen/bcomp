@@ -31,8 +31,6 @@ architecture Structural of bcomp_tb is
     
     alias sw_clk_free : std_logic is sw(0);
     alias sw_runmode  : std_logic is sw(1);
-    alias sw_address  : std_logic_vector (3 downto 0) is pmod(11 downto 8);
-    alias sw_data     : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
 
     alias sw_led_select  : std_logic_vector (2 downto 0) is sw(4 downto 2);
     constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000"; -- Databus
@@ -43,6 +41,9 @@ architecture Structural of bcomp_tb is
     constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101"; -- B register
     constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110"; -- Output register
     constant LED_SELECT_IREG : std_logic_vector (2 downto 0) := "111"; -- Instruction register
+
+    alias pmod_address  : std_logic_vector (3 downto 0) is pmod(11 downto 8);
+    alias pmod_data     : std_logic_vector (7 downto 0) is pmod( 7 downto 0);
 
     -- LED
     signal led : std_logic_vector (7 downto 0);
@@ -158,12 +159,12 @@ begin
         -- Configure DUT
         sw_clk_free   <= '0'; -- Use manual clock (switch off control logic)
         sw_runmode    <= '0'; -- Set RAM to programming mode
-        sw_led_select <= LED_SELECT_IREG;
+        sw_led_select <= LED_SELECT_ADDR;
 
         -- Program the RAM
         for i in 0 to 15 loop
-            sw_address <= std_logic_vector(to_unsigned(i, 4));
-            sw_data    <= mem(i);
+            pmod_address <= std_logic_vector(to_unsigned(i, 4));
+            pmod_data    <= mem(i);
             wait until falling_edge(clk);
             btn_write  <= '1';
             wait until rising_edge(clk);
@@ -180,7 +181,7 @@ begin
         btn_reset <= '0';
         wait until rising_edge(clk);
 
-        wait for 40000 ns;
+        wait for 50000 ns;
 
         test_running <= false;
         wait;

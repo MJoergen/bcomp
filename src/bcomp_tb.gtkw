@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Mon Apr 10 07:43:39 2017
+[*] Mon Apr 10 07:59:50 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Mon Apr 10 07:37:20 2017"
-[dumpfile_size] 77532
+[dumpfile_mtime] "Mon Apr 10 07:59:06 2017"
+[dumpfile_size] 95228
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
-[timestart] 37162700000
+[timestart] 0
 [size] 1805 1087
 [pos] 20 0
-*-26.716780 37383200000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-33.033039 40649000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
@@ -109,6 +109,7 @@ top.bcomp_tb.inst_bcomp.control[0]
 #{top.bcomp_tb.inst_bcomp.databus[7:0]} top.bcomp_tb.inst_bcomp.databus[7] top.bcomp_tb.inst_bcomp.databus[6] top.bcomp_tb.inst_bcomp.databus[5] top.bcomp_tb.inst_bcomp.databus[4] top.bcomp_tb.inst_bcomp.databus[3] top.bcomp_tb.inst_bcomp.databus[2] top.bcomp_tb.inst_bcomp.databus[1] top.bcomp_tb.inst_bcomp.databus[0]
 @28
 top.bcomp_tb.inst_bcomp.carry
+top.bcomp_tb.inst_bcomp.carry_reg
 @c00200
 -clock_logic
 @28
@@ -136,7 +137,7 @@ top.bcomp_tb.inst_bcomp.inst_a_register.enable_i
 #{top.bcomp_tb.inst_bcomp.inst_a_register.data[7:0]} top.bcomp_tb.inst_bcomp.inst_a_register.data[7] top.bcomp_tb.inst_bcomp.inst_a_register.data[6] top.bcomp_tb.inst_bcomp.inst_a_register.data[5] top.bcomp_tb.inst_bcomp.inst_a_register.data[4] top.bcomp_tb.inst_bcomp.inst_a_register.data[3] top.bcomp_tb.inst_bcomp.inst_a_register.data[2] top.bcomp_tb.inst_bcomp.inst_a_register.data[1] top.bcomp_tb.inst_bcomp.inst_a_register.data[0]
 @1401200
 -A register
-@800200
+@c00200
 -B register
 @28
 top.bcomp_tb.inst_bcomp.inst_b_register.clr_i
@@ -148,9 +149,9 @@ top.bcomp_tb.inst_bcomp.inst_b_register.enable_i
 #{top.bcomp_tb.inst_bcomp.inst_b_register.data_io[7:0]} top.bcomp_tb.inst_bcomp.inst_b_register.data_io[7] top.bcomp_tb.inst_bcomp.inst_b_register.data_io[6] top.bcomp_tb.inst_bcomp.inst_b_register.data_io[5] top.bcomp_tb.inst_bcomp.inst_b_register.data_io[4] top.bcomp_tb.inst_bcomp.inst_b_register.data_io[3] top.bcomp_tb.inst_bcomp.inst_b_register.data_io[2] top.bcomp_tb.inst_bcomp.inst_b_register.data_io[1] top.bcomp_tb.inst_bcomp.inst_b_register.data_io[0]
 [color] 2
 #{top.bcomp_tb.inst_bcomp.inst_b_register.data[7:0]} top.bcomp_tb.inst_bcomp.inst_b_register.data[7] top.bcomp_tb.inst_bcomp.inst_b_register.data[6] top.bcomp_tb.inst_bcomp.inst_b_register.data[5] top.bcomp_tb.inst_bcomp.inst_b_register.data[4] top.bcomp_tb.inst_bcomp.inst_b_register.data[3] top.bcomp_tb.inst_bcomp.inst_b_register.data[2] top.bcomp_tb.inst_bcomp.inst_b_register.data[1] top.bcomp_tb.inst_bcomp.inst_b_register.data[0]
-@1000200
+@1401200
 -B register
-@800200
+@c00200
 -ALU
 @28
 top.bcomp_tb.inst_bcomp.inst_alu.sub_i
@@ -158,9 +159,9 @@ top.bcomp_tb.inst_bcomp.inst_alu.sub_i
 top.bcomp_tb.inst_bcomp.inst_alu.enable_i
 @22
 #{top.bcomp_tb.inst_bcomp.inst_alu.result_o[7:0]} top.bcomp_tb.inst_bcomp.inst_alu.result_o[7] top.bcomp_tb.inst_bcomp.inst_alu.result_o[6] top.bcomp_tb.inst_bcomp.inst_alu.result_o[5] top.bcomp_tb.inst_bcomp.inst_alu.result_o[4] top.bcomp_tb.inst_bcomp.inst_alu.result_o[3] top.bcomp_tb.inst_bcomp.inst_alu.result_o[2] top.bcomp_tb.inst_bcomp.inst_alu.result_o[1] top.bcomp_tb.inst_bcomp.inst_alu.result_o[0]
-@29
+@28
 top.bcomp_tb.inst_bcomp.inst_alu.carry_o
-@1000200
+@1401200
 -ALU
 @c00200
 -Address register
@@ -197,15 +198,15 @@ top.bcomp_tb.inst_bcomp.inst_ram_module.data_out[0]
 @1401200
 -group_end
 -RAM module
-@800200
+@800201
 -Output register
-@28
+@29
 top.bcomp_tb.inst_bcomp.inst_output_register.load_i
-@22
+@23
 #{top.bcomp_tb.inst_bcomp.inst_output_register.data_i[7:0]} top.bcomp_tb.inst_bcomp.inst_output_register.data_i[7] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[6] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[5] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[4] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[3] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[2] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[1] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[0]
 [color] 2
 #{top.bcomp_tb.inst_bcomp.inst_output_register.data[7:0]} top.bcomp_tb.inst_bcomp.inst_output_register.data[7] top.bcomp_tb.inst_bcomp.inst_output_register.data[6] top.bcomp_tb.inst_bcomp.inst_output_register.data[5] top.bcomp_tb.inst_bcomp.inst_output_register.data[4] top.bcomp_tb.inst_bcomp.inst_output_register.data[3] top.bcomp_tb.inst_bcomp.inst_output_register.data[2] top.bcomp_tb.inst_bcomp.inst_output_register.data[1] top.bcomp_tb.inst_bcomp.inst_output_register.data[0]
-@1000200
+@1000201
 -Output register
 @c00200
 -Program counter
@@ -219,7 +220,7 @@ top.bcomp_tb.inst_bcomp.inst_program_counter.count_i
 #{top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[7:0]} top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[7] top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[6] top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[5] top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[4] top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[3] top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[2] top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[1] top.bcomp_tb.inst_bcomp.inst_program_counter.data_io[0]
 @1401200
 -Program counter
-@800200
+@c00200
 -Instruction register
 @28
 [color] 5
@@ -230,7 +231,7 @@ top.bcomp_tb.inst_bcomp.inst_instruction_register.enable_i
 [color] 2
 #{top.bcomp_tb.inst_bcomp.inst_instruction_register.data[7:0]} top.bcomp_tb.inst_bcomp.inst_instruction_register.data[7] top.bcomp_tb.inst_bcomp.inst_instruction_register.data[6] top.bcomp_tb.inst_bcomp.inst_instruction_register.data[5] top.bcomp_tb.inst_bcomp.inst_instruction_register.data[4] top.bcomp_tb.inst_bcomp.inst_instruction_register.data[3] top.bcomp_tb.inst_bcomp.inst_instruction_register.data[2] top.bcomp_tb.inst_bcomp.inst_instruction_register.data[1] top.bcomp_tb.inst_bcomp.inst_instruction_register.data[0]
 #{top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[7:0]} top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[7] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[6] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[5] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[4] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[3] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[2] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[1] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[0]
-@1000200
+@1401200
 -Instruction register
 @800200
 -Control module
