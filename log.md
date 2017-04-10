@@ -97,11 +97,35 @@ I've gone ahead and finished the design, before the next video from Ben Eater.
 
 The following picture shows output from the simulation.
 ![alt text](https://github.com/MJoergen/bcomp/blob/master/img/Simulation.png "")
+At the bottom we see the control logic.
+The first cycle sets CO and MI high. That copies the program counter to the
+memory address register. The value of the program counter can currently be seen
+on the data bus (value 0x0B).
+
+Second cycle sets RO and II high. That copies the memory contents to the
+instruction register.  The instruction op code can currently be seen on the
+data bus (value 0x80).
+
+Third cycle, it sets CE high, which increments the program counter. 
+
+Fourth cycle, the program counter has been incremented from 0x0B to 0x0C.
+Control module sets IO and JC high.  That performs a conditional jump, based on
+whether the register 'carry_reg' is high. In this case that is true, so the
+jump is performed. The destination address is currently seen on the data bus
+(value 0x00).
+
+Cycles five through eight are empty.
+
+After that the next instruction fetch proceeds, by once again setting CO and MI high.
+
+## Synthesis
 
 The current design uses 19% of the available logic in the FPGA and can run at up to 141 MHz.
 
-..* TODO: Make a more extensive test of the CPU and all it's instructions and capabilities.
-..* TODO: Increase memory, so larger programs can be stored.
-..* TODO: Add more instructions.
+## TODO
+
+..* Make a more extensive test of the CPU and all it's instructions and capabilities.
+..* Increase memory, so larger programs can be stored.
+..* Add more instructions.
 
 
