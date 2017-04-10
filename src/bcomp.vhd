@@ -74,7 +74,7 @@ architecture Structural of bcomp is
     constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110";
     constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111";
 
-    alias sw_disp_two_comp : std_logic is sw(5); -- Display two's complement
+    alias sw_disp_two_comp : std_logic is sw_i(5); -- Display two's complement
 
     -- Used for programming the RAM.
     alias pmod_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
