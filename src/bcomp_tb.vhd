@@ -47,9 +47,6 @@ architecture Structural of bcomp_tb is
     -- LED
     signal led : std_logic_vector (7 downto 0);
 
-    -- Used only for test purposes
-    signal databus       : std_logic_vector (7 downto 0) := "ZZZZZZZZ";
-
     -- Bus commands
     constant control_CE  : integer :=  0; -- Program counter count enable
     constant control_CO  : integer :=  1; -- Program counter output enable
@@ -146,10 +143,7 @@ begin
                  led_o        => led     , 
                  seg_ca_o     => open    ,
                  seg_dp_o     => open    ,
-                 seg_an_o     => open    ,
-
-                 -- Used only for test purposes
-                 databus_i    => databus 
+                 seg_an_o     => open    
              );
 
     -- Start the main test
@@ -159,7 +153,6 @@ begin
         sw        <= "00000000";
         btn       <= "0000";
         pmod      <= (others => '0');
-        databus   <= "ZZZZZZZZ";
         btn_reset <= '1';
 
         -- Configure DUT
@@ -187,7 +180,7 @@ begin
         btn_reset <= '0';
         wait until rising_edge(clk);
 
-        wait for 10000 ns;
+        wait for 40000 ns;
 
         test_running <= false;
         wait;

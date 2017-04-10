@@ -28,11 +28,6 @@ entity bcomp is
       -- Output LEDs
       led_o       : out std_logic_vector (7 downto 0);
 
-      -- pragma synthesis_off
-      -- Used during testing
-      databus_i       : in  std_logic_vector (7 downto 0);
-      -- pragma synthesis_on
-
       -- Output segment display
       seg_ca_o    : out std_logic_vector (6 downto 0);
       seg_dp_o    : out std_logic;
@@ -118,10 +113,6 @@ architecture Structural of bcomp is
     alias  control_JC : std_logic is control(15);  -- Jump if carry
 
 begin
-
-    -- pragma synthesis_off
-    databus <= databus_i;
-    -- pragma synthesis_on
 
     led_o <= databus                when led_select = LED_SELECT_BUS  else
              alu_value              when led_select = LED_SELECT_ALU  else
