@@ -1,0 +1,28 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Mon Apr 10 07:21:45 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/ram74ls189_tb.ghw"
+[dumpfile_mtime] "Mon Apr 10 07:20:38 2017"
+[dumpfile_size] 1176
+[savefile] "/home/mike/git/bcomp/src/ram74ls189_tb.gtkw"
+[timestart] 0
+[size] 1639 600
+[pos] -1 -1
+*-28.488995 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.ram74ls189_tb.
+[sst_width] 229
+[signals_width] 134
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@28
+top.ram74ls189_tb.cs
+top.ram74ls189_tb.we
+@22
+#{top.ram74ls189_tb.address[3:0]} top.ram74ls189_tb.address[3] top.ram74ls189_tb.address[2] top.ram74ls189_tb.address[1] top.ram74ls189_tb.address[0]
+#{top.ram74ls189_tb.data_in[3:0]} top.ram74ls189_tb.data_in[3] top.ram74ls189_tb.data_in[2] top.ram74ls189_tb.data_in[1] top.ram74ls189_tb.data_in[0]
+@23
+#{top.ram74ls189_tb.data_out[3:0]} top.ram74ls189_tb.data_out[3] top.ram74ls189_tb.data_out[2] top.ram74ls189_tb.data_out[1] top.ram74ls189_tb.data_out[0]
+[pattern_trace] 1
+[pattern_trace] 0

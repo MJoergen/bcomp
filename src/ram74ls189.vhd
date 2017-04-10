@@ -8,8 +8,6 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- Deviations from the chip:
 -- * Data outputs are NOT inverted.
 -- * Control inputs are active high.
--- * Writes are made synchronous (on rising edge of we_i).
---   This improves the clock routing in the FPGA.
 
 -- This is a single port RAM.
 
@@ -42,12 +40,7 @@ begin
     data_o <= data(conv_integer(address_i))
               when cs_i = '1' and we_i = '0' else "ZZZZ";
 
-    process (we_i)
-    begin
-        if rising_edge(we_i) then
-            data(conv_integer(address_i)) <= data_i;
-        end if;
-    end process;
+    data(conv_integer(address_i)) <= data_i when we_i = '1';
 
 end Structural;
 
