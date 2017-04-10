@@ -40,7 +40,9 @@ architecture Structural of bcomp_tb is
     constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "100"; -- A register
     constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101"; -- B register
     constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110"; -- Output register
-    constant LED_SELECT_IREG : std_logic_vector (2 downto 0) := "111"; -- Instruction register
+    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111"; -- Program counter
+
+    alias sw_disp_two_comp : std_logic is sw(5); -- Display two's complement
 
     alias pmod_address  : std_logic_vector (3 downto 0) is pmod(11 downto 8);
     alias pmod_data     : std_logic_vector (7 downto 0) is pmod( 7 downto 0);

@@ -72,7 +72,9 @@ architecture Structural of bcomp is
     constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "100";
     constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101";
     constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110";
-    constant LED_SELECT_IREG : std_logic_vector (2 downto 0) := "111";
+    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111";
+
+    alias sw_disp_two_comp : std_logic is sw(5); -- Display two's complement
 
     -- Used for programming the RAM.
     alias pmod_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
@@ -83,7 +85,6 @@ architecture Structural of bcomp is
     signal breg_value    : std_logic_vector (7 downto 0);
     signal ireg_value    : std_logic_vector (7 downto 0);
     signal address_value : std_logic_vector (3 downto 0);
-    signal disp_two_comp : std_logic;
     signal disp_value    : std_logic_vector (7 downto 0);
     signal carry         : std_logic;
     signal carry_reg     : std_logic; -- Registered value of carry
@@ -123,7 +124,7 @@ begin
              areg_value             when led_select = LED_SELECT_AREG else
              breg_value             when led_select = LED_SELECT_BREG else
              disp_value             when led_select = LED_SELECT_OUT  else
-             ireg_value             when led_select = LED_SELECT_IREG;
+             pc_value               when led_select = LED_SELECT_PC;
 
     pc_load <= control_J or (control_JC and carry_reg);
 
@@ -233,11 +234,11 @@ begin
     -- Instantiate Display
     inst_display : entity work.display
     port map (
-                 clk_i       => clk_i         , -- Use crystal clock
-                 two_comp_i  => disp_two_comp ,
-                 value_i     => disp_value    ,
-                 seg_ca_o    => seg_ca_o      ,
-                 seg_dp_o    => seg_dp_o      ,
+                 clk_i       => clk_i            , -- Use crystal clock
+                 two_comp_i  => sw_disp_two_comp ,
+                 value_i     => disp_value       ,
+                 seg_ca_o    => seg_ca_o         ,
+                 seg_dp_o    => seg_dp_o         ,
                  seg_an_o    => seg_an_o 
              );
 
