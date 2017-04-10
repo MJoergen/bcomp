@@ -1,0 +1,29 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Mon Apr 10 06:59:02 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/instruction_register_tb.ghw"
+[dumpfile_mtime] "Mon Apr 10 06:58:18 2017"
+[dumpfile_size] 993
+[savefile] "/home/mike/git/bcomp/src/instruction_register_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-27.335697 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.instruction_register_tb.
+[sst_width] 229
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@28
+top.instruction_register_tb.clr
+top.instruction_register_tb.clk
+top.instruction_register_tb.load
+top.instruction_register_tb.enable
+@22
+#{top.instruction_register_tb.data[7:0]} top.instruction_register_tb.data[7] top.instruction_register_tb.data[6] top.instruction_register_tb.data[5] top.instruction_register_tb.data[4] top.instruction_register_tb.data[3] top.instruction_register_tb.data[2] top.instruction_register_tb.data[1] top.instruction_register_tb.data[0]
+@23
+#{top.instruction_register_tb.reg[7:0]} top.instruction_register_tb.reg[7] top.instruction_register_tb.reg[6] top.instruction_register_tb.reg[5] top.instruction_register_tb.reg[4] top.instruction_register_tb.reg[3] top.instruction_register_tb.reg[2] top.instruction_register_tb.reg[1] top.instruction_register_tb.reg[0]
+[pattern_trace] 1
+[pattern_trace] 0
