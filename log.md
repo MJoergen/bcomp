@@ -91,3 +91,13 @@ PMOD's. So it is not necessary after all to use the Basys3 board.
 Slowly, the project is beginning to resemble a computer. Like an embryo growing into 
 a fetus.
 
+# 2017-04-10
+
+I've gone ahead and finished the design, before the next video from Ben Eater.
+
+The current design uses 19% of the available logic in the FPGA and can run at up to 141 MHz.
+
+TODO: Make a more extensive test of the CPU and all it's instructions and capabilities.
+TODO: Increase memory, so larger programs can be stored.
+TODO: Add more instructions.
+
