@@ -42,7 +42,6 @@ end control;
 architecture Structural of control is
 
     subtype control_type is std_logic_vector(15 downto 0);
-    signal control : control_type;
 
     constant control_CE  : integer := 0;  -- Program counter count enable
     constant control_CO  : integer := 1;  -- Program counter output enable
