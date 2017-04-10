@@ -124,8 +124,8 @@ The current design uses 19% of the available logic in the FPGA and can run at up
 
 ## TODO
 
-..* Make a more extensive test of the CPU and all it's instructions and capabilities.
-..* Increase memory, so larger programs can be stored.
-..* Add more instructions.
+* Make a more extensive test of the CPU and all it's instructions and capabilities.
+* Increase memory, so larger programs can be stored.
+* Add more instructions.
 
 
