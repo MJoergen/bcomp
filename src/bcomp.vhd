@@ -83,7 +83,7 @@ architecture Structural of bcomp is
     -- Communication between blocks
     signal areg_value    : std_logic_vector (7 downto 0);
     signal breg_value    : std_logic_vector (7 downto 0);
-    signal ireg_value    : std_logic_vector (7 downto 0);
+    signal ireg_value    : std_logic_vector (3 downto 0); -- Upper four bits
     signal address_value : std_logic_vector (3 downto 0);
     signal disp_value    : std_logic_vector (7 downto 0);
     signal carry         : std_logic;
@@ -255,9 +255,9 @@ begin
     -- Instantiate control module
     inst_control : entity work.control
     port map (
-                 clk_i       => clk                    ,
-                 rst_i       => btn_reset              ,
-                 instruct_i  => ireg_value(7 downto 4) ,
+                 clk_i       => clk        ,
+                 rst_i       => btn_reset  ,
+                 instruct_i  => ireg_value ,
                  control_o   => control
              );
 
