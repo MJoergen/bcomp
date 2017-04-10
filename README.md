@@ -27,5 +27,12 @@ Here are some links to additional learning resources:
 This project assumes you're running on a Linux based system.
 You need to install the Xilinx ISE Design Suite (version 14.7) from this link:
 https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/design-tools.html
+Don't bother with the cable drivers, they are not needed.
+Instead, go to 
+
+Please see the [Digilent's
+website](http://store.digilentinc.com/digilent-adept-2-download-only/) to
+download both the Runtime and the Utilities.
 
 Alternatively, follow this guide: https://www.realdigital.org/document/44
+
