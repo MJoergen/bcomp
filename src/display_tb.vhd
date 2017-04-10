@@ -35,7 +35,7 @@ begin
     -- Instantiate DUT
     inst_display : entity work.display
     generic map (
-                    COUNTER_SIZE => 3
+                    SIMULATION => true
                 )
     port map (
                  clk_i       => clk       ,
@@ -62,7 +62,7 @@ begin
         constant DIG_NONE : std_logic_vector (7 downto 0) := "11111111";
         constant DIG_NEG  : std_logic_vector (7 downto 0) := "10111111";
     begin
-        wait for 3*8*40 ns;
+        wait for 3*4*40 ns;
         wait for 40 ns;
 
         two_comp <= '0';
@@ -71,19 +71,19 @@ begin
         assert seg_ca = DIG_3(6 downto 0);
         assert seg_dp = DIG_3(7);
         assert seg_an = "1110";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
         assert seg_ca = DIG_1(6 downto 0);
         assert seg_dp = DIG_1(7);
         assert seg_an = "1101";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
         assert seg_ca = DIG_2(6 downto 0);
         assert seg_dp = DIG_2(7);
         assert seg_an = "1011";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
         assert seg_ca = DIG_NONE(6 downto 0);
         assert seg_dp = DIG_NONE(7);
         assert seg_an = "0111";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
 
         two_comp <= '1';
         value <= "11010101"; -- -43 decimal
@@ -91,19 +91,19 @@ begin
         assert seg_ca = DIG_3(6 downto 0);
         assert seg_dp = DIG_3(7);
         assert seg_an = "1110";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
         assert seg_ca = DIG_4(6 downto 0);
         assert seg_dp = DIG_4(7);
         assert seg_an = "1101";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
         assert seg_ca = DIG_0(6 downto 0);
         assert seg_dp = DIG_0(7);
         assert seg_an = "1011";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
         assert seg_ca = DIG_NEG(6 downto 0);
         assert seg_dp = DIG_NEG(7);
         assert seg_an = "0111";
-        wait for 8*40 ns;
+        wait for 4*40 ns;
 
         test_running <= false;
         wait;

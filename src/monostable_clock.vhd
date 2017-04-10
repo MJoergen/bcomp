@@ -14,8 +14,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity monostable_clock is
 
     generic (
-                COUNTER_SIZE : integer := 21 -- for delay
-                -- 40 ns * 2^21 = 0.1 s
+                SIMULATION : boolean := false
             );
 
     port (
@@ -31,6 +30,20 @@ entity monostable_clock is
 end monostable_clock;
 
 architecture Structural of monostable_clock is
+
+    function get_counter_size (simulation : boolean) return integer
+    is
+    begin
+        if simulation then
+            return 2;
+        else
+            return 21; -- 40 ns * 2^21 = 0.1 s
+        end if;
+            
+    end function;
+
+    constant COUNTER_SIZE : integer := get_counter_size(SIMULATION);
+
     signal counter   : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
                        (others => '0');
     signal btn_delay : std_logic;

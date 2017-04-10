@@ -14,8 +14,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity bistable_clock is
 
     generic (
-                COUNTER_SIZE : integer := 16 -- for delay
-                -- 40 ns * 2^16 = 2.6 ms
+                SIMULATION : boolean := false
             );
 
     port (
@@ -31,6 +30,19 @@ entity bistable_clock is
 end bistable_clock;
 
 architecture Structural of bistable_clock is
+    function get_counter_size (simulation : boolean) return integer
+    is
+    begin
+        if simulation then
+            return 2;
+        else
+            return 21; -- 40 ns * 2^21 = 0.1 s
+        end if;
+            
+    end function;
+
+    constant COUNTER_SIZE : integer := get_counter_size(SIMULATION);
+
     signal counter : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
                      (others => '0');
     signal sw_reg  : std_logic;

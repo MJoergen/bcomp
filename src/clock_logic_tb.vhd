@@ -37,9 +37,7 @@ begin
     -- Instantiate DUT
     inst_clock_logic : entity work.clock_logic
     generic map (
-                COUNTER_SIZE_MONO => 4,
-                COUNTER_SIZE_BI   => 4
-                    -- 40 ns * 2^4 = 640 ns.
+                    SIMULATION => true
                 )
     port map (
                  clk_i       => clk       ,

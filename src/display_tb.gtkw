@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Sun Apr  9 11:06:11 2017
+[*] Mon Apr 10 06:06:49 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/display_tb.ghw"
-[dumpfile_mtime] "Sun Apr  9 11:05:29 2017"
-[dumpfile_size] 2770
+[dumpfile_mtime] "Mon Apr 10 06:06:38 2017"
+[dumpfile_size] 1976
 [savefile] "/home/mike/git/bcomp/src/display_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-30.263567 1427000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-29.324968 1427000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.display_tb.
 [sst_width] 229
@@ -22,7 +22,6 @@ top.display_tb.two_comp
 @22
 #{top.display_tb.value[7:0]} top.display_tb.value[7] top.display_tb.value[6] top.display_tb.value[5] top.display_tb.value[4] top.display_tb.value[3] top.display_tb.value[2] top.display_tb.value[1] top.display_tb.value[0]
 #{top.display_tb.seg_ca[6:0]} top.display_tb.seg_ca[6] top.display_tb.seg_ca[5] top.display_tb.seg_ca[4] top.display_tb.seg_ca[3] top.display_tb.seg_ca[2] top.display_tb.seg_ca[1] top.display_tb.seg_ca[0]
-@23
 #{top.display_tb.seg_an[3:0]} top.display_tb.seg_an[3] top.display_tb.seg_an[2] top.display_tb.seg_an[1] top.display_tb.seg_an[0]
 [pattern_trace] 1
 [pattern_trace] 0

@@ -31,8 +31,7 @@ begin
     -- Instantiate DUT
     inst_monostable_clock : entity work.monostable_clock
     generic map (
-                    COUNTER_SIZE => 4 -- Much shorter counter during simulation.
-                    -- 40 ns * 2^4 = 640 ns.
+                    SIMULATION => true -- Much shorter counter during simulation.
                 )
     port map (
                  clk_i       => clk    ,
@@ -45,42 +44,49 @@ begin
     begin
         wait for 80 ns;
 
+        -- Verify btn_delay goes high immediately.
         btn <= '1';
         wait for 40 ns;
         assert btn_delay = '1';
 
-        wait for 640 ns;
+        -- Verify btn_delay stays high.
+        wait for 160 ns;
         assert btn_delay = '1';
 
+        -- Verify btn_delay goes low at the right time (after 4 clock cycles in simulation).
         btn <= '0';
-        wait for 160 ns;
+        wait for 40 ns;
         assert btn_delay = '1';
-        wait for 160 ns;
+        wait for 40 ns;
         assert btn_delay = '1';
-        wait for 160 ns;
+        wait for 40 ns;
         assert btn_delay = '1';
+        wait for 40 ns;
+        assert btn_delay = '0';
+
+        -- Verify btn_delay stays low.
         wait for 160 ns;
         assert btn_delay = '0';
 
-        wait for 640 ns;
-        assert btn_delay = '0';
+        -- Verify btn_delay goes high immediately.
+        btn <= '1';
+        wait for 40 ns;
+        assert btn_delay = '1';
+
+        -- Verify bouncing is ignored.
+        btn <= '0';
+        wait for 120 ns;
+        assert btn_delay = '1';
 
         btn <= '1';
         wait for 40 ns;
         assert btn_delay = '1';
 
+        -- Verify bouncing restarts timer.
         btn <= '0';
-        wait for 560 ns;
+        wait for 120 ns;
         assert btn_delay = '1';
-
-        btn <= '1';
         wait for 40 ns;
-        assert btn_delay = '1';
-
-        btn <= '0';
-        wait for 560 ns;
-        assert btn_delay = '1';
-        wait for 80 ns;
         assert btn_delay = '0';
 
         test_running <= false;

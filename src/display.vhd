@@ -14,8 +14,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity display is
 
     generic (
-                COUNTER_SIZE : integer := 15
-            -- 40 ns * 2^15 = 1.3 ms
+                SIMULATION : boolean := false
             );
     port (
              -- Clock input from crystal (for delay)
@@ -33,6 +32,19 @@ entity display is
 end display;
 
 architecture Structural of display is
+    function get_counter_size (simulation : boolean) return integer
+    is
+    begin
+        if simulation then
+            return 2;
+        else
+            return 15; -- 40 ns * 2^15 = 1.3 ms 
+        end if;
+            
+    end function;
+
+    constant COUNTER_SIZE : integer := get_counter_size(SIMULATION);
+
     signal segment : std_logic_vector(1 downto 0) := (others => '0');
     signal counter : std_logic_vector(COUNTER_SIZE-1 downto 0) :=
     (others => '0');

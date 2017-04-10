@@ -9,8 +9,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity clock_logic is
 
     generic (
-                COUNTER_SIZE_MONO : integer := 16; -- for delay
-                COUNTER_SIZE_BI   : integer := 16  -- for delay
+                SIMULATION : boolean := false
             );
 
     port (
@@ -39,7 +38,7 @@ begin
     -- Instantiate monostable
     inst_monostable_clock : entity work.monostable_clock
     generic map (
-                    COUNTER_SIZE => COUNTER_SIZE_MONO
+                    SIMULATION => SIMULATION
                 )
     port map (
                  clk_i       => clk_i  ,
@@ -50,7 +49,7 @@ begin
     -- Instantiate bistable
     inst_bistable_clock : entity work.bistable_clock
     generic map (
-                    COUNTER_SIZE => COUNTER_SIZE_BI
+                    SIMULATION => SIMULATION
                 )
     port map (
                  clk_i    => clk_i  ,

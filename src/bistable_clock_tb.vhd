@@ -31,8 +31,7 @@ begin
     -- Instantiate DUT
     inst_bistable_clock : entity work.bistable_clock
     generic map (
-                    COUNTER_SIZE => 4 -- Much shorter counter during simulation.
-                    -- 40 ns * 2^4 = 640 ns.
+                    SIMULATION => true -- Much shorter counter during simulation.
                 )
     port map (
                  clk_i    => clk    ,
@@ -45,43 +44,59 @@ begin
     begin
         wait for 80 ns;
 
+        -- Verify register goes high and stays high
         sw <= '1';
-        wait for 640 ns;
+        wait for 160 ns;
         assert sw_reg = '1';
 
-        wait for 640 ns;
+        wait for 160 ns;
         assert sw_reg = '1';
 
+        -- Verify register goes low at the right time and stays low
         sw <= '0';
         wait for 40 ns;
         assert sw_reg = '1';
-        wait for 640 ns;
+        wait for 40 ns;
+        assert sw_reg = '1';
+        wait for 40 ns;
+        assert sw_reg = '1';
+        wait for 40 ns;
         assert sw_reg = '0';
-        wait for 640 ns;
+        wait for 160 ns;
+        assert sw_reg = '0';
+        wait for 160 ns;
         assert sw_reg = '0';
 
+        -- Verify register goes high at the right time.
         sw <= '1';
-        wait for 160 ns;
+        wait for 40 ns;
         assert sw_reg = '0';
-        wait for 160 ns;
+        wait for 40 ns;
         assert sw_reg = '0';
-        wait for 160 ns;
+        wait for 40 ns;
         assert sw_reg = '0';
-        wait for 160 ns;
+        wait for 40 ns;
         assert sw_reg = '1';
 
+        -- Verify bouncing is ignored.
         sw <= '0';
         wait for 40 ns;
         assert sw_reg = '1';
-        wait for 160 ns;
+        wait for 40 ns;
         assert sw_reg = '1';
         sw <= '1';
-        wait for 160 ns;
+        wait for 40 ns;
+        assert sw_reg = '1';
+        wait for 40 ns;
         assert sw_reg = '1';
         sw <= '0';
-        wait for 160 ns;
+        wait for 40 ns;
         assert sw_reg = '1';
-        wait for 160 ns;
+        wait for 40 ns;
+        assert sw_reg = '1';
+        wait for 40 ns;
+        assert sw_reg = '1';
+        wait for 40 ns;
         assert sw_reg = '0';
 
         test_running <= false;
