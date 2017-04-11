@@ -1,0 +1,23 @@
+[*]
+[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
+[*] Tue Apr 11 17:49:51 2017
+[*]
+[dumpfile] "/home/mike/git/bcomp/src/astable_clock_tb.ghw"
+[dumpfile_mtime] "Tue Apr 11 17:49:43 2017"
+[dumpfile_size] 725
+[savefile] "/home/mike/git/bcomp/src/astable_clock_tb.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-27.076014 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[sst_width] 229
+[signals_width] 94
+[sst_expanded] 1
+[sst_vpaned_height] 146
+@28
+top.astable_clock_tb.clk
+@29
+top.astable_clock_tb.clk_slow
+[pattern_trace] 1
+[pattern_trace] 0
