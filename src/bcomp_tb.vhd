@@ -102,22 +102,22 @@ architecture Structural of bcomp_tb is
     -- This contains the contents of the memory
     type mem_type is array (0 to 15) of std_logic_vector(7 downto 0);
     constant mem : mem_type := (
-        "01110001",  -- 71  LDI 0x01
-        "01001110",  -- 4E  STA [0x0E] (Y)
-        "01110000",  -- 70  LDI 0x00
-        "01010000",  -- 50  OUT
-        "00101110",  -- 2E  ADD [0x0E] (Y)
-        "01001111",  -- 4F  STA [0x0F] (Z)
-        "00011110",  -- 1E  LDA [0x0E] (Y)
-        "01001101",  -- 4D  STA [0x0D] (X)
-        "00011111",  -- 1F  LDA [0x0F] (Z)
-        "01001110",  -- 4E  STA [0x0E] (Y)
-        "00011101",  -- 1D  LDA [0x0D] (X)
-        "10000000",  -- 80  JC 0x00
-        "01100011",  -- 63  J 0x03
-        "00000000",  -- 00  X
-        "00000000",  -- 00  Y
-        "00000000"); -- 00  Z
+        "01110001",  -- 00: 71  LDI 0x01
+        "01001110",  -- 01: 4E  STA [0x0E] (Y)
+        "01110000",  -- 02: 70  LDI 0x00
+        "01010000",  -- 03: 50  OUT
+        "00101110",  -- 04: 2E  ADD [0x0E] (Y)
+        "01001111",  -- 05: 4F  STA [0x0F] (Z)
+        "00011110",  -- 06: 1E  LDA [0x0E] (Y)
+        "01001101",  -- 07: 4D  STA [0x0D] (X)
+        "00011111",  -- 08: 1F  LDA [0x0F] (Z)
+        "01001110",  -- 09: 4E  STA [0x0E] (Y)
+        "00011101",  -- 0A: 1D  LDA [0x0D] (X)
+        "10000000",  -- 0B: 80  JC 0x00
+        "01100011",  -- 0C: 63  J 0x03
+        "00000000",  -- 0D: 00  X
+        "00000000",  -- 0E: 00  Y
+        "00000000"); -- 0F: 00  Z
 
 begin
     -- Simulate external crystal clock (25 MHz)
