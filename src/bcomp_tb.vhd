@@ -183,7 +183,7 @@ begin
         btn_reset <= '0';
         wait until rising_edge(clk);
 
-        wait for 50000 ns;
+        wait for 400 us;
 
         test_running <= false;
         wait;
