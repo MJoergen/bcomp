@@ -129,3 +129,14 @@ The current design uses 19% of the available logic in the FPGA and can run at up
 * Add more instructions.
 
 
+# 2017-04-11
+
+Added the possibility to preload the program, so it's not necessary to program the computer
+using the PMOD's.
+
+But more importantly, when I tested the computer on the physical board, sometimes reads
+from the RAM would fail. I suspect this is because the RAM is implemented using latches in
+the FPGA, and that is generally something to be avoided. So I've supplied a clock signal
+to the RAM module and made the writes synchronuous. This avoids latches, and now everything works
+charmingly!
+
