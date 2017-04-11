@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use work.ram74ls189_datatypes.all;
 
 -- ram_module.vhd
 -- This entity implements the feature described in the video
@@ -8,6 +9,10 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity ram_module is
 
+    generic (
+                INITIAL_HIGH : ram_type := (others => "0000");
+                INITIAL_LOW  : ram_type := (others => "0000")
+            );
     port (
              -- Control inputs
              wr_i           : in std_logic; -- called RI
@@ -43,6 +48,9 @@ begin
 
     -- Instantiate high nibble
     inst_ram74ls189_high : entity work.ram74ls189
+    generic map (
+                    INITIAL => INITIAL_HIGH
+                )
     port map (
                  address_i   => address_i           ,
                  data_i      => data_in(7 downto 4) ,
@@ -53,6 +61,9 @@ begin
 
     -- Instantiate low nibble
     inst_ram74ls189_low : entity work.ram74ls189
+    generic map (
+                    INITIAL => INITIAL_LOW
+                )
     port map (
                  address_i   => address_i           ,
                  data_i      => data_in(3 downto 0) ,

@@ -43,6 +43,10 @@ begin
 
     -- Instantiate DUT
     inst_ram_module : entity work.ram_module
+    generic map (
+                    INITIAL_HIGH => (0 => "1100", others => "0000"),
+                    INITIAL_LOW  => (0 => "1011", others => "0000")
+                )
     port map (
              wr_i           => wr           ,
              enable_i       => enable       ,
@@ -72,7 +76,18 @@ begin
         wr_button <= '0';
         wait for 80 ns;
         assert data     = "ZZZZZZZZ";
-        assert data_led = "ZZZZZZZZ";
+
+        -- Check read from address 0
+        address <= "0000";
+        wr_button <= '0';
+        wait for 80 ns;
+        assert data_led = "11001011";
+        assert data     = "ZZZZZZZZ";
+
+        enable <= '1';
+        wait for 80 ns;
+        assert data_led = "11001011";
+        assert data     = "11001011";
 
         -- Check write to address 0
         address <= "0000";

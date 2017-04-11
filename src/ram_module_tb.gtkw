@@ -1,19 +1,18 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Fri Apr  7 13:49:57 2017
+[*] Tue Apr 11 18:33:48 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/ram_module_tb.ghw"
-[dumpfile_mtime] "Fri Apr  7 13:49:41 2017"
-[dumpfile_size] 2763
+[dumpfile_mtime] "Tue Apr 11 18:33:40 2017"
+[dumpfile_size] 2558
 [savefile] "/home/mike/git/bcomp/src/ram_module_tb.gtkw"
 [timestart] 0
 [size] 1000 600
 [pos] -1 -1
-*-28.716415 406000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-28.902828 80000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.ram_module_tb.
 [treeopen] top.ram_module_tb.inst_ram_module.
-[treeopen] top.ram_module_tb.inst_ram_module.inst_ram.
 [sst_width] 229
 [signals_width] 190
 [sst_expanded] 1
@@ -35,9 +34,15 @@ top.ram_module_tb.wr_button
 @200
 -RAM
 @28
-top.ram_module_tb.inst_ram_module.inst_ram.wr_i
-top.ram_module_tb.inst_ram_module.inst_ram.enable_i
+top.ram_module_tb.inst_ram_module.runmode_i
+top.ram_module_tb.inst_ram_module.wr_i
+top.ram_module_tb.inst_ram_module.wr_button_i
+top.ram_module_tb.inst_ram_module.enable_i
 @22
-#{top.ram_module_tb.inst_ram_module.inst_ram.address_i[3:0]} top.ram_module_tb.inst_ram_module.inst_ram.address_i[3] top.ram_module_tb.inst_ram_module.inst_ram.address_i[2] top.ram_module_tb.inst_ram_module.inst_ram.address_i[1] top.ram_module_tb.inst_ram_module.inst_ram.address_i[0]
+#{top.ram_module_tb.inst_ram_module.address_i[3:0]} top.ram_module_tb.inst_ram_module.address_i[3] top.ram_module_tb.inst_ram_module.address_i[2] top.ram_module_tb.inst_ram_module.address_i[1] top.ram_module_tb.inst_ram_module.address_i[0]
+#{top.ram_module_tb.inst_ram_module.sw_data_i[7:0]} top.ram_module_tb.inst_ram_module.sw_data_i[7] top.ram_module_tb.inst_ram_module.sw_data_i[6] top.ram_module_tb.inst_ram_module.sw_data_i[5] top.ram_module_tb.inst_ram_module.sw_data_i[4] top.ram_module_tb.inst_ram_module.sw_data_i[3] top.ram_module_tb.inst_ram_module.sw_data_i[2] top.ram_module_tb.inst_ram_module.sw_data_i[1] top.ram_module_tb.inst_ram_module.sw_data_i[0]
+#{top.ram_module_tb.inst_ram_module.data_in[7:0]} top.ram_module_tb.inst_ram_module.data_in[7] top.ram_module_tb.inst_ram_module.data_in[6] top.ram_module_tb.inst_ram_module.data_in[5] top.ram_module_tb.inst_ram_module.data_in[4] top.ram_module_tb.inst_ram_module.data_in[3] top.ram_module_tb.inst_ram_module.data_in[2] top.ram_module_tb.inst_ram_module.data_in[1] top.ram_module_tb.inst_ram_module.data_in[0]
+#{top.ram_module_tb.inst_ram_module.data_out[7:0]} top.ram_module_tb.inst_ram_module.data_out[7] top.ram_module_tb.inst_ram_module.data_out[6] top.ram_module_tb.inst_ram_module.data_out[5] top.ram_module_tb.inst_ram_module.data_out[4] top.ram_module_tb.inst_ram_module.data_out[3] top.ram_module_tb.inst_ram_module.data_out[2] top.ram_module_tb.inst_ram_module.data_out[1] top.ram_module_tb.inst_ram_module.data_out[0]
+#{top.ram_module_tb.inst_ram_module.data_io[7:0]} top.ram_module_tb.inst_ram_module.data_io[7] top.ram_module_tb.inst_ram_module.data_io[6] top.ram_module_tb.inst_ram_module.data_io[5] top.ram_module_tb.inst_ram_module.data_io[4] top.ram_module_tb.inst_ram_module.data_io[3] top.ram_module_tb.inst_ram_module.data_io[2] top.ram_module_tb.inst_ram_module.data_io[1] top.ram_module_tb.inst_ram_module.data_io[0]
 [pattern_trace] 1
 [pattern_trace] 0

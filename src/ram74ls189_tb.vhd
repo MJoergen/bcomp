@@ -19,6 +19,9 @@ architecture Structural of ram74ls189_tb is
 begin
     -- Instantiate DUT
     inst_ram74ls189 : entity work.ram74ls189
+    generic map (
+                    INITIAL => (0 => "1011", 1 => "0110", others => "0000")
+                )
     port map (
                  address_i   => address  ,
                  data_i      => data_in  ,
@@ -42,7 +45,14 @@ begin
         address <= "0000";
         cs <= '1';
         wait for 100 ns;
-        assert data_out = "0000";
+        assert data_out = "1011";
+        
+        -- Check reset state (reading from address 1)
+        we <= '0';
+        address <= "0001";
+        cs <= '1';
+        wait for 100 ns;
+        assert data_out = "0110";
         
         -- Check writing to address 0
         address <= "0000";

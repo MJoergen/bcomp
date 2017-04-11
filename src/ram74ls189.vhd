@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use work.ram74ls189_datatypes.all;
 
 -- ram74ls189.vhd
 -- This entity emulates the RAM chip 74LS189 described in the video:
@@ -11,9 +12,11 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- This is a single port RAM.
 
-
 entity ram74ls189 is
 
+    generic (
+        INITIAL : ram_type := (others => "0000")
+    );
     port (
              -- Address input
              address_i   : in std_logic_vector(3 downto 0);
@@ -32,8 +35,7 @@ end ram74ls189;
 
 architecture Structural of ram74ls189 is
 
-    type ram_type is array (0 to 15) of std_logic_vector(3 downto 0);
-    signal data : ram_type;
+    signal data : ram_type := INITIAL;
 
 begin
 

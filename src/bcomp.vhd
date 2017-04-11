@@ -209,6 +209,14 @@ begin
 
     -- Instantiate RAM module
     inst_ram_module : entity work.ram_module
+    generic map (
+                    INITIAL_HIGH => (
+                        "0111", "0100", "0111", "0101", "0010", "0100", "0001", "0100",
+                        "0001", "0100", "0001", "1000", "0110", "0000", "0000", "0000"),
+                    INITIAL_LOW => (
+                        "0001", "1110", "0000", "0000", "1110", "1111", "1110", "1101",
+                        "1111", "1110", "1101", "0000", "0011", "0000", "0000", "0000")
+                )
     port map (
                  wr_i        => control_RI    ,
                  enable_i    => control_RO    ,

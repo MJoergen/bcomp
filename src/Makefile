@@ -10,6 +10,7 @@ vfiles    += alu.vhd
 vfiles    += memory_address_register.vhd
 vfiles    += ram_module.vhd
 vfiles    += ram74ls189.vhd 
+vfiles    += ram74ls189_datatypes.vhd
 vfiles    += program_counter.vhd 
 vfiles    += display.vhd 
 vfiles    += output_register.vhd 
@@ -24,6 +25,7 @@ vfiles    += astable_clock.vhd
 #top_module = ram_module
 #vfiles     = ram_module.vhd # Top level
 #vfiles    += ram74ls189.vhd 
+#vfiles    += ram74ls189_datatypes.vhd
 
 #project    = ram
 #top_module = ram
@@ -37,6 +39,7 @@ vfiles    += astable_clock.vhd
 #project    = ram74ls189
 #top_module = ram74ls189
 #vfiles     = ram74ls189.vhd # Top level
+#vfiles    += ram74ls189_datatypes.vhd
 
 #project    = monostable_clock
 #top_module = monostable_clock
@@ -96,8 +99,8 @@ tb_sources = $(testbench).vhd
 wave       = $(testbench).ghw
 wavesave   = $(testbench).gtkw
 unisim_lib = unisim-obj93.cf
-#stoptime   = --stop-time=4000us
-stoptime   = --stop-time=4000us --assert-level=none
+stoptime   = --stop-time=4000us
+#stoptime   = --stop-time=4000us --assert-level=none
 
 # Host PC application
 app_source = $(project).cpp

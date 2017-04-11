@@ -119,7 +119,6 @@ architecture Structural of bcomp_tb is
         "00000000",  -- 00  Y
         "00000000"); -- 00  Z
 
-
 begin
     -- Simulate external crystal clock (25 MHz)
     clk_gen : process
@@ -163,16 +162,16 @@ begin
         sw_runmode    <= '0'; -- Set RAM to programming mode
         sw_led_select <= LED_SELECT_ADDR;
 
-        -- Program the RAM
-        for i in 0 to 15 loop
-            pmod_address <= std_logic_vector(to_unsigned(i, 4));
-            pmod_data    <= mem(i);
-            wait until falling_edge(clk);
-            btn_write  <= '1';
-            wait until rising_edge(clk);
-            assert led = std_logic_vector(to_unsigned(i, 8));
-            btn_write  <= '0';
-        end loop;
+--        -- Program the RAM
+--        for i in 0 to 15 loop
+--            pmod_address <= std_logic_vector(to_unsigned(i, 4));
+--            pmod_data    <= mem(i);
+--            wait until falling_edge(clk);
+--            btn_write  <= '1';
+--            wait until rising_edge(clk);
+--            assert led = std_logic_vector(to_unsigned(i, 8));
+--            btn_write  <= '0';
+--        end loop;
 
         -- Reset DUT
         sw_clk_free <= '1'; -- Use freerunning (astable) clock
