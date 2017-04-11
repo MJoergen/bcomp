@@ -1,15 +1,15 @@
 [*]
-[*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Mon Apr 10 07:21:45 2017
+[*] GTKWave Analyzer v3.3.78 (w)1999-2016 BSI
+[*] Tue Apr 11 19:18:45 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/ram74ls189_tb.ghw"
-[dumpfile_mtime] "Mon Apr 10 07:20:38 2017"
-[dumpfile_size] 1176
+[dumpfile_mtime] "Tue Apr 11 19:18:37 2017"
+[dumpfile_size] 1486
 [savefile] "/home/mike/git/bcomp/src/ram74ls189_tb.gtkw"
 [timestart] 0
 [size] 1639 600
 [pos] -1 -1
-*-28.488995 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-27.287361 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.ram74ls189_tb.
 [sst_width] 229

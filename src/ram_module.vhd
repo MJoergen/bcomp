@@ -14,6 +14,9 @@ entity ram_module is
                 INITIAL_LOW  : ram_type := (others => "0000")
             );
     port (
+             -- System clock
+             clk_i          : in std_logic;
+
              -- Control inputs
              wr_i           : in std_logic; -- called RI
              enable_i       : in std_logic; -- called RO
@@ -52,6 +55,7 @@ begin
                     INITIAL => INITIAL_HIGH
                 )
     port map (
+                 clk_i       => clk_i               ,
                  address_i   => address_i           ,
                  data_i      => data_in(7 downto 4) ,
                  we_i        => wr                  ,
@@ -65,6 +69,7 @@ begin
                     INITIAL => INITIAL_LOW
                 )
     port map (
+                 clk_i       => clk_i               ,
                  address_i   => address_i           ,
                  data_i      => data_in(3 downto 0) ,
                  we_i        => wr                  ,

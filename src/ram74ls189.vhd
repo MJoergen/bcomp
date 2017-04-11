@@ -18,6 +18,9 @@ entity ram74ls189 is
         INITIAL : ram_type := (others => "0000")
     );
     port (
+             -- System clock
+             clk_i       : in std_logic;
+
              -- Address input
              address_i   : in std_logic_vector(3 downto 0);
 
@@ -39,10 +42,18 @@ architecture Structural of ram74ls189 is
 
 begin
 
+    process (clk_i)
+    begin
+        if rising_edge(clk_i) then
+            if we_i = '1' then
+                data(conv_integer(address_i)) <= data_i;
+            end if;
+        end if;
+    end process;
+
     data_o <= data(conv_integer(address_i))
               when cs_i = '1' and we_i = '0' else "ZZZZ";
 
-    data(conv_integer(address_i)) <= data_i when we_i = '1';
 
 end Structural;
 

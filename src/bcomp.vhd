@@ -218,6 +218,7 @@ begin
                         "1111", "1110", "1101", "0000", "0011", "0000", "0000", "0000")
                 )
     port map (
+                 clk_i       => clk           ,
                  wr_i        => control_RI    ,
                  enable_i    => control_RO    ,
                  data_io     => databus       ,

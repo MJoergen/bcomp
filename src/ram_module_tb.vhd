@@ -48,6 +48,7 @@ begin
                     INITIAL_LOW  => (0 => "1011", others => "0000")
                 )
     port map (
+             clk_i          => clk          ,
              wr_i           => wr           ,
              enable_i       => enable       ,
 
@@ -68,77 +69,81 @@ begin
         runmode <= '0';
 
         -- Check tristate buffer
-        wr <= '0';
-        enable <= '0';
-        data <= "ZZZZZZZZ";
-        address <= "0000";
-        sw_data <= "00000000";
+        wr        <= '0';
+        enable    <= '0';
+        data      <= "ZZZZZZZZ";
+        address   <= "0000";
+        sw_data   <= "00000000";
         wr_button <= '0';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data     = "ZZZZZZZZ";
 
         -- Check read from address 0
         address <= "0000";
         wr_button <= '0';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "11001011";
         assert data     = "ZZZZZZZZ";
 
         enable <= '1';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "11001011";
         assert data     = "11001011";
 
         -- Check write to address 0
         address <= "0000";
         sw_data <= "01010011";
-        wr_button <= '1' after 20 ns, '0' after 40 ns;
+        wr_button <= '1';
         enable <= '0';
-        wait for 80 ns;
+        wait until rising_edge(clk);
+        wr_button <= '0';
+        wait for 10 ns;
         assert data_led = "01010011";
         assert data     = "ZZZZZZZZ";
 
         -- Check read from address 0
         address <= "0000";
         wr_button <= '0';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "01010011";
         assert data     = "ZZZZZZZZ";
 
         enable <= '1';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "01010011";
         assert data     = "01010011";
 
         -- Check write to address 1
         address <= "0001";
         sw_data <= "10100110";
-        wr_button <= '1' after 20 ns, '0' after 40 ns;
+        wr_button <= '1';
         enable <= '0';
-        wait for 80 ns;
+        wait until rising_edge(clk);
+        wr_button <= '0';
+        wait for 10 ns;
         assert data_led = "10100110";
         assert data     = "ZZZZZZZZ";
 
         -- Check read from address 0
         address <= "0000";
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "01010011";
         assert data     = "ZZZZZZZZ";
 
         enable <= '1';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "01010011";
         assert data     = "01010011";
 
         -- Check read from address 1
         address <= "0001";
         enable <= '0';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "10100110";
         assert data     = "ZZZZZZZZ";
 
         enable <= '1';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "10100110";
         assert data     = "10100110";
 
@@ -147,7 +152,7 @@ begin
         sw_data <= "ZZZZZZZZ";
         wr_button <= '0';
         enable <= '0';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "01010011";
         assert data     = "ZZZZZZZZ";
 
@@ -155,30 +160,32 @@ begin
         runmode <= '1';
 
         -- Write to address 0
-        wr <= '1' after 10 ns, '0' after 30 ns;
+        wr <= '1';
         enable <= '0';
         data <= "11001100";
         address <= "0000";
-        wait for 80 ns;
+        wait until rising_edge(clk);
+        wr <= '0';
+        wait for 10 ns;
         assert data_led = "11001100";
         assert data     = "11001100";
 
         -- Check tristate buffer
         data <= "ZZZZZZZZ";
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "11001100";
         assert data     = "ZZZZZZZZ";
 
         -- Read from address 0
         enable <= '1';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "11001100";
         assert data     = "11001100";
 
         -- Read from address 1
         address <= "0001";
         enable <= '1';
-        wait for 80 ns;
+        wait until rising_edge(clk);
         assert data_led = "10100110";
         assert data     = "10100110";
 
