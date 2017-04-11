@@ -33,6 +33,7 @@ end clock_logic;
 architecture Structural of clock_logic is
     signal btn_delay : std_logic;
     signal sw_reg    : std_logic;
+    signal clk_slow  : std_logic;
 
 begin
     -- Instantiate monostable
@@ -57,7 +58,17 @@ begin
                  sw_reg_o => sw_reg
              );
 
-    clk_deriv_o <= ((clk_i and sw_reg) or (btn_delay and not sw_reg)) and not hlt_i;
+    -- Instantiate astable
+    inst_astable_clock : entity work.astable_clock
+    generic map (
+                    SIMULATION => SIMULATION
+                )
+    port map (
+                 clk_i => clk_i    ,
+                 clk_O => clk_slow
+             );
+
+    clk_deriv_o <= ((clk_slow and sw_reg) or (btn_delay and not sw_reg)) and not hlt_i;
 
 end Structural;
 
