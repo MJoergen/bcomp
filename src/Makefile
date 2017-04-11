@@ -14,6 +14,7 @@ vfiles    += program_counter.vhd
 vfiles    += display.vhd 
 vfiles    += output_register.vhd 
 vfiles    += control.vhd 
+vfiles    += astable_clock.vhd 
 
 #project    = program_counter
 #top_module = program_counter
@@ -41,6 +42,10 @@ vfiles    += control.vhd
 #top_module = monostable_clock
 #vfiles     = monostable_clock.vhd # Top level
 
+#project    = astable_clock
+#top_module = astable_clock
+#vfiles     = astable_clock.vhd # Top level
+
 #project    = bistable_clock
 #top_module = bistable_clock
 #vfiles     = bistable_clock.vhd # Top level
@@ -50,6 +55,7 @@ vfiles    += control.vhd
 #vfiles     = clock_logic.vhd # Top level
 #vfiles    += bistable_clock.vhd
 #vfiles    += monostable_clock.vhd
+#vfiles    += astable_clock.vhd
 
 #project    = instruction_register
 #top_module = instruction_register

@@ -35,7 +35,10 @@ entity control is
              instruct_i : in  std_logic_vector(3 downto 0);
 
              -- The derived clock output
-             control_o  : out std_logic_vector(15 downto 0));
+             control_o  : out std_logic_vector(15 downto 0);
+
+             -- Debug output
+             counter_o  : out std_logic_vector(2 downto 0));
 
 end control;
 
@@ -195,6 +198,8 @@ begin
     micro_op_addr <= instruct_i & counter;
 
     control_o <= micro_op_rom(conv_integer(micro_op_addr));
+
+    counter_o <= counter;
 
 end Structural;
 

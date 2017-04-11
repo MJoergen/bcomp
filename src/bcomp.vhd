@@ -94,6 +94,7 @@ architecture Structural of bcomp is
     signal alu_value     : std_logic_vector (7 downto 0);
     signal ram_value     : std_logic_vector (7 downto 0);
     signal pc_value      : std_logic_vector (3 downto 0);
+    signal counter       : std_logic_vector (2 downto 0); -- from Control module.
 
     -- Control signals
     signal control    : std_logic_vector (15 downto 0);
@@ -117,14 +118,14 @@ architecture Structural of bcomp is
 
 begin
 
-    led_o <= databus                when led_select = LED_SELECT_BUS  else
-             alu_value              when led_select = LED_SELECT_ALU  else
-             ram_value              when led_select = LED_SELECT_RAM  else
-             "0000" & address_value when led_select = LED_SELECT_ADDR else
-             areg_value             when led_select = LED_SELECT_AREG else
-             breg_value             when led_select = LED_SELECT_BREG else
-             disp_value             when led_select = LED_SELECT_OUT  else
-             "0000" & pc_value      when led_select = LED_SELECT_PC;
+    led_o <= databus                  when led_select = LED_SELECT_BUS  else
+             alu_value                when led_select = LED_SELECT_ALU  else
+             ram_value                when led_select = LED_SELECT_RAM  else
+             "0000" & address_value   when led_select = LED_SELECT_ADDR else
+             areg_value               when led_select = LED_SELECT_AREG else
+             breg_value               when led_select = LED_SELECT_BREG else
+             disp_value               when led_select = LED_SELECT_OUT  else
+             clk & counter & pc_value when led_select = LED_SELECT_PC;
 
     pc_load <= control_J or (control_JC and carry_reg);
 
@@ -258,7 +259,8 @@ begin
                  clk_i       => clk        ,
                  rst_i       => btn_reset  ,
                  instruct_i  => ireg_value ,
-                 control_o   => control
+                 control_o   => control    ,
+                 counter_o   => counter
              );
 
 end Structural;
