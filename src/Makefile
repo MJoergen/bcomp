@@ -16,6 +16,8 @@ vfiles    += ram/ram74ls189.vhd
 vfiles    += ram/ram74ls189_datatypes.vhd
 vfiles    += peripheral/display.vhd 
 vfiles    += peripheral/output_register.vhd 
+
+vfiles    += vga/vga_module.vhd
 vfiles    += vga/vga_controller_640_60.vhd
 vfiles    += vga/vga_disp.vhd
 vfiles    += vga/vga_bitmap_pkg.vhd

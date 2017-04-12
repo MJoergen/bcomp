@@ -122,11 +122,6 @@ architecture Structural of bcomp is
     alias  control_HLT: std_logic is control(14);  -- Halt clock
     alias  control_JC : std_logic is control(15);  -- Jump if carry
 
-    -- VGA timing signals
-    signal hcount     : std_logic_vector(10 downto 0); 
-    signal vcount     : std_logic_vector(10 downto 0); 
-    signal blank      : std_logic;                     
-
 begin
 
     led_array <= clk & counter & pc_value &  -- LED_SELECT_PC
@@ -284,37 +279,14 @@ begin
                  reg_o       => disp_value  -- Connected to display module
              );
 
-    -- Instantiate VGA display
-    inst_vga_disp : entity work.vga_disp
-    generic map (
-                    NAMES => (          -- @ is used for space.
-                        "@@@@BUS",
-                        "@@@@ALU",
-                        "@@@@RAM",
-                        "@@@ADDR",
-                        "@@@AREG",
-                        "@@@BREG",
-                        "@@@@OUT",
-                        "@@@@@PC")
-                )
+    -- Instantiate VGA module
+    inst_vga_module : entity work.vga_module
     port map (
-                 hcount_i    => hcount     ,
-                 vcount_i    => vcount     ,
-                 blank_i     => blank      ,
+                 clk_i       => clk_i      , -- 25 MHz crystal clock
                  led_array_i => led_array  ,
-                 vga_o       => vga_col_o
-             );
-
-    -- This generates the VGA timing signals
-    inst_vga_controller_640_60 : entity work.vga_controller_640_60
-    port map (
-                 rst_i     => '0'         , -- Not used.
-                 vga_clk_i => clk_i       , -- 25 MHz crystal clock
-                 HS_o      => vga_hs_o    ,
-                 VS_o      => vga_vs_o    ,
-                 hcount_o  => hcount      ,
-                 vcount_o  => vcount      ,
-                 blank_o   => blank
+                 vga_HS_o    => vga_hs_o   ,
+                 vga_VS_o    => vga_vs_o   ,
+                 vga_col_o   => vga_col_o
              );
 
 end Structural;
