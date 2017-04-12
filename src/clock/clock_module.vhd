@@ -2,11 +2,11 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
--- clock_logic.vhd
+-- clock_module.vhd
 -- This entity implements the feature described in the video
 -- https://www.youtube.com/watch?v=SmQ5K7UQPMM
 
-entity clock_logic is
+entity clock_module is
 
     generic (
                 SIMULATION : boolean := false
@@ -28,9 +28,9 @@ entity clock_logic is
              -- The derived clock output
              clk_deriv_o : out std_logic);
 
-end clock_logic;
+end clock_module;
 
-architecture Structural of clock_logic is
+architecture Structural of clock_module is
     signal btn_delay : std_logic;
     signal sw_reg    : std_logic;
     signal clk_slow  : std_logic;

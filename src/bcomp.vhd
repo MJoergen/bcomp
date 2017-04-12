@@ -146,7 +146,7 @@ begin
     end process;
 
     -- Instantiate clock module
-    inst_clock_logic : entity work.clock_logic
+    inst_clock_module : entity work.clock_module
     generic map (
                     SIMULATION => SIMULATION
                 )

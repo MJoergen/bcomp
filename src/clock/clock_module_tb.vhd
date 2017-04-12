@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity clock_logic_tb is
-end clock_logic_tb ;
+entity clock_module_tb is
+end clock_module_tb ;
 
-architecture Structural of clock_logic_tb is
+architecture Structural of clock_module_tb is
 
     -- Clock
     signal clk : std_logic; -- 25 MHz
@@ -35,7 +35,7 @@ begin
     end process clk_gen;
 
     -- Instantiate DUT
-    inst_clock_logic : entity work.clock_logic
+    inst_clock_module : entity work.clock_module
     generic map (
                     SIMULATION => true
                 )

@@ -2,7 +2,7 @@ project    = bcomp
 top_module = bcomp
 vfiles     = bcomp.vhd # Top level
 
-vfiles    += clock/clock_logic.vhd
+vfiles    += clock/clock_module.vhd
 vfiles    += clock/bistable_clock.vhd
 vfiles    += clock/monostable_clock.vhd
 vfiles    += clock/astable_clock.vhd 
