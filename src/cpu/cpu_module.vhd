@@ -21,11 +21,10 @@ entity cpu_module is
              ram_wr_o    : out   std_logic;
              hlt_o       : out   std_logic;
 
-             led_array_o : out   std_logic_vector(9*8-1 downto 0)
+             led_array_o : out   std_logic_vector(8*8-1 downto 0)
                                 -- PC
                                 -- BREG
                                 -- AREG
-                                -- ADR
                                 -- ALU
                                 -- BUS
                                 -- IREG
@@ -78,7 +77,6 @@ begin
                    clk_i & counter & pc_value &  -- PC
                    breg_value &                  -- BREG
                    areg_value &                  -- AREG
-                   "0000" & address_value &      -- ADR
                    alu_value &                   -- ALU
                    data_io;                      -- BUS
 

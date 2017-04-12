@@ -35,10 +35,10 @@ begin
     generic map (
                     NAMES => (          -- @ is used for space.
                         "@@@@RAM",
+                        "@@@ADDR",
                         "@@@@OUT",
                         "@@@@BUS",
                         "@@@@ALU",
-                        "@@@ADDR",
                         "@@@AREG",
                         "@@@BREG",
                         "@@@@@PC",

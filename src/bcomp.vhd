@@ -92,7 +92,7 @@ architecture Structural of bcomp is
     signal ram_wr   : std_logic;
     signal hlt      : std_logic;
 
-    signal led_array_cpu : std_logic_vector (9*8-1 downto 0);
+    signal led_array_cpu : std_logic_vector (8*8-1 downto 0);
     signal led_array     : std_logic_vector (11*8-1 downto 0);
     signal ram_value     : std_logic_vector (7 downto 0);
     signal disp_value    : std_logic_vector (7 downto 0);
@@ -100,8 +100,9 @@ architecture Structural of bcomp is
 begin
 
     led_array <= led_array_cpu &
-                 disp_value &                -- LED_SELECT_OUT
-                 ram_value;                  -- LED_SELECT_RAM
+                 disp_value &                -- OUT
+                 "0000" & addr_ram &         -- ADDR
+                 ram_value;                  -- RAM
 
     led_o <= led_array(conv_integer(led_select)*8+7 downto conv_integer(led_select)*8);
 
