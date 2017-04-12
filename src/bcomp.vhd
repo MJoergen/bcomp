@@ -258,27 +258,6 @@ begin
                  data_led_o  => ram_value       -- Debug output
              );
 
-    -- Instantiate Display
-    inst_display : entity work.display
-    port map (
-                 clk_i       => clk_i            , -- Use crystal clock
-                 two_comp_i  => sw_disp_two_comp ,
-                 value_i     => disp_value       ,
-                 seg_ca_o    => seg_ca_o         ,
-                 seg_dp_o    => seg_dp_o         ,
-                 seg_an_o    => seg_an_o 
-             );
-
-    -- Instantiate Output register
-    inst_output_register : entity work.output_register
-    port map (
-                 clk_i       => clk        ,
-                 clr_i       => btn_reset  ,
-                 data_i      => databus    ,
-                 load_i      => control_OI ,
-                 reg_o       => disp_value  -- Connected to display module
-             );
-
     -- Instantiate VGA module
     inst_vga_module : entity work.vga_module
     port map (
@@ -288,6 +267,20 @@ begin
                  vga_VS_o    => vga_vs_o   ,
                  vga_col_o   => vga_col_o
              );
+
+    -- Instantiate Peripheral module
+    inst_peripheral_module : entity work.peripheral_module
+    port map (
+                 clk_i      => clk_i            , -- 25 MHz crystal clock
+                 rst_i      => btn_reset        ,
+                 data_i     => databus          ,
+                 cs_i       => control_OI       ,
+                 mode_i     => sw_disp_two_comp ,
+                 seg_ca_o   => seg_ca_o         ,
+                 seg_dp_o   => seg_dp_o         ,
+                 seg_an_o   => seg_an_o         ,
+                 data_led_o => disp_value
+                 );
 
 end Structural;
 

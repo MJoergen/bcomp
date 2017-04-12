@@ -1,19 +1,24 @@
 project    = bcomp
 top_module = bcomp
 vfiles     = bcomp.vhd # Top level
+
 vfiles    += clock/clock_logic.vhd
 vfiles    += clock/bistable_clock.vhd
 vfiles    += clock/monostable_clock.vhd
 vfiles    += clock/astable_clock.vhd 
+
 vfiles    += cpu/register_8bit.vhd
 vfiles    += cpu/instruction_register.vhd
 vfiles    += cpu/alu.vhd
 vfiles    += cpu/memory_address_register.vhd
 vfiles    += cpu/control.vhd 
 vfiles    += cpu/program_counter.vhd 
+
 vfiles    += ram/ram_module.vhd
 vfiles    += ram/ram74ls189.vhd 
 vfiles    += ram/ram74ls189_datatypes.vhd
+
+vfiles    += peripheral/peripheral_module.vhd 
 vfiles    += peripheral/display.vhd 
 vfiles    += peripheral/output_register.vhd 
 
