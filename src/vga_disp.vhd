@@ -67,7 +67,7 @@ begin
                     bitmap := vga_bitmap_0;
                 end if;
 
-                if bitmap(ydiff*16 + xdiff) = "01" then
+                if bitmap(ydiff*16 + xdiff) = '1' then
                     vga_o <= vga_light;
                 else
                     vga_o <= vga_dark;
