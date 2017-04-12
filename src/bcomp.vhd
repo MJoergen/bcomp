@@ -163,6 +163,39 @@ begin
                  clk_deriv_o => clk           -- Main internal clock
              );
 
+    -- Instantiate Program counter
+    inst_program_counter : entity work.program_counter
+    port map (
+                 clk_i       => clk         ,
+                 clr_i       => btn_reset   ,
+                 data_io     => databus     ,
+                 load_i      => pc_load     ,
+                 enable_i    => control_CO  ,
+                 count_i     => control_CE  ,
+                 led_o       => pc_value      -- Debug output
+             );
+
+    -- Instantiate Control module
+    inst_control : entity work.control
+    port map (
+                 clk_i       => clk        ,
+                 rst_i       => btn_reset  ,
+                 instruct_i  => ireg_value ,
+                 control_o   => control    ,
+                 counter_o   => counter
+             );
+
+    -- Instantiate Instruction register
+    inst_instruction_register : entity work.instruction_register
+    port map (
+                 clk_i       => clk        ,
+                 load_i      => control_II ,
+                 enable_i    => control_IO ,
+                 clr_i       => btn_reset  ,
+                 data_io     => databus    ,
+                 reg_o       => ireg_value   -- to instruction decoder
+             );
+
     -- Instantiate A-register
     inst_a_register : entity work.register_8bit
     port map (
@@ -185,17 +218,6 @@ begin
                  reg_o       => breg_value   -- to ALU
              );
 
-    -- Instantiate instruction register
-    inst_instruction_register : entity work.instruction_register
-    port map (
-                 clk_i       => clk        ,
-                 load_i      => control_II ,
-                 enable_i    => control_IO ,
-                 clr_i       => btn_reset  ,
-                 data_io     => databus    ,
-                 reg_o       => ireg_value   -- to instruction decoder
-             );
-
     -- Instantiate ALU
     inst_alu : entity work.alu
     port map (
@@ -208,7 +230,7 @@ begin
                  led_o       => alu_value    -- Debug output
              );
 
-    -- Instantiate memory address register
+    -- Instantiate Memory Address Register
     inst_memory_address_register : entity work.memory_address_register
     port map (
                  clk_i       => clk                 ,
@@ -241,18 +263,6 @@ begin
                  data_led_o  => ram_value       -- Debug output
              );
 
-    -- Instantiate Program counter
-    inst_program_counter : entity work.program_counter
-    port map (
-                 clk_i       => clk         ,
-                 clr_i       => btn_reset   ,
-                 data_io     => databus     ,
-                 load_i      => pc_load     ,
-                 enable_i    => control_CO  ,
-                 count_i     => control_CE  ,
-                 led_o       => pc_value      -- Debug output
-             );
-
     -- Instantiate Display
     inst_display : entity work.display
     port map (
@@ -264,7 +274,7 @@ begin
                  seg_an_o    => seg_an_o 
              );
 
-    -- Instantiate output register
+    -- Instantiate Output register
     inst_output_register : entity work.output_register
     port map (
                  clk_i       => clk        ,
@@ -274,18 +284,19 @@ begin
                  reg_o       => disp_value  -- Connected to display module
              );
 
-    -- Instantiate control module
-    inst_control : entity work.control
-    port map (
-                 clk_i       => clk        ,
-                 rst_i       => btn_reset  ,
-                 instruct_i  => ireg_value ,
-                 control_o   => control    ,
-                 counter_o   => counter
-             );
-
-    -- This generates the image
+    -- Instantiate VGA display
     inst_vga_disp : entity work.vga_disp
+    generic map (
+                    NAMES => (          -- @ is used for space.
+                        "@@@@BUS",
+                        "@@@@ALU",
+                        "@@@@RAM",
+                        "@@@ADDR",
+                        "@@@AREG",
+                        "@@@BREG",
+                        "@@@@OUT",
+                        "@@@@@PC")
+                )
     port map (
                  hcount_i    => hcount     ,
                  vcount_i    => vcount     ,
@@ -297,7 +308,7 @@ begin
     -- This generates the VGA timing signals
     inst_vga_controller_640_60 : entity work.vga_controller_640_60
     port map (
-                 rst_i     => '0'         ,
+                 rst_i     => '0'         , -- Not used.
                  vga_clk_i => clk_i       , -- 25 MHz crystal clock
                  HS_o      => vga_hs_o    ,
                  VS_o      => vga_vs_o    ,
@@ -305,7 +316,6 @@ begin
                  vcount_o  => vcount      ,
                  blank_o   => blank
              );
-
 
 end Structural;
 
