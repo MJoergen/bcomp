@@ -11,6 +11,3 @@ package ram74ls189_datatypes is
 
 end ram74ls189_datatypes;
 
-package body ram74ls189_datatypes is
-end ram74ls189_datatypes;
-
