@@ -100,7 +100,7 @@ architecture Structural of bcomp is
     signal ram_value     : std_logic_vector (7 downto 0);
     signal pc_value      : std_logic_vector (3 downto 0);
     signal counter       : std_logic_vector (2 downto 0); -- from Control module.
-    signal led           : std_logic_vector (7 downto 0);
+    signal led_array     : std_logic_vector (63 downto 0);
 
     -- Control signals
     signal control    : std_logic_vector (15 downto 0);
@@ -129,15 +129,15 @@ architecture Structural of bcomp is
 
 begin
 
-    led_o <= led;
-    led   <= databus                  when led_select = LED_SELECT_BUS  else
-             alu_value                when led_select = LED_SELECT_ALU  else
-             ram_value                when led_select = LED_SELECT_RAM  else
-             "0000" & address_value   when led_select = LED_SELECT_ADDR else
-             areg_value               when led_select = LED_SELECT_AREG else
-             breg_value               when led_select = LED_SELECT_BREG else
-             disp_value               when led_select = LED_SELECT_OUT  else
-             clk & counter & pc_value when led_select = LED_SELECT_PC;
+    led_array <= clk & counter & pc_value &  -- LED_SELECT_PC
+                 disp_value &                -- LED_SELECT_OUT
+                 breg_value &                -- LED_SELECT_BREG
+                 areg_value &                -- LED_SELECT_AREG
+                 "0000" & address_value &    -- LED_SELECT_ADR
+                 ram_value &                 -- LED_SELECT_RAM
+                 alu_value &                 -- LED_SELECT_ALU
+                 databus;                    -- LED_SELECT_BUS
+    led_o <= led_array(conv_integer(led_select)*8+7 downto conv_integer(led_select)*8);
 
     pc_load <= control_J or (control_JC and carry_reg);
 
@@ -287,11 +287,11 @@ begin
     -- This generates the image
     inst_vga_disp : entity work.vga_disp
     port map (
-                 hcount_i   => hcount     ,
-                 vcount_i   => vcount     ,
-                 blank_i    => blank      ,
-                 led_i      => led        ,
-                 vga_o      => vga_col_o
+                 hcount_i    => hcount     ,
+                 vcount_i    => vcount     ,
+                 blank_i     => blank      ,
+                 led_array_i => led_array  ,
+                 vga_o       => vga_col_o
              );
 
     -- This generates the VGA timing signals

@@ -10,12 +10,12 @@ use work.vga_bitmap_pkg.ALL;
 entity vga_disp is
     port (
         -- From the VGA sync controller.
-        hcount_i  : in  std_logic_vector(10 downto 0); -- horizontal count of the currently displayed pixel (even if not in visible area)
-        vcount_i  : in  std_logic_vector(10 downto 0); -- vertical count of the currently active video line (even if not in visible area)
-        blank_i   : in  std_logic;                     -- active when pixel is not in visible area.
+        hcount_i    : in  std_logic_vector(10 downto 0); -- horizontal count of the currently displayed pixel (even if not in visible area)
+        vcount_i    : in  std_logic_vector(10 downto 0); -- vertical count of the currently active video line (even if not in visible area)
+        blank_i     : in  std_logic;                     -- active when pixel is not in visible area.
 
-        led_i     : in  std_logic_vector(7 downto 0);  -- This is the value to be shown.
-        vga_o     : out std_logic_vector(7 downto 0)   -- Color output
+        led_array_i : in  std_logic_vector(63 downto 0); -- These are the values to be shown.
+        vga_o       : out std_logic_vector(7 downto 0)   -- Color output
 		);
 end vga_disp;
 
@@ -32,7 +32,7 @@ architecture Behavioral of vga_disp is
 
 begin
 
-    gen_vga : process (hcount_i, vcount_i, blank_i, led_i) is
+    gen_vga : process (hcount_i, vcount_i, blank_i, led_array_i) is
         variable hcount : integer;
         variable vcount : integer;
         variable col    : integer;
@@ -55,13 +55,14 @@ begin
             vga_o <= vga_background; -- Default background color on screen.
 
             if (hcount >= OFFSET_X) and (hcount < OFFSET_X+16*8)
-                and (vcount >= OFFSET_Y) and (vcount < OFFSET_Y+16) then
+                and (vcount >= OFFSET_Y) and (vcount < OFFSET_Y+16*8) then
 
                 col   := (hcount - OFFSET_X) / 16;
+                row   := (vcount - OFFSET_Y) / 16;
                 xdiff := (hcount - OFFSET_X) rem 16;
                 ydiff := (vcount - OFFSET_Y) rem 16;
 
-                if led_i(7-col) = '1' then
+                if led_array_i(row*8 + 7-col) = '1' then
                     bitmap := vga_bitmap_1;
                 else
                     bitmap := vga_bitmap_0;
@@ -75,7 +76,7 @@ begin
             end if;
 
             if (hcount >= OFFSET_X) and (hcount <= OFFSET_X+16*8)
-                and (vcount >= OFFSET_Y) and (vcount <= OFFSET_Y+16) then
+                and (vcount >= OFFSET_Y) and (vcount <= OFFSET_Y+16*8) then
 
                 if ydiff = 0 or xdiff = 0 then
                     vga_o <= vga_white;
