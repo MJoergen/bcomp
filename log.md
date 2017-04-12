@@ -140,3 +140,9 @@ the FPGA, and that is generally something to be avoided. So I've supplied a cloc
 to the RAM module and made the writes synchronuous. This avoids latches, and now everything works
 charmingly!
 
+# 2017-04-12
+
+I'm about to wrap up this project. I've added VGA output, so you can view all the LED's simultaneously
+on the screen. I intend to start a new project, building a modular computer with an architecture
+more simular to regular 8-bit CPU's (e.g. Z80 and/or 6502).
+
