@@ -14,24 +14,29 @@ entity bcomp is
             );
     port (
              -- Clock
-             clk_i    : in  std_logic;  -- 25 MHz
+             clk_i     : in  std_logic;  -- 25 MHz
 
              -- Input switches
-             sw_i     : in  std_logic_vector (7 downto 0);
+             sw_i      : in  std_logic_vector (7 downto 0);
 
              -- Inputs from PMOD's
-             pmod_i   : in  std_logic_vector (15 downto 0);
+             pmod_i    : in  std_logic_vector (15 downto 0);
 
              -- Input buttons
-             btn_i    : in  std_logic_vector (3 downto 0);
+             btn_i     : in  std_logic_vector (3 downto 0);
 
              -- Output LEDs
-             led_o    : out std_logic_vector (7 downto 0);
+             led_o     : out std_logic_vector (7 downto 0);
 
              -- Output segment display
-             seg_ca_o : out std_logic_vector (6 downto 0);
-             seg_dp_o : out std_logic;
-             seg_an_o : out std_logic_vector (3 downto 0)
+             seg_ca_o  : out std_logic_vector (6 downto 0);
+             seg_dp_o  : out std_logic;
+             seg_an_o  : out std_logic_vector (3 downto 0);
+
+             -- VGA output
+             vga_hs_o  : out std_logic;
+             vga_vs_o  : out std_logic;
+             vga_col_o : out std_logic_vector(7 downto 0)
          );
 
 end bcomp;
@@ -95,6 +100,7 @@ architecture Structural of bcomp is
     signal ram_value     : std_logic_vector (7 downto 0);
     signal pc_value      : std_logic_vector (3 downto 0);
     signal counter       : std_logic_vector (2 downto 0); -- from Control module.
+    signal led           : std_logic_vector (7 downto 0);
 
     -- Control signals
     signal control    : std_logic_vector (15 downto 0);
@@ -116,9 +122,15 @@ architecture Structural of bcomp is
     alias  control_HLT: std_logic is control(14);  -- Halt clock
     alias  control_JC : std_logic is control(15);  -- Jump if carry
 
+    -- VGA timing signals
+    signal hcount     : std_logic_vector(10 downto 0); 
+    signal vcount     : std_logic_vector(10 downto 0); 
+    signal blank      : std_logic;                     
+
 begin
 
-    led_o <= databus                  when led_select = LED_SELECT_BUS  else
+    led_o <= led;
+    led   <= databus                  when led_select = LED_SELECT_BUS  else
              alu_value                when led_select = LED_SELECT_ALU  else
              ram_value                when led_select = LED_SELECT_RAM  else
              "0000" & address_value   when led_select = LED_SELECT_ADDR else
@@ -271,6 +283,29 @@ begin
                  control_o   => control    ,
                  counter_o   => counter
              );
+
+    -- This generates the image
+    inst_vga_disp : entity work.vga_disp
+    port map (
+                 hcount_i   => hcount     ,
+                 vcount_i   => vcount     ,
+                 blank_i    => blank      ,
+                 led_i      => led        ,
+                 vga_o      => vga_col_o
+             );
+
+    -- This generates the VGA timing signals
+    inst_vga_controller_640_60 : entity work.vga_controller_640_60
+    port map (
+                 rst_i     => '0'         ,
+                 vga_clk_i => clk_i       , -- 25 MHz crystal clock
+                 HS_o      => vga_hs_o    ,
+                 VS_o      => vga_vs_o    ,
+                 hcount_o  => hcount      ,
+                 vcount_o  => vcount      ,
+                 blank_o   => blank
+             );
+
 
 end Structural;
 

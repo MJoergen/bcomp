@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Tue Apr 11 18:39:25 2017
+[*] Wed Apr 12 13:08:42 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Tue Apr 11 18:39:00 2017"
-[dumpfile_size] 336831
+[dumpfile_mtime] "Wed Apr 12 13:06:27 2017"
+[dumpfile_size] 419050
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1805 1087
@@ -13,7 +13,6 @@
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
-[treeopen] top.bcomp_tb.inst_bcomp.inst_alu.
 [treeopen] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_high.data.
 [treeopen] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.
 [treeopen] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_low.data.
@@ -198,15 +197,15 @@ top.bcomp_tb.inst_bcomp.inst_ram_module.data_out[0]
 @1401200
 -group_end
 -RAM module
-@800200
+@c00200
 -Output register
-@29
+@28
 top.bcomp_tb.inst_bcomp.inst_output_register.load_i
-@23
+@22
 #{top.bcomp_tb.inst_bcomp.inst_output_register.data_i[7:0]} top.bcomp_tb.inst_bcomp.inst_output_register.data_i[7] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[6] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[5] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[4] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[3] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[2] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[1] top.bcomp_tb.inst_bcomp.inst_output_register.data_i[0]
 [color] 2
 #{top.bcomp_tb.inst_bcomp.inst_output_register.data[7:0]} top.bcomp_tb.inst_bcomp.inst_output_register.data[7] top.bcomp_tb.inst_bcomp.inst_output_register.data[6] top.bcomp_tb.inst_bcomp.inst_output_register.data[5] top.bcomp_tb.inst_bcomp.inst_output_register.data[4] top.bcomp_tb.inst_bcomp.inst_output_register.data[3] top.bcomp_tb.inst_bcomp.inst_output_register.data[2] top.bcomp_tb.inst_bcomp.inst_output_register.data[1] top.bcomp_tb.inst_bcomp.inst_output_register.data[0]
-@1000200
+@1401200
 -Output register
 @c00200
 -Program counter
@@ -233,7 +232,7 @@ top.bcomp_tb.inst_bcomp.inst_instruction_register.enable_i
 #{top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[7:0]} top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[7] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[6] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[5] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[4] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[3] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[2] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[1] top.bcomp_tb.inst_bcomp.inst_instruction_register.data_io[0]
 @1401200
 -Instruction register
-@800200
+@c00200
 -Control module
 @22
 #{top.bcomp_tb.inst_bcomp.inst_control.instruct_i[3:0]} top.bcomp_tb.inst_bcomp.inst_control.instruct_i[3] top.bcomp_tb.inst_bcomp.inst_control.instruct_i[2] top.bcomp_tb.inst_bcomp.inst_control.instruct_i[1] top.bcomp_tb.inst_bcomp.inst_control.instruct_i[0]
@@ -280,7 +279,16 @@ top.bcomp_tb.inst_bcomp.inst_control.micro_op_addr[0]
 +{CE} top.bcomp_tb.inst_bcomp.control[0]
 @1001200
 -group_end
-@1000200
+@1401200
 -Control module
+@28
+top.bcomp_tb.vga_vs
+top.bcomp_tb.vga_hs
+@22
+#{top.bcomp_tb.vga_col[7:0]} top.bcomp_tb.vga_col[7] top.bcomp_tb.vga_col[6] top.bcomp_tb.vga_col[5] top.bcomp_tb.vga_col[4] top.bcomp_tb.vga_col[3] top.bcomp_tb.vga_col[2] top.bcomp_tb.vga_col[1] top.bcomp_tb.vga_col[0]
+#{top.bcomp_tb.inst_bcomp.vcount[10:0]} top.bcomp_tb.inst_bcomp.vcount[10] top.bcomp_tb.inst_bcomp.vcount[9] top.bcomp_tb.inst_bcomp.vcount[8] top.bcomp_tb.inst_bcomp.vcount[7] top.bcomp_tb.inst_bcomp.vcount[6] top.bcomp_tb.inst_bcomp.vcount[5] top.bcomp_tb.inst_bcomp.vcount[4] top.bcomp_tb.inst_bcomp.vcount[3] top.bcomp_tb.inst_bcomp.vcount[2] top.bcomp_tb.inst_bcomp.vcount[1] top.bcomp_tb.inst_bcomp.vcount[0]
+#{top.bcomp_tb.inst_bcomp.hcount[10:0]} top.bcomp_tb.inst_bcomp.hcount[10] top.bcomp_tb.inst_bcomp.hcount[9] top.bcomp_tb.inst_bcomp.hcount[8] top.bcomp_tb.inst_bcomp.hcount[7] top.bcomp_tb.inst_bcomp.hcount[6] top.bcomp_tb.inst_bcomp.hcount[5] top.bcomp_tb.inst_bcomp.hcount[4] top.bcomp_tb.inst_bcomp.hcount[3] top.bcomp_tb.inst_bcomp.hcount[2] top.bcomp_tb.inst_bcomp.hcount[1] top.bcomp_tb.inst_bcomp.hcount[0]
+@23
+#{top.bcomp_tb.inst_bcomp.led[7:0]} top.bcomp_tb.inst_bcomp.led[7] top.bcomp_tb.inst_bcomp.led[6] top.bcomp_tb.inst_bcomp.led[5] top.bcomp_tb.inst_bcomp.led[4] top.bcomp_tb.inst_bcomp.led[3] top.bcomp_tb.inst_bcomp.led[2] top.bcomp_tb.inst_bcomp.led[1] top.bcomp_tb.inst_bcomp.led[0]
 [pattern_trace] 1
 [pattern_trace] 0

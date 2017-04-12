@@ -119,6 +119,11 @@ architecture Structural of bcomp_tb is
         "00000000",  -- 0E: 00  Y
         "00000000"); -- 0F: 00  Z
 
+    -- VGA output
+    signal vga_hs  : std_logic;
+    signal vga_vs  : std_logic;
+    signal vga_col : std_logic_vector(7 downto 0);
+
 begin
     -- Simulate external crystal clock (25 MHz)
     clk_gen : process
@@ -145,7 +150,10 @@ begin
                  led_o        => led     , 
                  seg_ca_o     => open    ,
                  seg_dp_o     => open    ,
-                 seg_an_o     => open    
+                 seg_an_o     => open    ,
+                 vga_hs_o     => vga_hs  ,
+                 vga_vs_o     => vga_vs  ,
+                 vga_col_o    => vga_col
              );
 
     -- Start the main test

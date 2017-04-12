@@ -16,6 +16,9 @@ vfiles    += display.vhd
 vfiles    += output_register.vhd 
 vfiles    += control.vhd 
 vfiles    += astable_clock.vhd 
+vfiles    += vga_controller_640_60.vhd
+vfiles    += vga_disp.vhd
+vfiles    += vga_bitmap_pkg.vhd
 
 #project    = program_counter
 #top_module = program_counter
