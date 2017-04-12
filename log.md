@@ -146,3 +146,9 @@ I'm about to wrap up this project. I've added VGA output, so you can view all th
 on the screen. I intend to start a new project, building a modular computer with an architecture
 more simular to regular 8-bit CPU's (e.g. Z80 and/or 6502).
 
+Phew. A major re-organization, collecting all the CPU-related stuff into a single module. This 
+hierarchical division is very helpful and closely resembles normal CPU architecture.
+
+Currently, the design now uses 22% of the available logic, and can run up to 140 MHz. The total
+build time on my (slow) desktop PC is around 2 minutes.
+So the VGA display has only used about 3% of the available logic.

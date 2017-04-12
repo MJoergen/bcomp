@@ -19,11 +19,7 @@ entity memory_address_register is
              address_i   : in  std_logic_vector (3 downto 0);
 
              -- To RAM module
-             address_o   : out std_logic_vector (3 downto 0);
-
-             -- Switches and buttons
-             runmode_i   : in  std_logic;
-             sw_i        : in  std_logic_vector (3 downto 0)
+             address_o   : out std_logic_vector (3 downto 0)
          );
 
 end memory_address_register;
@@ -34,7 +30,7 @@ architecture Structural of memory_address_register is
 
 begin
 
-    address_o <= sw_i when runmode_i = '0' else address;
+    address_o <= address;
     
     process(clk_i)
     begin

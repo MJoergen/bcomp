@@ -46,6 +46,30 @@ architecture Structural of bcomp is
     -- The main internal clock
     signal clk  : std_logic;
 
+    -- Interpretation of input buttons and switches.
+    alias btn_clk        : std_logic is btn_i(0);
+    alias btn_write      : std_logic is btn_i(1);
+    alias btn_reset      : std_logic is btn_i(2);
+
+    alias sw_clk_free    : std_logic is sw_i(0);
+    alias sw_runmode     : std_logic is sw_i(1);
+
+    alias led_select     : std_logic_vector (2 downto 0) is sw_i(4 downto 2);
+    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "000";
+    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "001";
+    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "010";
+    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "011";
+    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "100";
+    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "101";
+    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "110";
+    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111";
+
+    alias sw_disp_two_comp : std_logic is sw_i(5); -- Display two's complement
+
+    -- Used for programming the RAM.
+    alias pmod_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
+    alias pmod_data        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
+
     -- The main data bus
     -- All the blocks connected to the data bus
     -- must have an enable_i pin telling the block,
@@ -59,93 +83,31 @@ architecture Structural of bcomp is
     --   ALU
     --   RAM
     --   Program counter
-    signal databus       : std_logic_vector(7 downto 0);
+    signal data     : std_logic_vector (7 downto 0);
 
-    -- Interpretation of input buttons and switches.
-    alias btn_clk        : std_logic is btn_i(0);
-    alias btn_write      : std_logic is btn_i(1);
-    alias btn_reset      : std_logic is btn_i(2);
+    signal addr_cpu : std_logic_vector (3 downto 0);
+    signal addr_ram : std_logic_vector (3 downto 0);
+    signal out_cs   : std_logic;
+    signal ram_cs   : std_logic;
+    signal ram_wr   : std_logic;
+    signal hlt      : std_logic;
 
-    alias sw_clk_free    : std_logic is sw_i(0);
-    alias sw_runmode     : std_logic is sw_i(1);
-
-    alias led_select     : std_logic_vector (2 downto 0) is sw_i(4 downto 2);
-    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000";
-    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "001";
-    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "010";
-    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "011";
-    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "100";
-    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101";
-    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110";
-    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111";
-
-    alias sw_disp_two_comp : std_logic is sw_i(5); -- Display two's complement
-
-    -- Used for programming the RAM.
-    alias pmod_address     : std_logic_vector (3 downto 0) is pmod_i(11 downto 8);
-    alias pmod_data        : std_logic_vector (7 downto 0) is pmod_i( 7 downto 0);
-
-    -- Communication between blocks
-    signal areg_value    : std_logic_vector (7 downto 0);
-    signal breg_value    : std_logic_vector (7 downto 0);
-    signal ireg_value    : std_logic_vector (3 downto 0); -- Upper four bits
-    signal address_value : std_logic_vector (3 downto 0);
-    signal disp_value    : std_logic_vector (7 downto 0);
-    signal carry         : std_logic;
-    signal carry_reg     : std_logic; -- Registered value of carry
-    signal pc_load       : std_logic;
-
-    -- Debug outputs connected to LEDs
-    signal alu_value     : std_logic_vector (7 downto 0);
+    signal led_array_cpu : std_logic_vector (9*8-1 downto 0);
+    signal led_array     : std_logic_vector (11*8-1 downto 0);
     signal ram_value     : std_logic_vector (7 downto 0);
-    signal pc_value      : std_logic_vector (3 downto 0);
-    signal counter       : std_logic_vector (2 downto 0); -- from Control module.
-    signal led_array     : std_logic_vector (63 downto 0);
-
-    -- Control signals
-    signal control    : std_logic_vector (15 downto 0);
-    alias  control_CE : std_logic is control(0);   -- Program counter count enable
-    alias  control_CO : std_logic is control(1);   -- Program counter output enable
-    alias  control_J  : std_logic is control(2);   -- Program counter jump
-    alias  control_MI : std_logic is control(3);   -- Memory address register load
-    alias  control_RI : std_logic is control(4);   -- RAM load (write)
-    alias  control_RO : std_logic is control(5);   -- RAM output enable
-    alias  control_II : std_logic is control(6);   -- Instruction register load
-    alias  control_IO : std_logic is control(7);   -- Instruction register output enable
-
-    alias  control_AI : std_logic is control(8);   -- A register load
-    alias  control_AO : std_logic is control(9);   -- A register output enable
-    alias  control_SU : std_logic is control(10);  -- ALU subtract
-    alias  control_EO : std_logic is control(11);  -- ALU output enable
-    alias  control_BI : std_logic is control(12);  -- B register load
-    alias  control_OI : std_logic is control(13);  -- Program counter count enable
-    alias  control_HLT: std_logic is control(14);  -- Halt clock
-    alias  control_JC : std_logic is control(15);  -- Jump if carry
+    signal disp_value    : std_logic_vector (7 downto 0);
 
 begin
 
-    led_array <= clk & counter & pc_value &  -- LED_SELECT_PC
+    led_array <= led_array_cpu &
                  disp_value &                -- LED_SELECT_OUT
-                 breg_value &                -- LED_SELECT_BREG
-                 areg_value &                -- LED_SELECT_AREG
-                 "0000" & address_value &    -- LED_SELECT_ADR
-                 ram_value &                 -- LED_SELECT_RAM
-                 alu_value &                 -- LED_SELECT_ALU
-                 databus;                    -- LED_SELECT_BUS
+                 ram_value;                  -- LED_SELECT_RAM
+
     led_o <= led_array(conv_integer(led_select)*8+7 downto conv_integer(led_select)*8);
 
-    pc_load <= control_J or (control_JC and carry_reg);
+    addr_ram <= pmod_address when sw_runmode = '0' else addr_cpu;
 
-    process(clk)
-    begin
-        if rising_edge(clk) then
-            if control_EO = '1' then
-                carry_reg <= carry;
-            end if;
-        end if;
-    end process;
-
-    -- Instantiate clock module
+    -- Instantiate Clock module
     inst_clock_module : entity work.clock_module
     generic map (
                     SIMULATION => SIMULATION
@@ -154,86 +116,22 @@ begin
                  clk_i       => clk_i       , -- External crystal
                  sw_i        => sw_clk_free ,
                  btn_i       => btn_clk     ,
-                 hlt_i       => control_HLT ,
+                 hlt_i       => hlt         ,
                  clk_deriv_o => clk           -- Main internal clock
              );
 
-    -- Instantiate Program counter
-    inst_program_counter : entity work.program_counter
+    -- Instantiate CPU module
+    inst_cpu_module : entity work.cpu_module
     port map (
-                 clk_i       => clk         ,
-                 clr_i       => btn_reset   ,
-                 data_io     => databus     ,
-                 load_i      => pc_load     ,
-                 enable_i    => control_CO  ,
-                 count_i     => control_CE  ,
-                 led_o       => pc_value      -- Debug output
-             );
-
-    -- Instantiate Control module
-    inst_control : entity work.control
-    port map (
-                 clk_i       => clk        ,
-                 rst_i       => btn_reset  ,
-                 instruct_i  => ireg_value ,
-                 control_o   => control    ,
-                 counter_o   => counter
-             );
-
-    -- Instantiate Instruction register
-    inst_instruction_register : entity work.instruction_register
-    port map (
-                 clk_i       => clk        ,
-                 load_i      => control_II ,
-                 enable_i    => control_IO ,
-                 clr_i       => btn_reset  ,
-                 data_io     => databus    ,
-                 reg_o       => ireg_value   -- to instruction decoder
-             );
-
-    -- Instantiate A-register
-    inst_a_register : entity work.register_8bit
-    port map (
-                 clk_i       => clk        ,
-                 load_i      => control_AI ,
-                 enable_i    => control_AO ,
-                 clr_i       => btn_reset  ,
-                 data_io     => databus    ,
-                 reg_o       => areg_value   -- to ALU
-             );
-
-    -- Instantiate B-register
-    inst_b_register : entity work.register_8bit
-    port map (
-                 clk_i       => clk        ,
-                 load_i      => control_BI ,
-                 enable_i    => '0'        ,
-                 clr_i       => btn_reset  ,
-                 data_io     => databus    ,
-                 reg_o       => breg_value   -- to ALU
-             );
-
-    -- Instantiate ALU
-    inst_alu : entity work.alu
-    port map (
-                 sub_i       => control_SU ,
-                 enable_i    => control_EO ,
-                 areg_i      => areg_value ,
-                 breg_i      => breg_value ,
-                 result_o    => databus    ,
-                 carry_o     => carry      ,
-                 led_o       => alu_value    -- Debug output
-             );
-
-    -- Instantiate Memory Address Register
-    inst_memory_address_register : entity work.memory_address_register
-    port map (
-                 clk_i       => clk                 ,
-                 load_i      => control_MI          ,
-                 address_i   => databus(3 downto 0) ,
-                 runmode_i   => sw_runmode          ,
-                 sw_i        => pmod_address        ,
-                 address_o   => address_value         -- to RAM module
+                 clk_i       => clk           ,
+                 rst_i       => btn_reset     ,
+                 addr_o      => addr_cpu      ,
+                 data_io     => data          ,
+                 out_cs_o    => out_cs        ,
+                 ram_cs_o    => ram_cs        ,
+                 ram_wr_o    => ram_wr        ,
+                 hlt_o       => hlt           ,
+                 led_array_o => led_array_cpu
              );
 
     -- Instantiate RAM module
@@ -248,10 +146,10 @@ begin
                 )
     port map (
                  clk_i       => clk           ,
-                 wr_i        => control_RI    ,
-                 enable_i    => control_RO    ,
-                 data_io     => databus       ,
-                 address_i   => address_value ,
+                 wr_i        => ram_wr        ,
+                 enable_i    => ram_cs        ,
+                 data_io     => data          ,
+                 address_i   => addr_ram      ,
                  runmode_i   => sw_runmode    ,
                  sw_data_i   => pmod_data     ,
                  wr_button_i => btn_write     ,
@@ -273,14 +171,14 @@ begin
     port map (
                  clk_i      => clk_i            , -- 25 MHz crystal clock
                  rst_i      => btn_reset        ,
-                 data_i     => databus          ,
-                 cs_i       => control_OI       ,
+                 data_i     => data             ,
+                 cs_i       => out_cs           ,
                  mode_i     => sw_disp_two_comp ,
                  seg_ca_o   => seg_ca_o         ,
                  seg_dp_o   => seg_dp_o         ,
                  seg_an_o   => seg_an_o         ,
                  data_led_o => disp_value
-                 );
+             );
 
 end Structural;
 

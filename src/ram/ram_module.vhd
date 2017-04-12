@@ -78,7 +78,7 @@ begin
              );
 
     data_led_o <= data_out;
-    data_io <= data_out when enable_i = '1' else "ZZZZZZZZ";
+    data_io <= data_out when enable_i = '1' and wr_i = '0' else "ZZZZZZZZ";
 
 end Structural;
 

@@ -558,7 +558,7 @@ package vga_bitmap_pkg is
         vga_bitmap_char_Z);
 
     type vga_string_t is array (0 to 6) of character; -- Exactly 7 characters.
-    type vga_names_t is array (0 to 7) of vga_string_t; -- One string for each row.
+    type vga_names_t is array (0 to 10) of vga_string_t; -- One string for each row.
 
 end package vga_bitmap_pkg;
 

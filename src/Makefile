@@ -7,6 +7,7 @@ vfiles    += clock/bistable_clock.vhd
 vfiles    += clock/monostable_clock.vhd
 vfiles    += clock/astable_clock.vhd 
 
+vfiles    += cpu/cpu_module.vhd
 vfiles    += cpu/register_8bit.vhd
 vfiles    += cpu/instruction_register.vhd
 vfiles    += cpu/alu.vhd

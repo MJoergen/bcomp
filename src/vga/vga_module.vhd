@@ -11,7 +11,7 @@ entity vga_module is
              clk_i       : in  std_logic;
 
              -- These are the LED values to show
-             led_array_i : in  std_logic_vector (63 downto 0);
+             led_array_i : in  std_logic_vector (11*8-1 downto 0);
 
              -- VGA output
              vga_hs_o    : out std_logic;
@@ -34,14 +34,17 @@ begin
     inst_vga_disp : entity work.vga_disp
     generic map (
                     NAMES => (          -- @ is used for space.
+                        "@@@@RAM",
+                        "@@@@OUT",
                         "@@@@BUS",
                         "@@@@ALU",
-                        "@@@@RAM",
                         "@@@ADDR",
                         "@@@AREG",
                         "@@@BREG",
-                        "@@@@OUT",
-                        "@@@@@PC")
+                        "@@@@@PC",
+                        "@@@CONL",
+                        "@@@CONH",
+                        "@@@IREG")
                 )
     port map (
                  hcount_i    => hcount      ,

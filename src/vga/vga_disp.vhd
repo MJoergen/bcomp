@@ -17,7 +17,7 @@ entity vga_disp is
         vcount_i    : in  std_logic_vector(10 downto 0); -- vertical count of the currently active video line (even if not in visible area)
         blank_i     : in  std_logic;                     -- active when pixel is not in visible area.
 
-        led_array_i : in  std_logic_vector(63 downto 0); -- These are the values to be shown.
+        led_array_i : in  std_logic_vector(11*8-1 downto 0); -- These are the values to be shown.
         vga_o       : out std_logic_vector(7 downto 0)   -- Color output
 		);
 end vga_disp;
@@ -41,7 +41,7 @@ begin
         variable vcount     : integer;
         variable col        : integer;
         variable col_char   : integer range 0 to 6;
-        variable row        : integer range 0 to 7;
+        variable row        : integer range 0 to 10;
         variable xdiff      : integer range 0 to 15;
         variable ydiff      : integer range 0 to 15;
         variable bitmap     : vga_bitmap_t;
@@ -72,7 +72,7 @@ begin
             vga_o <= vga_background; -- Default background color on screen.
 
             if (hcount >= OFFSET_NAME_X) and (hcount < OFFSET_NAME_X+12*7)
-                and (vcount >= OFFSET_Y) and (vcount < OFFSET_Y+16*8) then
+                and (vcount >= OFFSET_Y) and (vcount < OFFSET_Y+16*11) then
 
                 col_char := offset_to_col(hcount - OFFSET_NAME_X);
                 row   := (vcount - OFFSET_Y) / 16;
@@ -91,7 +91,7 @@ begin
             end if;
 
             if (hcount >= OFFSET_X) and (hcount < OFFSET_X+16*8)
-                and (vcount >= OFFSET_Y) and (vcount < OFFSET_Y+16*8) then
+                and (vcount >= OFFSET_Y) and (vcount < OFFSET_Y+16*11) then
 
                 col   := (hcount - OFFSET_X) / 16;
                 row   := (vcount - OFFSET_Y) / 16;
@@ -112,7 +112,7 @@ begin
             end if;
 
             if (hcount >= OFFSET_X) and (hcount <= OFFSET_X+16*8)
-                and (vcount >= OFFSET_Y) and (vcount <= OFFSET_Y+16*8) then
+                and (vcount >= OFFSET_Y) and (vcount <= OFFSET_Y+16*11) then
 
                 if ydiff = 0 or xdiff = 0 then
                     vga_o <= vga_white;

@@ -33,14 +33,14 @@ architecture Structural of bcomp_tb is
     alias sw_runmode  : std_logic is sw(1);
 
     alias sw_led_select  : std_logic_vector (2 downto 0) is sw(4 downto 2);
-    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "000"; -- Databus
-    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "001"; -- ALU output
-    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "010"; -- RAM output
-    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "011"; -- Memory address
-    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "100"; -- A register
-    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "101"; -- B register
-    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "110"; -- Output register
-    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111"; -- Program counter
+    constant LED_SELECT_RAM  : std_logic_vector (2 downto 0) := "000";
+    constant LED_SELECT_OUT  : std_logic_vector (2 downto 0) := "001";
+    constant LED_SELECT_BUS  : std_logic_vector (2 downto 0) := "010";
+    constant LED_SELECT_ALU  : std_logic_vector (2 downto 0) := "011";
+    constant LED_SELECT_ADDR : std_logic_vector (2 downto 0) := "100";
+    constant LED_SELECT_AREG : std_logic_vector (2 downto 0) := "101";
+    constant LED_SELECT_BREG : std_logic_vector (2 downto 0) := "110";
+    constant LED_SELECT_PC   : std_logic_vector (2 downto 0) := "111";
 
     alias sw_disp_two_comp : std_logic is sw(5); -- Display two's complement
 
