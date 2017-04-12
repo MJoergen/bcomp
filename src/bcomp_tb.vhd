@@ -50,75 +50,6 @@ architecture Structural of bcomp_tb is
     -- LED
     signal led : std_logic_vector (7 downto 0);
 
-    -- Bus commands
-    constant control_CE  : integer :=  0; -- Program counter count enable
-    constant control_CO  : integer :=  1; -- Program counter output enable
-    constant control_J   : integer :=  2; -- Program counter jump
-    constant control_MI  : integer :=  3; -- Memory address register load
-    constant control_RI  : integer :=  4; -- RAM load (write)
-    constant control_RO  : integer :=  5; -- RAM output enable
-    constant control_II  : integer :=  6; -- Instruction register load
-    constant control_IO  : integer :=  7; -- Inttruction register output enable
-
-    constant control_AI  : integer :=  8; -- A register load
-    constant control_AO  : integer :=  9; -- A register output enable
-    constant control_SU  : integer := 10; -- ALU subtract
-    constant control_EO  : integer := 11; -- ALU output enable
-    constant control_BI  : integer := 12; -- B register load
-    constant control_OI  : integer := 13; -- Output register load
-    constant control_HLT : integer := 14; -- Halt clock
-    constant control_JC  : integer := 15; -- Jump if carry
- 
-    subtype control_type is std_logic_vector(15 downto 0);
-    constant MEM_TO_AREG : control_type := (
-            control_RO => '1', control_AI => '1', others => '0');
-    constant MEM_TO_BREG : control_type := (
-            control_RO => '1', control_BI => '1', others => '0');
-    constant ALU_TO_AREG : control_type := (
-            control_EO => '1', control_AI => '1', others => '0');
-    constant AREG_TO_MEM : control_type := (
-            control_AO => '1', control_RI => '1', others => '0');
-    constant AREG_TO_ADDR : control_type := (
-            control_AO => '1', control_MI => '1', others => '0');
-    constant ALU_SUB : control_type := (
-            control_SU => '1', others => '0');
-    constant NOP : control_type := (
-            others => '0');
-    constant AREG_TO_OUT : control_type := (
-            control_AO => '1', control_OI => '1', others => '0');
-
-    -- No specific opcodes, only used for testing.
-    constant AREG_TO_BUS : control_type := (
-            control_AO => '1', others => '0');
-    constant ALU_TO_BUS : control_type := (
-            control_EO => '1', others => '0');
-    constant BUS_TO_AREG : control_type := (
-            control_AI => '1', others => '0');
-    constant BUS_TO_BREG : control_type := (
-            control_BI => '1', others => '0');
-    constant BUS_TO_ADDR : control_type := (
-            control_MI => '1', others => '0');
-
-    -- This contains the contents of the memory
-    type mem_type is array (0 to 15) of std_logic_vector(7 downto 0);
-    constant mem : mem_type := (
-        "01110001",  -- 00: 71  LDI 0x01
-        "01001110",  -- 01: 4E  STA [0x0E] (Y)
-        "01110000",  -- 02: 70  LDI 0x00
-        "01010000",  -- 03: 50  OUT
-        "00101110",  -- 04: 2E  ADD [0x0E] (Y)
-        "01001111",  -- 05: 4F  STA [0x0F] (Z)
-        "00011110",  -- 06: 1E  LDA [0x0E] (Y)
-        "01001101",  -- 07: 4D  STA [0x0D] (X)
-        "00011111",  -- 08: 1F  LDA [0x0F] (Z)
-        "01001110",  -- 09: 4E  STA [0x0E] (Y)
-        "00011101",  -- 0A: 1D  LDA [0x0D] (X)
-        "10000000",  -- 0B: 80  JC 0x00
-        "01100011",  -- 0C: 63  J 0x03
-        "00000000",  -- 0D: 00  X
-        "00000000",  -- 0E: 00  Y
-        "00000000"); -- 0F: 00  Z
-
     -- VGA output
     signal vga_hs  : std_logic;
     signal vga_vs  : std_logic;
@@ -158,39 +89,49 @@ begin
 
     -- Start the main test
     main_test : process is
+        variable old_led : std_logic_vector(7 downto 0);
+
+        -- This contains the expected values of the output register
+        type led_array_type is array (integer range <>) of std_logic_vector(7 downto 0);
+        constant led_array : led_array_type := (
+            "00000001",  --   1 = 0x01
+            "00000010",  --   2 = 0x02
+            "00000011",  --   3 = 0x03
+            "00000101",  --   5 = 0x05
+            "00001000",  --   8 = 0x08
+            "00001101",  --  13 = 0x0D
+            "00010101",  --  21 = 0x15
+            "00100010",  --  34 = 0x22
+            "00110111",  --  55 = 0x37
+            "01011001",  --  89 = 0x59
+            "10010000",  -- 144 = 0x90
+            "00000000",  --   0 = 0x00
+            "00000001"); --   1 = 0x01
+
     begin
         -- Set initial values
-        sw        <= "00000000";
-        btn       <= "0000";
-        pmod      <= (others => '0');
-        btn_reset <= '1';
-
-        -- Configure DUT
-        sw_clk_free   <= '0'; -- Use manual clock (switch off control logic)
-        sw_runmode    <= '0'; -- Set RAM to programming mode
-        sw_led_select <= LED_SELECT_ADDR;
-
---        -- Program the RAM
---        for i in 0 to 15 loop
---            pmod_address <= std_logic_vector(to_unsigned(i, 4));
---            pmod_data    <= mem(i);
---            wait until falling_edge(clk);
---            btn_write  <= '1';
---            wait until rising_edge(clk);
---            assert led = std_logic_vector(to_unsigned(i, 8));
---            btn_write  <= '0';
---        end loop;
+        sw            <= "00000000";
+        btn           <= "0000";
+        pmod          <= (others => '0');
+        sw_led_select <= LED_SELECT_OUT;
 
         -- Reset DUT
-        sw_clk_free <= '1'; -- Use freerunning (astable) clock
-        sw_runmode  <= '1'; -- Set memory to run mode.
+        sw_clk_free   <= '1'; -- Use freerunning (astable) clock
+        sw_runmode    <= '1'; -- Set RAM to run mode.
+        btn_reset     <= '1';
         wait until rising_edge(clk);
+        btn_reset     <= '0';
         wait until rising_edge(clk);
 
-        btn_reset <= '0';
-        wait until rising_edge(clk);
+        assert led = "00000000";
 
-        wait for 400 us;
+        -- Run the program
+        for i in led_array'range loop
+            old_led := led;
+            wait until old_led /= led;
+            assert led = led_array(i)
+                report "received " & slv_to_string(led) & ", expected " & slv_to_string(led_array(i));
+        end loop;
 
         test_running <= false;
         wait;
