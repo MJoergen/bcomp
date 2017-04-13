@@ -65,7 +65,7 @@ architecture Structural of control is
     constant control_JC  : integer := 15; -- B register output enable
 
     signal counter       : std_logic_vector(2 downto 0) := "000"; -- Eight possible states
-    signal micro_op_addr : std_logic_vector(6 downto 0);
+    signal micro_op_addr : integer range 0 to 5*16-1;
 
     ------------------------------------------
     -- List of all possible micro-instructions
@@ -74,12 +74,11 @@ architecture Structural of control is
     -- Common for all instructions
     constant PC_TO_ADDR : control_type := (
             control_CO => '1',
+            control_CE => '1',
             control_MI => '1', others => '0');
     constant MEM_TO_IR : control_type := (
             control_RO => '1',
             control_II => '1', others => '0');
-    constant PC_COUNT : control_type := (
-            control_CE => '1', others => '0');
 
     -- LDA [addr]
     constant IR_TO_ADDR : control_type := (
@@ -133,56 +132,56 @@ architecture Structural of control is
     constant HLT : control_type := (
             control_HLT => '1', others => '0');
 
-    type micro_op_rom_type is array(0 to 8*16-1) of std_logic_vector(15 downto 0);
+    type micro_op_rom_type is array(0 to 5*16-1) of std_logic_vector(15 downto 0);
 
     constant micro_op_rom : micro_op_rom_type := (
     -- 0000  NOP
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, NOP, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, NOP, NOP, NOP,
 
     -- 0001  LDA [addr]
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_ADDR, MEM_TO_AREG, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, IR_TO_ADDR, MEM_TO_AREG, NOP,
 
     -- 0010  ADD [addr]
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_ADDR, MEM_TO_BREG, ALU_TO_AREG, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, IR_TO_ADDR, MEM_TO_BREG, ALU_TO_AREG,
 
     -- 0011  SUB [addr]
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_ADDR, MEM_TO_BREG_SUB, ALU_TO_AREG, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, IR_TO_ADDR, MEM_TO_BREG_SUB, ALU_TO_AREG,
 
     -- 0100  STA [addr]
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_ADDR, AREG_TO_MEM, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, IR_TO_ADDR, AREG_TO_MEM, NOP,
 
     -- 0101  OUT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, AREG_TO_OUT, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, AREG_TO_OUT, NOP, NOP,
 
     -- 0110  JMP
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_PC, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, IR_TO_PC, NOP, NOP,
 
     -- 0111  LDI
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_AREG, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, IR_TO_AREG, NOP, NOP,
 
     -- 1000  JC
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, IR_TO_PC_CARRY, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, IR_TO_PC_CARRY, NOP, NOP,
 
     -- 1001  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, HLT, NOP, NOP,
 
     -- 1010  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, HLT, NOP, NOP,
 
     -- 1011  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, HLT, NOP, NOP,
 
     -- 1100  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, HLT, NOP, NOP,
 
     -- 1101  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, HLT, NOP, NOP,
 
     -- 1110  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP,
+    PC_TO_ADDR, MEM_TO_IR, HLT, NOP, NOP,
 
     -- 1111  HLT
-    PC_TO_ADDR, MEM_TO_IR, PC_COUNT, HLT, NOP, NOP, NOP, NOP);
+    PC_TO_ADDR, MEM_TO_IR, HLT, NOP, NOP);
 
 begin
 
@@ -191,13 +190,17 @@ begin
         if rst_i = '1' then
             counter <= (others => '0');
         elsif rising_edge(clk_i) then
-            counter <= counter + 1;
+            if counter = 4 then
+                counter <= "000";
+            else
+                counter <= counter + 1;
+            end if;
         end if;
     end process;
 
-    micro_op_addr <= instruct_i & counter;
+    micro_op_addr <= conv_integer(instruct_i)*5 + conv_integer(counter);
 
-    control_o <= micro_op_rom(conv_integer(micro_op_addr));
+    control_o <= micro_op_rom(micro_op_addr);
 
     counter_o <= counter;
 

@@ -1,19 +1,18 @@
 [*]
 [*] GTKWave Analyzer v3.3.72 (w)1999-2016 BSI
-[*] Wed Apr 12 18:19:16 2017
+[*] Thu Apr 13 05:45:05 2017
 [*]
 [dumpfile] "/home/mike/git/bcomp/src/bcomp_tb.ghw"
-[dumpfile_mtime] "Wed Apr 12 18:17:44 2017"
-[dumpfile_size] 449184
+[dumpfile_mtime] "Thu Apr 13 05:25:11 2017"
+[dumpfile_size] 304178
 [savefile] "/home/mike/git/bcomp/src/bcomp_tb.gtkw"
 [timestart] 0
 [size] 1805 1087
 [pos] 20 0
-*-35.905907 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-35.227989 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.bcomp_tb.
 [treeopen] top.bcomp_tb.inst_bcomp.
-[treeopen] top.bcomp_tb.inst_bcomp.inst_cpu_module.
 [treeopen] top.bcomp_tb.inst_bcomp.inst_cpu_module.inst_memory_address_register.
 [treeopen] top.bcomp_tb.inst_bcomp.inst_ram_module.inst_ram74ls189_high.data.
 [sst_width] 327
